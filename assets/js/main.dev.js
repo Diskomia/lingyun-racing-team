@@ -2368,9 +2368,9 @@ window.LingYun = window.LingYun || {};
      * 生成符合 Bloomberg & Google 设计风格的正式 HTML 邮件回执 (嵌入官方凌云油车队队徽)
      */
     generateApplicantReceiptHtml(meta) {
-      const logoUrl = 'https://diskomia.github.io/lingyun-racing-team/assets/images/logo.png';
+      const logoUrl = 'https://cdn.jsdelivr.net/gh/Diskomia/lingyun-racing-team@main/assets/images/logo.png';
       const siteUrl = 'https://diskomia.github.io/lingyun-racing-team/';
-      const iconBase = 'https://diskomia.github.io/lingyun-racing-team/assets/images/';
+      const iconBase = 'https://cdn.jsdelivr.net/gh/Diskomia/lingyun-racing-team@main/assets/images/';
       const targetAdminEmail = this.targetEmail || 'diskomiakhan@gmail.com';
       const receiptId = meta.receiptId || `LY2026-REC-${Date.now().toString(36).toUpperCase()}`;
       const submitterEmail = meta.email || '';
