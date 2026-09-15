@@ -550,7 +550,7 @@ window.LingYun = window.LingYun || {};
 
           // 1.4 ScrollSpy: 实时动态高亮当前视口所在章节 (实时读取 getBoundingClientRect，避免图片加载后缓存偏移)
           if (this.sections.length && (this.navLinks.length || this.mobileNavLinks.length)) {
-            const navLine = 110; // 导航栏底部下方约 30px 的判定线
+            const navLine = 120; // 导航栏底部下方约 30px 的判定线
             let currentSectionId = '';
             for (const sec of this.sections) {
               const rect = sec.getBoundingClientRect();

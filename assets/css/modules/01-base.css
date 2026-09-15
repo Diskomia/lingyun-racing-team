@@ -1,11 +1,11 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    🏎️ LINGYUN RACING TEAM - APPLE-INSPIRED MOTORSPORT DESIGN SYSTEM
    Layer 01: Base & Typography (全局重置、平滑滚动、选区高亮与字体工具类)
    ========================================================================== */
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+  scroll-padding-top: 100px;
   background-color: var(--color-bg-base);
   color-scheme: light;
 }
