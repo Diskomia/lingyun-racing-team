@@ -42,6 +42,22 @@
         });
       }
 
+      // 拦截所有锚点链接，用 JS 精确滚动
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          if (!href || href === '#' || href === '#home') return;
+          const target = document.querySelector(href);
+          if (!target) return;
+          e.preventDefault();
+          e.stopPropagation();
+          const navH = document.getElementById('main-nav')?.offsetHeight || 80;
+          const top = target.getBoundingClientRect().top + window.pageYOffset - navH - 10;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+          history.pushState(null, '', href);
+        }, true);
+      });
+
       // 初次校准
       this.onScroll();
 
@@ -89,7 +105,7 @@
 
           // ScrollSpy: 实时计算当前 section
           if (this.sections.length && (this.navLinks.length || this.mobileNavLinks.length)) {
-            const navLine = 150; // 导航栏下方 150px 判定线
+            const navLine = 130; // 导航栏下方判定线
             let currentSectionId = '';
             for (const sec of this.sections) {
               const rect = sec.getBoundingClientRect();

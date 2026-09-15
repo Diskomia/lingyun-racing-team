@@ -56,7 +56,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 100px;
+  scroll-padding-top: 130px;
   background-color: var(--color-bg-base);
   color-scheme: light;
 }
