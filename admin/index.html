@@ -1000,7 +1000,7 @@
         <div>
           <label class="block text-xs font-telemetry text-zinc-600 mb-1.5">GitHub 发布令牌 (Personal Access Token, 需 repo 权限)</label>
           <div class="flex gap-2">
-            <input id="github-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxx" class="flex-1 px-3 py-2.5 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-mono text-zinc-900 focus:border-[#103A82] focus:bg-white focus:outline-none">
+            <input id="github-token-input" type="password" placeholder="粘贴你的 GitHub Token" class="flex-1 px-3 py-2.5 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-mono text-zinc-900 focus:border-[#103A82] focus:bg-white focus:outline-none">
             <button id="btn-save-token" type="button" class="px-4 py-2.5 rounded-lg bg-[#103A82] hover:bg-[#0C2B64] text-white text-xs font-telemetry font-semibold">保存令牌</button>
           </div>
           <p class="text-[11px] text-zinc-400 mt-1">生成地址：github.com → Settings → Developer settings → Personal access tokens (classic) → 勾 repo → Generate。令牌只保存在本机浏览器。</p>
@@ -2398,7 +2398,22 @@
         };
 
         ConfigManager.save(cfg);
+        // 同时把配置写到 SCF，前台从这里拉取
+        saveConfigToScf(cfg);
         showToast('🎉 各组负责人与联络邮箱配置已成功保存！', 'success');
+      }
+
+      // 把配置写到 SCF，前台从这里拉取
+      async function saveConfigToScf(cfg) {
+        try {
+          await fetch('https://1488993078-67xfxov1j1.ap-guangzhou.tencentscf.com', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'save_config', config: cfg })
+          });
+        } catch (e) {
+          console.error('saveConfigToScf error:', e);
+        }
       }
 
       // ─────────────────────────────────────────────────────────────────────────

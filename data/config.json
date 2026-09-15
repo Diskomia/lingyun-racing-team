@@ -1,0 +1,31 @@
+{
+  "departments": {
+    "electrical": {
+      "name": "动力总成组",
+      "head": "李振坡",
+      "email": "293676192@qq.com",
+      "prepGuide": "建议学习内燃机、进排气与发动机控制相关知识或准备过往作品。"
+    },
+    "mechanical": {
+      "name": "底盘组",
+      "head": "于鑫泽",
+      "email": "2021991482@qq.com",
+      "prepGuide": "建议学习车架、悬架与机械设计相关知识或准备过往作品。"
+    },
+    "bodywork": {
+      "name": "车身组",
+      "head": "纪浩鹏",
+      "email": "diskomiakhan@gmail.com",
+      "prepGuide": "建议学习复合材料、空气动力学与工业设计相关知识或准备过往作品。"
+    },
+    "business": {
+      "name": "商业组",
+      "head": "郭傲涵",
+      "email": "diskomiakhan@gmail.com",
+      "prepGuide": "建议学习商业计划书撰写、市场分析与商务沟通相关知识或准备过往作品。"
+    },
+    "general": {
+      "email": "diskomiakhan@gmail.com"
+    }
+  }
+}
