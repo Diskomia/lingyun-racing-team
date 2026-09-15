@@ -1781,7 +1781,7 @@
         };
 
         const isDuplicate = AppState.records.some(r => {
-          if (r.data?.email && email && r.data.email === email && r.timestamp === timestamp) return true;
+          if (r.data?.email && email && r.data.email === email && (r.timestamp || r.time) === timestamp) return true;
           return false;
         });
 
@@ -1840,7 +1840,7 @@
 
           return [
             escapeCSV(r.id),
-            escapeCSV(r.timestamp),
+            escapeCSV(r.timestamp || r.time || ''),
             escapeCSV(CATEGORY_NAMES[r.category] || r.category),
             escapeCSV(name),
             escapeCSV(target),
@@ -1901,7 +1901,7 @@
             const d = r.data || {};
             const searchPool = [
               r.id,
-              r.timestamp,
+              r.timestamp || r.time || '',
               r.notes,
               r.status,
               CATEGORY_NAMES[r.category],
@@ -1999,7 +1999,7 @@
           html += `
             <tr class="hover:bg-zinc-50/80 transition-colors group">
               <td class="py-3.5 px-4 font-telemetry text-zinc-400 font-semibold">${indexNum}</td>
-              <td class="py-3.5 px-4 font-telemetry text-zinc-600 whitespace-nowrap">${item.timestamp.split(' ')[0]} <span class="text-[10px] text-zinc-400">${item.timestamp.split(' ')[1] || ''}</span></td>
+              <td class="py-3.5 px-4 font-telemetry text-zinc-600 whitespace-nowrap">${(item.timestamp || item.time || '').split(' ')[0]} <span class="text-[10px] text-zinc-400">${(item.timestamp || item.time || '').split(' ')[1] || ''}</span></td>
               <td class="py-3.5 px-4 whitespace-nowrap">${catBadge}</td>
               <td class="py-3.5 px-4">
                 <div class="font-semibold text-zinc-900">${name}</div>
@@ -2081,7 +2081,7 @@
 
         document.getElementById('detail-modal-id').textContent = `RECORD ID: ${item.id}`;
         document.getElementById('detail-category-badge').textContent = CATEGORY_NAMES[item.category] || item.category;
-        document.getElementById('detail-time').textContent = item.timestamp;
+        document.getElementById('detail-time').textContent = item.timestamp || item.time || '';
         
         const name = d.name || d['申请人姓名'] || d['企业/机构全称'] || d['来访人姓名/称呼'] || '-';
         document.getElementById('detail-name').textContent = name;
