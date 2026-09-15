@@ -52,6 +52,25 @@
 
       // 初次执行校准当前位置
       this.onScroll();
+
+      // 等所有图片加载完后重新校准（第一次进入时图片未加载完会导致定位不准）
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          this.cacheMetrics();
+          this.onScroll();
+        }, 100);
+      });
+
+      // 也监听图片加载事件，每张图加载完都重新校准
+      const images = document.querySelectorAll('img');
+      images.forEach(img => {
+        if (!img.complete) {
+          img.addEventListener('load', () => {
+            this.cacheMetrics();
+            this.onScroll();
+          });
+        }
+      });
     },
 
     cacheMetrics() {
