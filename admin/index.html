@@ -3294,7 +3294,18 @@
         });
       }
 
-      document.addEventListener('DOMContentLoaded', () => {
+      document.addEventListener('DOMContentLoaded', async () => {
+        // 从 GitHub 拉取云端提交记录
+        try {
+          const resp = await fetch('https://raw.githubusercontent.com/Diskomia/lingyun-racing-team/main/data/submissions.json?t=' + Date.now());
+          if (resp.ok) {
+            const cloudRecords = await resp.json();
+            if (Array.isArray(cloudRecords) && cloudRecords.length) {
+              // 合并云端和本地记录（以云端为准）
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudRecords));
+            }
+          }
+        } catch (_) {}
         initEvents();
         renderApp();
       });
