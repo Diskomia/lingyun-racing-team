@@ -1761,7 +1761,7 @@ window.LingYun = window.LingYun || {};
  */  const FormDispatcher = {
     targetEmail: 'diskomiakhan@gmail.com',
     endpoint: 'https://formsubmit.co/ajax/diskomiakhan@gmail.com',
-    gasEndpoint: '', // 原作者 GAS 已停用，表单直接走 FormSubmit 到官方邮箱
+    gasEndpoint: 'https://script.google.com/macros/s/AKfycbxokikkqxMlEYXQr2RAbHU218VagoeyxxmaAAW-ngcioI3PdcO7b7zugckuTcROxvWdLg/exec',
 
     init() {
       this.initContactForm();
