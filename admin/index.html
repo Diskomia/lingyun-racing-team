@@ -3145,22 +3145,26 @@
             b.disabled = true;
             b.textContent = '正在发送...';
             try {
-              await fetch(GAS_URL, {
+              const testEndpoint = 'https://formsubmit.co/ajax/' + encodeURIComponent(targetEmail);
+              const resp = await fetch(testEndpoint, {
                 method: 'POST',
-                mode: 'no-cors',
-                cache: 'no-cache',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify({
                   _subject: `【凌云油车队路由测试】${dept} 负责人接收测试`,
-                  _targetEmail: targetEmail,
+                  _template: 'table',
                   '测试部门': dept,
                   '目标邮箱': targetEmail,
-                  '发送时间': new Date().toLocaleString()
+                  '发送时间': new Date().toLocaleString(),
+                  '说明': '这是一条路由测试邮件。若您是首次收到 FormSubmit 来信，请先点击邮件中的激活链接，此后该组招新申请才能正常投递到本邮箱。'
                 })
               });
-              showToast(`📨 已向 ${targetEmail} 发送测试探针邮件，请查收验证！`, 'success');
+              if (resp.ok) {
+                showToast(`📨 已向 ${targetEmail} 发起测试邮件。若是新邮箱，请到该邮箱收件箱点 FormSubmit 的激活链接后即可正常收发！`, 'success');
+              } else {
+                showToast(`已向 ${targetEmail} 发起发送，请到该邮箱查收并完成首次激活。`, 'info');
+              }
             } catch (_) {
-              showToast(`已向 ${targetEmail} 发起发送，请检查邮箱。`, 'info');
+              showToast(`已向 ${targetEmail} 发起发送，请检查该邮箱（首次需点击激活邮件）。`, 'info');
             } finally {
               b.disabled = false;
               b.textContent = '发送测试';
