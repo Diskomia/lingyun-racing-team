@@ -47,7 +47,7 @@ function doPost(e) {
     var submitterName = data['申请人/单位'] || data['申请人姓名'] || data['来访人姓名/称呼'] || data['企业/机构全称'] || data.name || "申报人";
     var receiptId = data['受理编号'] || ("LY2026-" + Utilities.formatDate(new Date(), "GMT+8", "yyyyMMdd-HHmmss"));
     var autoResponse = data._autoresponse || "";
-    var timestamp = data['提交时间'] || Utilities.formatDate(new Date(), "GMT+8", "yyyy-MM-dd HH:mm:ss (CST)");
+    var timestamp = data['提交时间'] || Utilities.formatDate(new Date(), "GMT+8", "yyyy-MM-dd HH:mm:ss 'CST'");
     var targetRole = data['申报意向/合作级别'] || data['申请意向组别'] || data['意向合作级别'] || data['咨询交流类型'] || "凌云油车队申请";
 
     var logoUrl = "https://raw.githubusercontent.com/Diskomia/lingyun-racing-team/main/assets/images/logo.png";
