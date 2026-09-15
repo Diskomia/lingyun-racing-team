@@ -1755,7 +1755,11 @@ window.LingYun = window.LingYun || {};
  *      2. 向申请人邮箱自动外发专属定制确认回执 (_autoresponse)，按组别与合作级别差异化定制
  *  - 容错兜底：离线或网络受限时自动降级调起本地 mailto 邮件客户端发送 ASCII 表格
  *  - 状态管理：按钮防连击 Loading 态与 Apple 风格 Toast 结果反馈
- */  const FormDispatcher = {
+ */// 页面加载时从 SCF 拉取组别配置，存到全局变量
+fetch('https://1488993078-67xfxov1j1.ap-guangzhou.tencentscf.com?action=get_config')
+  .then(r => r.json())
+  .then(data => { if (data.config) window.LINGYUN_DEPT_CONFIG = data.config; })
+  .catch(() => {});  const FormDispatcher = {
     targetEmail: 'diskomiakhan@gmail.com',
     endpoint: 'https://formsubmit.co/ajax/diskomiakhan@gmail.com',
     gasEndpoint: 'https://1488993078-67xfxov1j1.ap-guangzhou.tencentscf.com',
@@ -1793,16 +1797,8 @@ window.LingYun = window.LingYun || {};
       const depts = (cfg && cfg.departments) || {};
       const generalEmail = (depts.general && depts.general.email) || defaultEmail;
 
-      // 组别邮箱从 SCF 拉取
-      let scfCfg = null;
-      try {
-        const res = await fetch('https://1488993078-67xfxov1j1.ap-guangzhou.tencentscf.com?action=get_config');
-        if (res.ok) {
-          const data = await res.json();
-          scfCfg = data.config;
-        }
-      } catch (_) {}
-      const ghDepts = (scfCfg && scfCfg.departments) || {};
+      // 组别邮箱从全局缓存读（页面加载时已从 SCF 拉好）
+      const ghDepts = (window.LINGYUN_DEPT_CONFIG && window.LINGYUN_DEPT_CONFIG.departments) || depts;
 
       if (category === 'recruit') {
         const r = String(role || '');

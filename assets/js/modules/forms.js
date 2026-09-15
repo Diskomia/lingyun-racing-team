@@ -16,6 +16,12 @@
 
 'use strict';
 
+// 页面加载时从 SCF 拉取组别配置，存到全局变量
+fetch('https://1488993078-67xfxov1j1.ap-guangzhou.tencentscf.com?action=get_config')
+  .then(r => r.json())
+  .then(data => { if (data.config) window.LINGYUN_DEPT_CONFIG = data.config; })
+  .catch(() => {});
+
 (function(global) {
   const FormDispatcher = {
     targetEmail: 'diskomiakhan@gmail.com',
@@ -55,16 +61,8 @@
       const depts = (cfg && cfg.departments) || {};
       const generalEmail = (depts.general && depts.general.email) || defaultEmail;
 
-      // 组别邮箱从 SCF 拉取
-      let scfCfg = null;
-      try {
-        const res = await fetch('https://1488993078-67xfxov1j1.ap-guangzhou.tencentscf.com?action=get_config');
-        if (res.ok) {
-          const data = await res.json();
-          scfCfg = data.config;
-        }
-      } catch (_) {}
-      const ghDepts = (scfCfg && scfCfg.departments) || {};
+      // 组别邮箱从全局缓存读（页面加载时已从 SCF 拉好）
+      const ghDepts = (global.LINGYUN_DEPT_CONFIG && global.LINGYUN_DEPT_CONFIG.departments) || depts;
 
       if (category === 'recruit') {
         const r = String(role || '');
