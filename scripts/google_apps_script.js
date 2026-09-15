@@ -53,6 +53,17 @@ function doPost(e) {
     var logoUrl = "https://raw.githubusercontent.com/Diskomia/lingyun-racing-team/main/assets/images/logo.png";
     var siteUrl = "https://diskomia.github.io/lingyun-racing-team/";
 
+    // 根据申请组别返回对应部门图标
+    function getDeptIcon(role) {
+      var base = "https://raw.githubusercontent.com/Diskomia/lingyun-racing-team/main/assets/images/";
+      if (role.indexOf("动力总成") >= 0 || role.indexOf("powertrain") >= 0) return base + "icon_powertrain.png";
+      if (role.indexOf("底盘") >= 0 || role.indexOf("chassis") >= 0) return base + "icon_chassis.png";
+      if (role.indexOf("车身") >= 0 || role.indexOf("body") >= 0 || role.indexOf("空套") >= 0) return base + "icon_body.png";
+      if (role.indexOf("商业") >= 0 || role.indexOf("business") >= 0 || role.indexOf("商务") >= 0) return base + "icon_business.png";
+      return logoUrl;
+    }
+    var deptIconUrl = getDeptIcon(targetRole);
+
     // 1. 生成排版考究的 HTML 汇总表格并投递给车队管理员邮箱 (Bloomberg & Google Style)
     var adminHtmlBody = '<div style="background-color: #f1f5f9; padding: 24px 12px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif;">' +
       '<div style="max-width: 640px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.06);">' +
@@ -147,7 +158,7 @@ function doPost(e) {
               '<!-- Centered Logo Area -->' +
               '<div style="text-align: center; margin-bottom: 20px;">' +
                 '<div style="display: inline-block; width: 68px; height: 68px; padding: 8px; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 12px;">' +
-                  '<img src="' + logoUrl + '" alt="凌云油车队队徽" style="width: 100%; height: 100%; object-fit: contain; display: block;">' +
+                  '<img src="' + deptIconUrl + '" alt="' + targetRole + '" style="width: 100%; height: 100%; object-fit: contain; display: block;">' +
                 '</div>' +
                 '<h1 style="color: #0f172a; font-size: 20px; font-weight: 700; margin: 0 0 6px 0; letter-spacing: -0.3px; line-height: 1.3;">' +
                   '表单正式受理与初审确认回执' +
