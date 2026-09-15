@@ -1,0 +1,236 @@
+/**
+ * =========================================================================
+ * 🏎️ LINGYUN OIL RACING TEAM - 2026 49号 模块化架构
+ * Module: 00 - ENGINE_CONFIG (集中式全局配置中心 & 动态网站内容管理器)
+ * =========================================================================
+ */
+
+'use strict';
+
+(function(global) {
+  const DEFAULT_SITE_CONFIG = {
+    site: {
+      tickerText: "⚡ 凌云油车队 2026 赛季全新燃油方程式赛车研发进行中 · 招贤纳新通道持续开放",
+      tickerSpeed: 50,
+      tickerEnabled: true,
+      tickerItems: [
+        { label: "UNIVERSITY", val: "河北工程大学科信学院 (KEXIN COLLEGE)", pulse: true },
+        { label: "AFFILIATION", val: "机械装备与制造学院 / 教务处" },
+        { label: "TEAM", val: "凌云油车队 (LINGYUN OIL RACING)", highlight: true },
+        { label: "SEASON", val: "2026 49号 燃油驱动方程式" },
+        { label: "POWERTRAIN", val: "燃油内燃机 · 链传动后驱", highlight: true },
+        { label: "ACCUMULATOR", val: "防爆燃油箱 · 进气/排气/冷却" },
+        { label: "STATUS", val: "● 备战成都耐久赛", color: "text-emerald-600" },
+        { label: "HEADQUARTERS", val: "科信学院成学楼东侧机械装备与制造学院" }
+      ],
+      heroTag: "2026 赛季研发攻坚阶段",
+      heroSubtitle: "矢志不渝，以燃油之驱突破赛道物理极限",
+      countdownTitle: "2026 中国大学生方程式汽车大赛 (FSC)",
+      countdownDate: "2026-11-03T09:00:00+08:00",
+      countdownLabel: "距 2026FSC 全国总决赛开幕倒计时",
+      countdownPeriod: "拟定赛期：2026.11.03 - 11.08",
+      currentStatus: "整车装配中",
+      currentStatusColor: "emerald",
+      currentLocation: "科信学院成学楼东侧机械装备与制造学院",
+      workshopAddress: "河北省邯郸市科信学院成学楼东侧机械装备与制造学院",
+      coordinatorPhone: "138-3100-2026",
+      officialWechat: "河北工程大学科信学院凌云油车队",
+      copyright: "© 2026 河北工程大学科信学院凌云油车队 (Lingyun Oil Racing Team). 保留所有权利."
+    },
+    departments: {
+      electrical: {
+        name: "动力总成组",
+        head: "动力总成负责人",
+        email: "diskomiakhan@gmail.com",
+        phone: "",
+        prepGuide: "建议学习内燃机、进排气与发动机控制相关知识或准备过往作品。"
+      },
+      mechanical: {
+        name: "底盘组",
+        head: "底盘负责人",
+        email: "diskomiakhan@gmail.com",
+        phone: "",
+        prepGuide: "建议学习车架、悬架与机械设计相关知识或准备过往作品。"
+      },
+      business: {
+        name: "商业组",
+        head: "商业负责人",
+        email: "diskomiakhan@gmail.com",
+        phone: "",
+        prepGuide: "建议学习相关知识或准备过往作品。"
+      },
+      sponsor: {
+        name: "商务赞助",
+        head: "商业总监 / 外联主管",
+        email: "diskomiakhan@gmail.com",
+        phone: ""
+      },
+      general: {
+        name: "官方统筹 / 队长",
+        head: "车队队长",
+        email: "diskomiakhan@gmail.com",
+        phone: "",
+        ccAll: true
+      }
+    },
+    recruitment: {
+      isOpen: true,
+      seasonYear: "2026",
+      statusNotice: "凌云油车队 2026 赛季全系招新正式开启，欢迎怀揣赛车梦想的同学加入！"
+    },
+    activities: [
+      {
+        id: "act_2025_fsec",
+        category: "race",
+        tag: "FSEC 大赛 · 全国三等奖",
+        tagColor: "bg-amber-500",
+        date: "2025.11",
+        title: "2025FSEC：荣获中国大学生方程式汽车大赛全国三等奖",
+        summary: "全国总决赛赛场攻坚突破，车检顺畅过检，技术组与商业组再度斩获国家级殊荣。",
+        fullText: "在中国大学生方程式汽车大赛中，凌云油车队经过车辆技术检验、车检与静态商业答辩，并在多项动态赛事中稳定完赛，斩获全国三等奖！",
+        image: "assets/images/track_action_card.jpg",
+        stats: " FSEC 电动车组全国三等奖 | 技术与商业协同攻坚",
+        badge: "国家级三等奖",
+        badgeIcon: "trophy"
+      },
+      {
+        id: "act_2024_fsec",
+        category: "race",
+        tag: "FSEC 大赛 · 全国二等奖",
+        tagColor: "bg-[#D9232D]",
+        date: "2024.11",
+        title: "2024FSEC：斩获全国二等奖并蝉联优秀宣传团队",
+        summary: "全国总决赛赛场再续辉煌，车检全优通过，商业组与技术组共同捧起两座国家级大奖。",
+        fullText: "在中国大学生方程式汽车大赛中，河北工程大学科信学院凌云油车队技术组与商业组协同作战，以优异成绩斩获电动车组全国二等奖，并凭借高质量的新媒体传播与赛事纪实，再次蝉联‘年度优秀宣传团队’荣誉称号！",
+        image: "assets/images/activity_2024_award.jpg",
+        stats: " FSEC 电动车组二等奖 | 蝉联年度优秀宣传团队",
+        badge: "国家级二等奖",
+        badgeIcon: "trophy"
+      },
+      {
+        id: "act_stem_outreach",
+        category: "science",
+        tag: "社会交流 · 科普开放日",
+        tagColor: "bg-[#103A82]",
+        date: "2024",
+        title: "践行社会责任：接待邯郸四中及石家庄工程技术学校师生科普",
+        summary: "开放赛车车间，生动讲解新能源赛车构造与原理，发挥高校工程实践育人社会效益。",
+        fullText: "作为河北工程大学实践教学与社会服务的重要载体，凌云油车队先后接待了邯郸市第四中学和石家庄工程技术学校师生来访。队员们在科信学院成学楼东侧机械装备与制造学院热情带领中学生走进车间，深入讲解方程式赛车悬架几何、碳纤维成型与散热系统原理，点亮青少年的工程强国梦想。",
+        image: "assets/images/activity_stem_outreach.jpg",
+        stats: "接待中学生及职校师生 120+ 人 | 赛车构造与新能源原理科普",
+        badge: "工程科普实践",
+        badgeIcon: "book-open"
+      },
+      {
+        id: "act_garage_tuning",
+        category: "tech",
+        tag: "实训车间 · 研发纪实",
+        tagColor: "bg-[#103A82]",
+        date: "2026.01",
+        title: "实训车间：4130桁架与高压电驱动总成调试",
+        summary: "践行“每年推出一辆新赛车”的庄严承诺，师生携手攻坚 E20 赛车高压电驱与底盘制造。",
+        fullText: "在河北工程大学科信学院成学楼东侧机械装备与制造学院，技术组机械与电气队员正紧锣密鼓进行 E20 纯电动方程式赛车的装配调试。团队严格执行工程规范，完成整车线束布置、504V 动力电池箱双侧风道密封测试、TC4钛合金半轴与悬架四轮定位，力求在动态赛中再破纪录。",
+        image: "assets/images/activity_garage_tuning.jpg",
+        stats: "高压电驱 | 504V动力电池 | 4130桁架与TC4钛合金半轴",
+        badge: "工程实训研发车间",
+        badgeIcon: "wrench"
+      }
+    ]
+  };
+
+  const CONFIG_STORAGE_KEY = 'ly_site_config_v2';
+
+  const SiteConfigManager = {
+    STORAGE_KEY: CONFIG_STORAGE_KEY,
+    DEFAULT_CONFIG: DEFAULT_SITE_CONFIG,
+
+    load() {
+      try {
+        if (typeof localStorage === 'undefined') return JSON.parse(JSON.stringify(DEFAULT_SITE_CONFIG));
+        const raw = localStorage.getItem(CONFIG_STORAGE_KEY);
+        if (!raw) return JSON.parse(JSON.stringify(DEFAULT_SITE_CONFIG));
+        const parsed = JSON.parse(raw);
+        // 深度合并保证新增字段不丢失
+        return {
+          site: Object.assign({}, DEFAULT_SITE_CONFIG.site, parsed.site || {}),
+          departments: Object.assign({}, DEFAULT_SITE_CONFIG.departments, parsed.departments || {}),
+          recruitment: Object.assign({}, DEFAULT_SITE_CONFIG.recruitment, parsed.recruitment || {}),
+          activities: Array.isArray(parsed.activities) && parsed.activities.length ? parsed.activities : DEFAULT_SITE_CONFIG.activities
+        };
+      } catch (_) {
+        return JSON.parse(JSON.stringify(DEFAULT_SITE_CONFIG));
+      }
+    },
+
+    save(config) {
+      if (typeof localStorage === 'undefined') return;
+      try {
+        localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(config));
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('ly_config_updated', { detail: config }));
+        }
+      } catch (e) {
+        console.error('Save site config failed:', e);
+      }
+    },
+
+    reset() {
+      if (typeof localStorage === 'undefined') return;
+      localStorage.removeItem(CONFIG_STORAGE_KEY);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('ly_config_updated', { detail: DEFAULT_SITE_CONFIG }));
+      }
+    },
+
+    async fetchCloudConfig(gasUrl) {
+      const endpoint = gasUrl || (typeof window !== 'undefined' && window.LingYunGASUrl);
+      if (!endpoint || !endpoint.includes('script.google.com')) return null;
+      try {
+        const resp = await fetch(`${endpoint}?action=get_config`, { method: 'GET', cache: 'no-cache' });
+        if (resp.ok) {
+          const res = await resp.json();
+          if (res && res.success && res.config) {
+            this.save(res.config);
+            return res.config;
+          }
+        }
+      } catch (_) {}
+      return null;
+    }
+  };
+
+  const ENGINE_CONFIG = {
+    // 3D 视差倾角控制参数
+    tilt: {
+      defaultMax: 6.0,       // 标准小卡片最大偏转角度 (度)
+      subtleMax: 3.2,        // 大型重点板块 (如技术组与商业组) 微偏转角度 (度)
+      defaultZ: 8,           // 悬浮位移 Z 轴深度 (px)
+      subtleZ: 4,            // 微倾角板块 Z 轴深度 (px)
+      perspective: 1000      // 3D 空间视距 (px)
+    },
+    // 全局滚动监听阈值
+    scroll: {
+      navbarThreshold: 40,   // 导航栏由通透过渡为高斯毛玻璃的滚动距离 (px)
+      backToTopThreshold: 280// 回到顶部按键浮现的触发阈值 (px)
+    },
+    // 遥测数字增长动画时长
+    telemetryDuration: 1500, // 数值滚动插值总耗时 (ms)
+    // 2026 中国大学生方程式汽车大赛 (FSC) 赛期拟定配置
+    competition: {
+      name: '2026 中国大学生方程式汽车大赛 (FSC)',
+      startDate: '2026-11-03T09:00:00+08:00',
+      endDate: '2026-11-08T18:00:00+08:00'
+    },
+    // 动态全站内容管理器
+    siteConfig: SiteConfigManager
+  };
+
+  // 挂载至统一命名空间
+  global.LingYun = global.LingYun || {};
+  global.LingYun.ENGINE_CONFIG = ENGINE_CONFIG;
+  global.LingYun.SiteConfigManager = SiteConfigManager;
+
+  // 向后兼容全局作用域
+  global.ENGINE_CONFIG = ENGINE_CONFIG;
+  global.SiteConfigManager = SiteConfigManager;
+})(typeof window !== 'undefined' ? window : this);

@@ -1,0 +1,609 @@
+/* ==========================================================================
+   🏎️ LINGYUN RACING TEAM - APPLE-INSPIRED MOTORSPORT DESIGN SYSTEM (CONSOLIDATED)
+   Generated from modular sources in assets/css/modules/
+   ⚠️  AUTO-GENERATED FILE — DO NOT EDIT DIRECTLY
+   ========================================================================== */
+
+/* ==========================================================================
+   🏎️ LINGYUN RACING TEAM - APPLE-INSPIRED MOTORSPORT DESIGN SYSTEM
+   Layer 00: Design Tokens (色彩体系、高精度圆角、系统字体、表面层级)
+   ========================================================================== */
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+  --font-telemetry: 'JetBrains Mono', monospace;
+
+  /* Apple Pristine Light Canvas */
+  --color-bg-base: #FFFFFF;
+  --color-bg-subtle: #F5F5F7;
+  --color-bg-elevated: #FFFFFF;
+  
+  /* Text System (Apple Charcoal & Grayscale) */
+  --color-text-primary: #1D1D1F;
+  --color-text-secondary: #424245;
+  --color-text-tertiary: #6E6E73;
+  --color-text-quaternary: #86868B;
+  
+  /* Dual Brand Colors */
+  --color-school-blue: #103A82;
+  --color-school-blue-hover: #0C2B64;
+  --color-school-blue-light: rgba(16, 58, 130, 0.08);
+  
+  --color-racing-red: #D9232D;
+  --color-racing-red-hover: #B81D25;
+  --color-racing-red-light: rgba(217, 35, 45, 0.08);
+
+  /* Hairlines & Apple Soft Surfaces */
+  --hairline-border: rgba(0, 0, 0, 0.08);
+  --hairline-border-subtle: rgba(0, 0, 0, 0.04);
+  --hairline-border-hover: rgba(16, 58, 130, 0.25);
+  
+  --glass-surface-base: rgba(255, 255, 255, 0.92);
+  --glass-surface-card: #FFFFFF;
+  
+  /* Crisp Geometry (Reduced Radii) */
+  --radius-card: 12px;
+  --radius-button: 8px;
+  --radius-pill: 6px;
+}
+
+
+/* ==========================================================================
+   🏎️ LINGYUN RACING TEAM - APPLE-INSPIRED MOTORSPORT DESIGN SYSTEM
+   Layer 01: Base & Typography (全局重置、平滑滚动、选区高亮与字体工具类)
+   ========================================================================== */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  background-color: var(--color-bg-base);
+  color-scheme: light;
+}
+
+::selection {
+  background-color: var(--color-school-blue);
+  color: #FFFFFF;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typographic Precision Utilities */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-telemetry {
+  font-family: var(--font-telemetry);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+
+/* ==========================================================================
+   🏎️ LINGYUN RACING TEAM - APPLE-INSPIRED MOTORSPORT DESIGN SYSTEM
+   Layer 02: Components (导航栏指标、赛道进度条、毛玻璃卡片、微质感按钮、3D视差)
+   ========================================================================== */
+
+/* Nav Link ScrollSpy Active Indicator */
+.nav-link {
+  position: relative;
+  transition: color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--color-racing-red);
+  border-radius: 1px;
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s ease;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.nav-link.active {
+  color: var(--color-school-blue) !important;
+  font-weight: 600;
+}
+
+.nav-link.active::after {
+  width: 18px;
+}
+
+.mobile-nav-link {
+  transition: all 0.2s ease;
+  border-left: 2px solid transparent;
+  padding-left: 8px;
+}
+
+.mobile-nav-link.active {
+  color: var(--color-school-blue) !important;
+  font-weight: 600;
+  border-left-color: var(--color-racing-red);
+  background: rgba(16, 58, 130, 0.04);
+}
+
+/* Hairline Structural Classes */
+.border-hairline {
+  border: 1px solid var(--hairline-border);
+}
+
+.border-hairline-t {
+  border-top: 1px solid var(--hairline-border);
+}
+
+.border-hairline-b {
+  border-bottom: 1px solid var(--hairline-border);
+}
+
+.border-hairline-r {
+  border-right: 1px solid var(--hairline-border);
+}
+
+.border-hairline-l {
+  border-left: 1px solid var(--hairline-border);
+}
+
+/* Ultra-Slim Telemetry Progress Bar (纯 GPU 合成，零重排零重绘) */
+#track-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2.5px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  z-index: 9999;
+  background: linear-gradient(90deg, #103A82 0%, #D9232D 100%);
+  box-shadow: 0 1px 6px rgba(217, 35, 45, 0.3);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Precision Telemetry Stream (Apple Clean Minimalist Ribbon) */
+.telemetry-ticker-wrap {
+  width: 100%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid var(--hairline-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  z-index: 40;
+  contain: content;
+  transform: translateZ(0);
+}
+
+.telemetry-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: telemetryScroll 50s linear infinite;
+  will-change: transform;
+}
+
+.telemetry-ticker-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes telemetryScroll {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.telemetry-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 24px;
+  font-family: var(--font-telemetry);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  border-right: 1px solid var(--hairline-border-subtle);
+  white-space: nowrap;
+}
+
+.telemetry-pill span.val {
+  color: var(--color-school-blue);
+  font-weight: 600;
+}
+
+.telemetry-pill span.highlight {
+  color: var(--color-racing-red);
+  font-weight: 600;
+}
+
+/* Apple-Grade Clean Frosted Glass & Surface Panels */
+.glass-panel {
+  background: var(--glass-surface-base) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--hairline-border);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  border-radius: var(--radius-card);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.glass-card {
+  background: var(--glass-surface-card) !important;
+  border: 1px solid var(--hairline-border);
+  border-radius: var(--radius-card);
+  box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.04);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  transition: 
+    background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: var(--hairline-border-hover);
+  box-shadow: 0 10px 28px -4px rgba(16, 58, 130, 0.08);
+  transform: translate3d(0, -2px, 0);
+}
+
+.glass-dock {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--hairline-border);
+  border-radius: var(--radius-button);
+}
+
+.glass-pill {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border: 1px solid var(--hairline-border);
+  border-radius: var(--radius-pill);
+}
+
+/* High-End Precision Action Buttons (Apple Geometry, Crisp 8px) */
+.btn-speed {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-button);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+}
+
+.btn-speed:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -2px rgba(217, 35, 45, 0.2);
+}
+
+.btn-speed:active {
+  transform: translateY(0);
+}
+
+/* 3D Tilt Engine (Selective & Crisp Micro-Glare) */
+.tilt-card {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.tilt-inner {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+  position: relative;
+}
+
+.tilt-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 100px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.tilt-inner:hover::after {
+  opacity: 1;
+}
+
+
+/* ==========================================================================
+   🏎️ LINGYUN RACING TEAM - APPLE-INSPIRED MOTORSPORT DESIGN SYSTEM
+   Layer 03: Sections (领奖台高光、Pit-Board 倒计时看板、专属滚动条、背景水印)
+   ========================================================================== */
+
+/* Podium Highlights: Crisp hairline tint */
+.podium-p1 {
+  border-color: rgba(217, 119, 6, 0.4) !important;
+  background: #FFFDF7 !important;
+}
+
+.podium-p2 {
+  border-color: rgba(16, 58, 130, 0.4) !important;
+  background: #F8FAFC !important;
+}
+
+.podium-p3 {
+  border-color: rgba(234, 88, 12, 0.4) !important;
+  background: #FFFBF7 !important;
+}
+
+/* Pit-Board F1 Telemetry Countdown Box */
+.pit-digit-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  height: 52px;
+  padding: 0 10px;
+  border-radius: 10px;
+  background: rgba(245, 245, 247, 0.9);
+  border: 1px solid var(--hairline-border);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F5F7;
+}
+::-webkit-scrollbar-thumb {
+  background: #D1D1D6;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #AEAEB2;
+}
+
+/* Watermark Emblems for Hero Background */
+.watermark-emblem-school {
+  position: absolute;
+  top: 6%;
+  left: 2%;
+  width: 440px;
+  height: 440px;
+  background-image: url('../images/school_logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.045;
+  filter: grayscale(15%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.watermark-emblem-team {
+  position: absolute;
+  bottom: 4%;
+  right: 2%;
+  width: 500px;
+  height: 350px;
+  background-image: url('../images/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.045;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ==========================================================================
+   🏎️ LINGYUN RACING TEAM - APPLE-INSPIRED MOTORSPORT DESIGN SYSTEM
+   Layer 04: Interactive (热点雷达、平滑渐入流、模态弹窗、Toast通知、回到顶部)
+   ========================================================================== */
+
+/* Interactive Car Spec Radar Hotspots */
+.car-hotspot-btn {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.car-hotspot-core {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #103A82;
+  box-shadow: 0 0 8px rgba(16, 58, 130, 0.6);
+  border: 2px solid #FFFFFF;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.car-hotspot-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(16, 58, 130, 0.4);
+  animation: hotspotRadar 2.2s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+}
+
+.car-hotspot-btn.active .car-hotspot-core {
+  background: #D9232D;
+  transform: scale(1.3);
+  box-shadow: 0 0 12px #D9232D;
+}
+
+.car-hotspot-btn.active .car-hotspot-pulse {
+  border-color: #D9232D;
+}
+
+@keyframes hotspotRadar {
+  0% { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Staggered Scroll-Reveal Animations (Butter Smooth) */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+.delay-100 { transition-delay: 80ms; }
+.delay-200 { transition-delay: 160ms; }
+.delay-300 { transition-delay: 240ms; }
+.delay-400 { transition-delay: 320ms; }
+
+/* Micro-Fade In Animation for Tabs & Hotspot Switch */
+@keyframes itemFadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.item-fade-in {
+  animation: itemFadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+}
+
+/* Apple-Grade Frosted Toast Notification */
+.toast-card {
+  background: rgba(255, 255, 255, 0.96) !important;
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 40px -4px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+  color: #1D1D1F;
+  border-radius: 12px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+/* Clean Modals & Animations */
+.modal-backdrop {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(0, 0, 0, 0.42);
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-card-anim {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(0.96);
+  opacity: 0;
+}
+
+.modal-card-anim.modal-visible {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Minimalist Floating Back-to-Top Button */
+#back-to-top-btn {
+  position: fixed;
+  right: 28px;
+  bottom: 32px;
+  z-index: 45;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-button);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--hairline-border);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, 8px, 0);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+#back-to-top-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+
+#back-to-top-btn:hover {
+  background: #D9232D;
+  border-color: #D9232D;
+  color: #FFFFFF;
+  transform: translate3d(0, -2px, 0);
+  box-shadow: 0 6px 18px rgba(217, 35, 45, 0.3);
+}
+
+#back-to-top-btn:active {
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* ==========================================================================
+   🏎️ LINGYUN RACING TEAM - APPLE-INSPIRED MOTORSPORT DESIGN SYSTEM
+   Layer 05: Utilities & Accessibility (布局隔离、无障碍聚焦指示、动效降级)
+   ========================================================================== */
+
+/* High-Performance Layout Containment (大幅削减长列表滚动重排损耗) */
+#about, #dual-pillars, #machinery, #milestones, #activities, #recruitment, #sponsorship, #contact {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+/* Accessible Focus Indicator (键盘 Tab 聚焦可访问性光标增强) */
+:focus-visible {
+  outline: 2px solid var(--color-school-blue);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion Accessibility (系统减弱动态偏好无缝降级) */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .telemetry-ticker-track {
+    animation: none !important;
+    transform: none !important;
+  }
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .modal-card-anim {
+    transform: none !important;
+  }
+}

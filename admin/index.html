@@ -1,0 +1,3274 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>凌云油车队内部数据统筹平台 · 管理中枢 | 河北工程大学</title>
+  <link rel="icon" type="image/png" href="../assets/images/logo.png">
+
+  <!-- 工业级网络安全策略 (CSP & Security Headers) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://formsubmit.co;">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Google Fonts: Space Grotesk, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            school: {
+              blue: '#103A82',
+              'blue-hover': '#0C2B64',
+              'blue-light': 'rgba(16, 58, 130, 0.08)'
+            },
+            racing: {
+              red: '#D9232D',
+              'red-hover': '#B81D25',
+              'red-light': 'rgba(217, 35, 45, 0.08)'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+            display: ['Space Grotesk', 'Plus Jakarta Sans', 'sans-serif'],
+            telemetry: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- 全局配置中心 -->
+  <script src="../assets/js/modules/config.js"></script>
+
+  <style>
+    body {
+      background-color: #F8FAFC;
+      color: #0F172A;
+    }
+    .font-telemetry {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .font-display {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #F1F5F9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
+    }
+  </style>
+</head>
+<body class="antialiased font-sans min-h-screen flex flex-col selection:bg-[#103A82] selection:text-white">
+
+  <!-- =========================================================================
+       1. 顶栏导航区 (Top Management Header)
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-black/[0.08] shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+      
+      <!-- Brand & Title -->
+      <div class="flex items-center gap-3.5">
+        <a href="../index.html" class="flex items-center gap-2 group" title="返回车队官网次页">
+          <div class="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center p-0.5">
+            <img src="../assets/images/school_logo.png" alt="校徽" class="w-full h-full object-contain">
+          </div>
+          <span class="h-4 w-[1px] bg-zinc-300"></span>
+          <div class="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center p-0.5">
+            <img src="../assets/images/logo.png" alt="车队队徽" class="w-full h-full object-contain">
+          </div>
+        </a>
+
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-display font-bold text-sm sm:text-base text-zinc-900 tracking-tight">
+              凌云油车队 · 数据统筹与管理中枢
+            </h1>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-telemetry font-semibold bg-[#103A82]/10 text-[#103A82] border border-[#103A82]/20">
+              全站可视化可维护
+            </span>
+          </div>
+          <div class="text-[10px] text-zinc-500 font-telemetry tracking-tight hidden sm:block">
+            LINGYUN OIL RACING TEAM · VERIFIED HUB & ZERO-CODE CMS
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Area -->
+      <div class="flex items-center gap-3">
+        <div id="auth-user-badge" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-100 text-xs font-telemetry text-zinc-700">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span id="current-username">管理员 (在线)</span>
+        </div>
+
+        <a href="../index.html" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-black/[0.08] hover:border-[#103A82] hover:bg-zinc-50 text-zinc-700 hover:text-[#103A82] text-xs font-telemetry font-medium transition-colors" title="回到车队官网次页">
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          <span>官网次页</span>
+        </a>
+
+        <button id="btn-logout" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-zinc-100 hover:bg-red-50 hover:text-red-600 text-zinc-700 text-xs font-telemetry font-medium transition-colors">
+          <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+          <span>退出登录</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       2. 未登录拦截卡片 (In-Page Authentication Gate)
+       ========================================================================= -->
+  <main id="login-gate" class="flex-1 flex items-center justify-center p-6 sm:p-12">
+    <div class="bg-white border border-black/[0.08] rounded-2xl max-w-md w-full p-8 sm:p-10 shadow-xl relative">
+      <div class="text-center mb-8">
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-[#103A82]/10 flex items-center justify-center text-[#103A82] mb-4">
+          <i data-lucide="shield-check" class="w-8 h-8"></i>
+        </div>
+        <h2 class="font-display font-bold text-2xl text-zinc-900 mb-1">管理中枢身份认证</h2>
+        <p class="text-xs text-zinc-500 font-telemetry uppercase tracking-wider">COMMAND & TELEMETRY AUTHENTICATION</p>
+        <p class="text-xs text-zinc-600 mt-2 font-light">
+          当前界面仅限车队队长、各专业组主管及指导教师登录以统筹填报数据并维护网页
+        </p>
+      </div>
+
+      <form id="gate-login-form" class="space-y-4">
+        <div>
+          <label for="gate-user" class="block text-xs font-telemetry text-zinc-600 uppercase tracking-wider mb-1.5">管理员账号 (Admin ID) *</label>
+          <div class="relative">
+            <input id="gate-user" name="username" type="text" autocomplete="username" required placeholder="例如：admin" class="w-full pl-10 pr-4 py-2.5 bg-zinc-50 border border-black/[0.08] rounded-lg text-sm text-zinc-900 focus:border-[#103A82] focus:bg-white focus:outline-none transition-colors">
+            <i data-lucide="user" class="w-4 h-4 text-zinc-400 absolute left-3.5 top-3"></i>
+          </div>
+        </div>
+
+        <div>
+          <label for="gate-pass" class="block text-xs font-telemetry text-zinc-600 uppercase tracking-wider mb-1.5">通行密码 (Password) *</label>
+          <div class="relative">
+            <input id="gate-pass" name="password" type="password" autocomplete="current-password" required placeholder="请输入管理通行密码" class="w-full pl-10 pr-10 py-2.5 bg-zinc-50 border border-black/[0.08] rounded-lg text-sm text-zinc-900 focus:border-[#103A82] focus:bg-white focus:outline-none transition-colors">
+            <i data-lucide="lock" class="w-4 h-4 text-zinc-400 absolute left-3.5 top-3"></i>
+            <button type="button" id="gate-pass-toggle" class="absolute right-3 top-2.5 text-zinc-400 hover:text-zinc-700 p-0.5">
+              <i data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="gate-error-box" class="hidden p-3 rounded-lg bg-red-50 border border-red-200 text-xs text-red-600 flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+          <span id="gate-error-msg">账号或密码错误</span>
+        </div>
+
+        <button type="submit" class="w-full py-2.5 px-4 rounded-lg bg-[#103A82] hover:bg-[#0C2B64] text-white font-telemetry text-xs font-semibold tracking-wider flex items-center justify-center gap-2 shadow-sm transition-colors mt-2">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>验证凭据并进入工作台</span>
+        </button>
+      </form>
+
+      <div class="mt-6 pt-5 border-t border-black/[0.06] text-center">
+        <a href="../index.html" class="text-xs font-telemetry text-[#103A82] hover:underline flex items-center justify-center gap-1">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span>返回凌云油车队官方网站次页</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       3. 已认证管理主工作台 (Authenticated Data Hub Dashboard)
+       ========================================================================= -->
+  <main id="dashboard-app" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    
+    <!-- 全站功能模块导航 Tab 栏 -->
+    <div class="bg-white p-2.5 rounded-2xl border border-black/[0.08] shadow-sm">
+      <nav class="flex flex-wrap items-center gap-2" id="main-tabs-nav">
+        <button data-tab="forms" class="main-tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl font-telemetry text-xs font-semibold bg-[#103A82] text-white shadow-sm transition-all">
+          <i data-lucide="inbox" class="w-4 h-4"></i>
+          <span>真实表单统筹</span>
+        </button>
+        <button data-tab="activities" class="main-tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl font-telemetry text-xs font-semibold bg-zinc-50 hover:bg-zinc-100 text-zinc-700 transition-all">
+          <i data-lucide="flag" class="w-4 h-4"></i>
+          <span>赛道纪实管理</span>
+        </button>
+        <button data-tab="routing" class="main-tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl font-telemetry text-xs font-semibold bg-zinc-50 hover:bg-zinc-100 text-zinc-700 transition-all">
+          <i data-lucide="mail-plus" class="w-4 h-4"></i>
+          <span>各组邮箱路由</span>
+        </button>
+        <button data-tab="cms" class="main-tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl font-telemetry text-xs font-semibold bg-zinc-50 hover:bg-zinc-100 text-zinc-700 transition-all">
+          <i data-lucide="layout-template" class="w-4 h-4"></i>
+          <span>网页内容修改</span>
+        </button>
+        <button data-tab="handover" class="main-tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl font-telemetry text-xs font-semibold bg-zinc-50 hover:bg-zinc-100 text-zinc-700 transition-all">
+          <i data-lucide="book-marked" class="w-4 h-4"></i>
+          <span>零代码交接中心</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- =========================================================================
+         TAB 1: 真实表单数据统筹中枢 (Original Submission Hub)
+         ========================================================================= -->
+    <div id="tab-content-forms" class="tab-pane space-y-8">
+      <!-- 欢迎栏与工作台副标题 -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-black/[0.06] pb-6">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <h2 class="font-display font-bold text-2xl sm:text-3xl text-zinc-900 tracking-tight">
+              真实表单数据统筹中枢
+            </h2>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-telemetry bg-emerald-100 text-emerald-800 font-semibold border border-emerald-300">
+              ✓ 真实数据已校验
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-zinc-500 font-light mt-1">
+            数据来源于官网访客真实填报及车队接收邮箱自动归集，杜绝任何虚构演示数据
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5">
+          <!-- 同步真实邮件数据按钮 -->
+          <button id="btn-open-sync-email" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-telemetry font-semibold shadow-sm transition-all" title="粘贴并同步官方邮箱收到的真实表单邮件">
+            <i data-lucide="mail-check" class="w-4 h-4"></i>
+            <span>同步真实邮件数据</span>
+          </button>
+
+          <button id="btn-export-csv" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white border border-black/[0.08] hover:border-[#103A82] hover:bg-zinc-50 text-zinc-800 hover:text-[#103A82] text-xs font-telemetry font-semibold shadow-sm transition-all" title="导出为 Excel/WPS 兼容的 CSV 表格">
+            <i data-lucide="download" class="w-4 h-4 text-[#103A82]"></i>
+            <span>导出 Excel (CSV)</span>
+          </button>
+
+          <button id="btn-open-manual-add" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#103A82] hover:bg-[#0C2B64] text-white text-xs font-telemetry font-semibold shadow-sm transition-all" title="现场纸质报名表或名片登记">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span>线下数据补录</span>
+          </button>
+
+          <div class="relative group">
+            <button id="btn-more-actions" class="p-2 rounded-lg bg-white border border-black/[0.08] text-zinc-600 hover:text-zinc-900 transition-colors">
+              <i data-lucide="more-horizontal" class="w-4 h-4"></i>
+            </button>
+            <div id="more-menu" class="hidden absolute right-0 mt-2 w-48 bg-white border border-black/[0.08] rounded-xl shadow-xl py-2 z-30 text-xs font-telemetry">
+              <button id="btn-export-json" class="w-full text-left px-4 py-2 hover:bg-zinc-50 flex items-center gap-2 text-zinc-700">
+                <i data-lucide="file-code" class="w-3.5 h-3.5"></i>
+                <span>备份数据 (JSON)</span>
+              </button>
+              <button id="btn-purge-fake" class="w-full text-left px-4 py-2 hover:bg-amber-50 text-amber-800 flex items-center gap-2">
+                <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+                <span>清理并校验纯净数据</span>
+              </button>
+              <button id="btn-clear-all" class="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600 flex items-center gap-2 border-t border-black/[0.04]">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                <span>清空所有历史记录</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI 指标看板卡片 -->
+      <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5">
+        <div class="bg-white p-5 rounded-xl border border-black/[0.06] shadow-sm relative overflow-hidden group hover:border-[#103A82]/30 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-telemetry text-zinc-500 uppercase tracking-wider">真实表单记录</span>
+            <div class="w-8 h-8 rounded-lg bg-blue-50 text-[#103A82] flex items-center justify-center">
+              <i data-lucide="inbox" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div id="stat-total" class="font-display font-bold text-2xl sm:text-3xl text-zinc-900">0</div>
+          <div class="text-[11px] text-zinc-400 font-telemetry mt-1">VERIFIED SUBMISSIONS</div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-black/[0.06] shadow-sm relative overflow-hidden group hover:border-[#D9232D]/30 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-telemetry text-zinc-500 uppercase tracking-wider">队员招新申请</span>
+            <div class="w-8 h-8 rounded-lg bg-red-50 text-[#D9232D] flex items-center justify-center">
+              <i data-lucide="users" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div id="stat-recruit" class="font-display font-bold text-2xl sm:text-3xl text-zinc-900">0</div>
+          <div id="stat-recruit-detail" class="text-[11px] text-zinc-400 font-telemetry mt-1">机 / 电 / 商 分布</div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-black/[0.06] shadow-sm relative overflow-hidden group hover:border-emerald-500/30 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-telemetry text-zinc-500 uppercase tracking-wider">商务赞助洽谈</span>
+            <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <i data-lucide="briefcase" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div id="stat-sponsor" class="font-display font-bold text-2xl sm:text-3xl text-zinc-900">0</div>
+          <div id="stat-sponsor-detail" class="text-[11px] text-zinc-400 font-telemetry mt-1">战略 / 冠名 / 物料</div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-black/[0.06] shadow-sm relative overflow-hidden group hover:border-purple-500/30 transition-all">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-telemetry text-zinc-500 uppercase tracking-wider">基地留言与探访</span>
+            <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+              <i data-lucide="message-square" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div id="stat-contact" class="font-display font-bold text-2xl sm:text-3xl text-zinc-900">0</div>
+          <div class="text-[11px] text-zinc-400 font-telemetry mt-1">PADDOCK MESSAGES</div>
+        </div>
+
+        <div class="col-span-2 lg:col-span-1 bg-amber-50/50 p-5 rounded-xl border border-amber-200/80 shadow-sm relative overflow-hidden group">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-telemetry text-amber-800 uppercase tracking-wider font-semibold">待审核/跟进</span>
+            <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center">
+              <i data-lucide="clock" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div id="stat-pending" class="font-display font-bold text-2xl sm:text-3xl text-amber-900">0</div>
+          <div class="text-[11px] text-amber-700 font-telemetry mt-1">PENDING ACTIONS</div>
+        </div>
+      </div>
+
+      <!-- 筛选过滤与搜索栏 -->
+      <div class="bg-white p-4 sm:p-5 rounded-xl border border-black/[0.06] shadow-sm space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="flex flex-wrap items-center gap-1.5 p-1 bg-zinc-100 rounded-lg text-xs font-telemetry">
+            <button data-cat="all" class="filter-cat-btn px-3 py-1.5 rounded-md font-semibold transition-all bg-white text-zinc-900 shadow-xs">
+              全部真实数据 (<span id="tab-count-all">0</span>)
+            </button>
+            <button data-cat="recruit" class="filter-cat-btn px-3 py-1.5 rounded-md font-medium text-zinc-600 hover:text-zinc-900 transition-all">
+              🏎️ 招新申请 (<span id="tab-count-recruit">0</span>)
+            </button>
+            <button data-cat="sponsor" class="filter-cat-btn px-3 py-1.5 rounded-md font-medium text-zinc-600 hover:text-zinc-900 transition-all">
+              🤝 商务赞助 (<span id="tab-count-sponsor">0</span>)
+            </button>
+            <button data-cat="contact" class="filter-cat-btn px-3 py-1.5 rounded-md font-medium text-zinc-600 hover:text-zinc-900 transition-all">
+              📬 基地留言 (<span id="tab-count-contact">0</span>)
+            </button>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-telemetry text-zinc-500 shrink-0">状态：</span>
+              <select id="filter-status-select" class="px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-800 focus:border-[#103A82] focus:outline-none">
+                <option value="all">全部跟进状态</option>
+                <option value="待审核">待审核 (未处理)</option>
+                <option value="已联络">已联络 (沟通中)</option>
+                <option value="面试中">面试考核/实训</option>
+                <option value="合作推进">合作推进中</option>
+                <option value="已录取">已考核通过/签约</option>
+                <option value="已归档">已归档 (完成)</option>
+              </select>
+            </div>
+
+            <div class="relative min-w-[240px]">
+              <input id="search-input" type="text" placeholder="搜索姓名/机构/专业/邮箱..." class="w-full pl-9 pr-4 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-800 placeholder-zinc-400 focus:border-[#103A82] focus:bg-white focus:outline-none transition-colors">
+              <i data-lucide="search" class="w-4 h-4 text-zinc-400 absolute left-3 top-2.5"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 数据明细表格 (Data Table) -->
+      <div class="bg-white rounded-xl border border-black/[0.06] shadow-sm overflow-hidden">
+        <div class="overflow-x-auto custom-scrollbar">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-black/[0.06] bg-zinc-50 text-[11px] font-telemetry uppercase tracking-wider text-zinc-500">
+                <th class="py-3.5 px-4 font-semibold">编号</th>
+                <th class="py-3.5 px-4 font-semibold">提交时间</th>
+                <th class="py-3.5 px-4 font-semibold">填报类别</th>
+                <th class="py-3.5 px-4 font-semibold">申请人 / 企业机构</th>
+                <th class="py-3.5 px-4 font-semibold">意向组别 / 合作级别</th>
+                <th class="py-3.5 px-4 font-semibold">联络通讯</th>
+                <th class="py-3.5 px-4 font-semibold">跟进状态</th>
+                <th class="py-3.5 px-4 font-semibold text-right">操作</th>
+              </tr>
+            </thead>
+            <tbody id="data-table-body" class="divide-y divide-black/[0.04] text-xs">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 空状态提示 -->
+        <div id="table-empty-state" class="hidden py-16 px-6 text-center">
+          <div class="w-14 h-14 mx-auto rounded-full bg-blue-50 flex items-center justify-center text-[#103A82] mb-4">
+            <i data-lucide="inbox" class="w-7 h-7"></i>
+          </div>
+          <p class="text-base font-display font-semibold text-zinc-800">当前暂无真实表单提交记录</p>
+          <p class="text-xs text-zinc-500 max-w-md mx-auto mt-2 leading-relaxed font-light">
+            当访客在官网提交招贤纳新、商务赞助或基地留言时，真实数据将在此处实时同步。
+          </p>
+        </div>
+
+        <!-- 分页与统计底栏 -->
+        <div class="py-3.5 px-4 bg-zinc-50/50 border-t border-black/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-telemetry text-zinc-500">
+          <div>
+            共显示 <span id="page-item-count" class="font-semibold text-zinc-800">0</span> 条真实记录
+          </div>
+          <div class="flex items-center gap-1">
+            <button id="btn-prev-page" class="px-2.5 py-1 rounded border border-black/[0.08] bg-white text-zinc-600 hover:bg-zinc-100 disabled:opacity-40 disabled:cursor-not-allowed">上一页</button>
+            <span id="page-indicator" class="px-2 font-semibold text-zinc-800">1 / 1</span>
+            <button id="btn-next-page" class="px-2.5 py-1 rounded border border-black/[0.08] bg-white text-zinc-600 hover:bg-zinc-100 disabled:opacity-40 disabled:cursor-not-allowed">下一页</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 2: 赛道纪实与战报发布管理 (Activities Publisher)
+         ========================================================================= -->
+    <div id="tab-content-activities" class="tab-pane hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-black/[0.06] pb-6">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <h2 class="font-display font-bold text-2xl sm:text-3xl text-zinc-900 tracking-tight">
+              “赛道纪实 · 实践科普” 发布中枢
+            </h2>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-telemetry bg-red-100 text-[#D9232D] font-semibold border border-red-200">
+              官网实时动态渲染
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-zinc-500 font-light mt-1">
+            发布新的全国大赛战报、车间研发实录或中学生科普交流，卡片与赛报复盘全文将即时呈现在官网次页
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button id="btn-create-activity" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#D9232D] hover:bg-[#B81D25] text-white text-xs font-telemetry font-semibold shadow-sm transition-all">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span>发布新纪实战报</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 类别筛选标签 -->
+      <div class="flex flex-wrap items-center gap-2">
+        <button class="act-admin-filter px-3.5 py-1.5 rounded-lg bg-[#D9232D] text-white font-telemetry text-xs font-semibold" data-cat="all">全部 (<span id="act-count-all">0</span>)</button>
+        <button class="act-admin-filter px-3.5 py-1.5 rounded-lg bg-white border border-zinc-200 text-zinc-600 hover:text-zinc-900 font-telemetry text-xs font-semibold" data-cat="race">🏆 大赛战报 (<span id="act-count-race">0</span>)</button>
+        <button class="act-admin-filter px-3.5 py-1.5 rounded-lg bg-white border border-zinc-200 text-zinc-600 hover:text-zinc-900 font-telemetry text-xs font-semibold" data-cat="tech">🔧 研发制造 (<span id="act-count-tech">0</span>)</button>
+        <button class="act-admin-filter px-3.5 py-1.5 rounded-lg bg-white border border-zinc-200 text-zinc-600 hover:text-zinc-900 font-telemetry text-xs font-semibold" data-cat="science">📖 科普交流 (<span id="act-count-science">0</span>)</button>
+      </div>
+
+      <!-- 动态卡片列表网格 -->
+      <div id="admin-activity-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Dynamic activity cards -->
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 3: 各专业组邮箱与负责人路由 (Department Routing)
+         ========================================================================= -->
+    <div id="tab-content-routing" class="tab-pane hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-black/[0.06] pb-6">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <h2 class="font-display font-bold text-2xl sm:text-3xl text-zinc-900 tracking-tight">
+              各专业组联络邮箱与负责人配置
+            </h2>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-telemetry bg-blue-100 text-[#103A82] font-semibold border border-blue-200">
+              动态智能分流中枢
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-zinc-500 font-light mt-1">
+            每年换届或调整负责人时，在此更新各组负责人邮箱即可，申报邮件将直投当前负责人的工作邮箱
+          </p>
+        </div>
+
+        <div>
+          <button id="btn-save-routing" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#103A82] hover:bg-[#0C2B64] text-white text-xs font-telemetry font-semibold shadow-sm transition-all">
+            <i data-lucide="save" class="w-4 h-4"></i>
+            <span>保存负责人与邮箱配置</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 提示说明卡片 -->
+      <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-xs text-blue-900 flex items-start gap-3">
+        <i data-lucide="info" class="w-5 h-5 text-[#103A82] shrink-0 mt-0.5"></i>
+        <div class="space-y-1">
+          <p class="font-semibold">工作原理说明：</p>
+          <p class="text-blue-800 leading-relaxed">
+            当申请人选择【电气组】招募时，邮件直发电气组负责人邮箱；选择【机械组】直发机械组；选择【商业组】直发商业组；提交赞助时直发赞助负责人；队长邮箱默认全局抄送备份。且申请人收到的回执中将同步展示对应组别的官方对接邮箱。
+          </p>
+        </div>
+      </div>
+
+      <!-- 5 组独立卡片网格 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- 卡片 1: 电气组 -->
+        <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between border-b border-black/[0.06] pb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                <h3 class="font-display font-bold text-base text-zinc-900">⚡ 电气系统组 (Electrical)</h3>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-telemetry bg-amber-50 text-amber-800 font-semibold border border-amber-200"> 电装</span>
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">组别名称</label>
+              <input id="dept-electrical-name" type="text" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-semibold text-zinc-900" value="电气组">
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">当前负责人姓名 / 职务</label>
+              <input id="dept-electrical-head" type="text" placeholder="例如：王同学 (电控技术主管)" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="电控负责人">
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">招新接收邮箱 * (Direct Email)</label>
+              <input id="dept-electrical-email" type="email" required placeholder="如：electrical@racing.com" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-900 focus:border-[#103A82] focus:outline-none" value="diskomiakhan@gmail.com">
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">回执信中【建议准备】指引文案</label>
+              <textarea id="dept-electrical-guide" rows="2" class="w-full p-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-800">建议学习相关知识或准备过往作品。</textarea>
+            </div>
+          </div>
+
+          <div class="pt-4 mt-4 border-t border-black/[0.06] flex items-center justify-between">
+            <span class="text-[11px] text-zinc-400 font-telemetry">接收【电气组】招新申请</span>
+            <button class="btn-test-dept-email px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-[11px] font-telemetry font-semibold transition-colors" data-dept="electrical">发送测试</button>
+          </div>
+        </div>
+
+        <!-- 卡片 2: 机械组 -->
+        <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between border-b border-black/[0.06] pb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-[#103A82]"></span>
+                <h3 class="font-display font-bold text-base text-zinc-900">🏎️ 机械与车辆组 (Mechanical)</h3>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-telemetry bg-blue-50 text-[#103A82] font-semibold border border-blue-200">底盘/车架/空气动力学</span>
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">组别名称</label>
+              <input id="dept-mechanical-name" type="text" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-semibold text-zinc-900" value="机械组">
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">当前负责人姓名 / 职务</label>
+              <input id="dept-mechanical-head" type="text" placeholder="例如：李同学 (机械总监)" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="机械负责人">
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">招新接收邮箱 * (Direct Email)</label>
+              <input id="dept-mechanical-email" type="email" required placeholder="如：mechanical@racing.com" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-900 focus:border-[#103A82] focus:outline-none" value="diskomiakhan@gmail.com">
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">回执信中【建议准备】指引文案</label>
+              <textarea id="dept-mechanical-guide" rows="2" class="w-full p-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-800">建议学习相关知识或准备过往作品。</textarea>
+            </div>
+          </div>
+
+          <div class="pt-4 mt-4 border-t border-black/[0.06] flex items-center justify-between">
+            <span class="text-[11px] text-zinc-400 font-telemetry">接收【机械组】招新申请</span>
+            <button class="btn-test-dept-email px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-[11px] font-telemetry font-semibold transition-colors" data-dept="mechanical">发送测试</button>
+          </div>
+        </div>
+
+        <!-- 卡片 3: 商业组 -->
+        <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between border-b border-black/[0.06] pb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-[#D9232D]"></span>
+                <h3 class="font-display font-bold text-base text-zinc-900">💼 商业与宣传部 (Business)</h3>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-telemetry bg-red-50 text-[#D9232D] font-semibold border border-red-200">商业逻辑/BOM/宣传</span>
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">组别名称</label>
+              <input id="dept-business-name" type="text" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-semibold text-zinc-900" value="商业组">
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">当前负责人姓名 / 职务</label>
+              <input id="dept-business-head" type="text" placeholder="例如：陈同学 (商业部长)" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="商业负责人">
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">招新接收邮箱 * (Direct Email)</label>
+              <input id="dept-business-email" type="email" required placeholder="如：business@racing.com" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-900 focus:border-[#103A82] focus:outline-none" value="diskomiakhan@gmail.com">
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">回执信中【建议准备】指引文案</label>
+              <textarea id="dept-business-guide" rows="2" class="w-full p-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-800">建议学习相关知识或准备过往作品。</textarea>
+            </div>
+          </div>
+
+          <div class="pt-4 mt-4 border-t border-black/[0.06] flex items-center justify-between">
+            <span class="text-[11px] text-zinc-400 font-telemetry">接收【商业组】招新申请</span>
+            <button class="btn-test-dept-email px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-[11px] font-telemetry font-semibold transition-colors" data-dept="business">发送测试</button>
+          </div>
+        </div>
+
+        <!-- 卡片 4: 商务赞助部 -->
+        <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between border-b border-black/[0.06] pb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                <h3 class="font-display font-bold text-base text-zinc-900">🤝 商务赞助委员会 (Sponsorship)</h3>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-telemetry bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200">校企合作/冠名/物料</span>
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">部门对接职能</label>
+              <input id="dept-sponsor-name" type="text" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-semibold text-zinc-900" value="商务合作委员会">
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">对接主管姓名 / 职务</label>
+              <input id="dept-sponsor-head" type="text" placeholder="例如：商业总监 / 外联主管" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="商业总监 / 外联主管">
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">赞助接收邮箱 * (Sponsor Email)</label>
+              <input id="dept-sponsor-email" type="email" required placeholder="如：sponsor@racing.com" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-900 focus:border-[#103A82] focus:outline-none" value="diskomiakhan@gmail.com">
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">商务联络专线 (电话/微信)</label>
+              <input id="dept-sponsor-phone" type="text" placeholder="商务对接电话" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="138-3100-2026">
+            </div>
+          </div>
+
+          <div class="pt-4 mt-4 border-t border-black/[0.06] flex items-center justify-between">
+            <span class="text-[11px] text-zinc-400 font-telemetry">接收【企业赞助意向】</span>
+            <button class="btn-test-dept-email px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-[11px] font-telemetry font-semibold transition-colors" data-dept="sponsor">发送测试</button>
+          </div>
+        </div>
+
+        <!-- 卡片 5: 车队统筹与队长 -->
+        <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between border-b border-black/[0.06] pb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-purple-600"></span>
+                <h3 class="font-display font-bold text-base text-zinc-900">🏆 车队队长 / 官方统筹 (Captain)</h3>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-telemetry bg-purple-50 text-purple-700 font-semibold border border-purple-200">最高统筹中枢</span>
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">职能身份</label>
+              <input id="dept-general-name" type="text" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-semibold text-zinc-900" value="车队队长 / 官方统筹">
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">队长姓名 / 称谓</label>
+              <input id="dept-general-head" type="text" placeholder="例如：车队队长" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="车队队长">
+            </div>
+
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">车队主邮箱 * (Captain/Admin Email)</label>
+              <input id="dept-general-email" type="email" required placeholder="官方主邮箱" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-900 focus:border-[#103A82] focus:outline-none" value="diskomiakhan@gmail.com">
+            </div>
+
+            <div class="pt-2">
+              <label class="flex items-center gap-2 text-xs text-zinc-700 cursor-pointer">
+                <input id="dept-general-cc" type="checkbox" checked class="w-4 h-4 rounded text-[#103A82] border-zinc-300">
+                <span class="font-medium">自动抄送所有组别的填报邮件 (CC All)</span>
+              </label>
+              <p class="text-[11px] text-zinc-400 mt-1">开启后，队长将实时掌握招募与赞助动向</p>
+            </div>
+          </div>
+
+          <div class="pt-4 mt-4 border-t border-black/[0.06] flex items-center justify-between">
+            <span class="text-[11px] text-zinc-400 font-telemetry">接收【基地留言】与全量抄送</span>
+            <button class="btn-test-dept-email px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-[11px] font-telemetry font-semibold transition-colors" data-dept="general">发送测试</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 4: 网页内容可视化修改 (Site Content CMS)
+         ========================================================================= -->
+    <div id="tab-content-cms" class="tab-pane hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-black/[0.06] pb-6">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <h2 class="font-display font-bold text-2xl sm:text-3xl text-zinc-900 tracking-tight">
+              官网核心内容可视化修改 (CMS)
+            </h2>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-telemetry bg-purple-100 text-purple-800 font-semibold border border-purple-200">
+              免代码可视化编辑
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-zinc-500 font-light mt-1">
+            直观修改官网次页的跑马灯通告、次屏标语、招募状态与车间基地信息，无需触碰任何 HTML 或 CSS 代码
+          </p>
+        </div>
+
+        <div>
+          <button id="btn-save-cms" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#103A82] hover:bg-[#0C2B64] text-white text-xs font-telemetry font-semibold shadow-sm transition-all">
+            <i data-lucide="save" class="w-4 h-4"></i>
+            <span>保存网页内容修改</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- 模块 1: 顶部跑马灯通告与遥测流 (Full Width) -->
+        <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm space-y-5 lg:col-span-2">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-black/[0.06] pb-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="volume-2" class="w-5 h-5 text-[#103A82]"></i>
+              <h3 class="font-display font-bold text-base text-zinc-900">📢 官网顶部滚动栏通告与遥测流 (Top Ticker Stream)</h3>
+            </div>
+            <span class="text-[11px] font-telemetry text-zinc-400">实时联动全站顶部无缝滚动条，支持修改置顶广播与各条目参数</span>
+          </div>
+
+          <!-- 实时跑马灯预览卡片 (Dark Terminal Style) -->
+          <div class="p-4 rounded-xl border border-black/[0.08] bg-zinc-950 text-white shadow-inner space-y-2">
+            <div class="flex items-center justify-between text-[10px] font-telemetry text-zinc-400">
+              <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> 顶部滚动栏实时视觉效果预览</span>
+              <span id="preview-ticker-speed-text" class="text-zinc-400">速度: 50s / 周期</span>
+            </div>
+            <div class="overflow-x-auto custom-scrollbar py-2 px-3 rounded-lg bg-zinc-900/90 border border-white/10">
+              <div id="admin-ticker-preview-track" class="inline-flex items-center gap-3 whitespace-nowrap font-telemetry text-xs">
+                <!-- 由 JS 动态填充 -->
+              </div>
+            </div>
+          </div>
+
+          <!-- 编辑表单控制网格 (双列拆分) -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-1">
+            
+            <!-- 左列：置顶通告与播放控制 -->
+            <div class="space-y-3.5 p-4 rounded-xl bg-zinc-50/70 border border-black/[0.05]">
+              <div class="flex items-center gap-1.5 text-xs font-telemetry font-bold text-zinc-800">
+                <i data-lucide="megaphone" class="w-4 h-4 text-[#D9232D]"></i>
+                <span>置顶广播与播放参数</span>
+              </div>
+
+              <div>
+                <label class="block text-xs font-telemetry text-zinc-600 mb-1">置顶广播通告文案 (Top Announcement, 闪烁高亮展示)</label>
+                <textarea id="cms-ticker-text" rows="3" placeholder="例如：⚡ 凌云油车队 2026 赛季全新燃油方程式赛车研发进行中 · 招贤纳新通道持续开放" class="w-full p-3 bg-white border border-black/[0.08] rounded-xl text-xs text-zinc-800 focus:border-[#103A82] focus:outline-none"></textarea>
+                <p class="text-[11px] text-zinc-400 mt-1">留空则不显示置顶通告徽章，仅轮播右侧数据条目。</p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-telemetry text-zinc-600 mb-1">滚动速度 (秒/完整周期)</label>
+                  <input id="cms-ticker-speed" type="number" min="15" max="120" class="w-full px-3 py-2 bg-white border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-900 focus:border-[#103A82] focus:outline-none" value="50">
+                  <p class="text-[10px] text-zinc-400 mt-0.5">推荐 35~60 秒，数值越大滚动越从容平稳</p>
+                </div>
+                <div>
+                  <label class="block text-xs font-telemetry text-zinc-600 mb-1">滚动栏显示状态</label>
+                  <select id="cms-ticker-enabled" class="w-full px-3 py-2 bg-white border border-black/[0.08] rounded-lg text-xs text-zinc-900 focus:border-[#103A82] focus:outline-none">
+                    <option value="true">🟢 持续无缝滚动展示</option>
+                    <option value="false">🟡 暂时关闭隐藏顶部栏</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- 右列：遥测数据流条目列表 -->
+            <div class="space-y-3.5 p-4 rounded-xl bg-zinc-50/70 border border-black/[0.05]">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-1.5 text-xs font-telemetry font-bold text-zinc-800">
+                  <i data-lucide="list-filter" class="w-4 h-4 text-[#103A82]"></i>
+                  <span>滚动数据条目列表 (一行一条，格式: 标签: 内容)</span>
+                </div>
+                <button type="button" id="btn-reset-ticker-items" class="text-[11px] font-telemetry text-[#103A82] hover:underline flex items-center gap-1">
+                  <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
+                  <span>恢复预设条目</span>
+                </button>
+              </div>
+
+              <div>
+                <textarea id="cms-ticker-items-raw" rows="6" placeholder="UNIVERSITY: 河北工程大学 (HEBEI UNIVERSITY OF ENGINEERING)&#10;TEAM: 凌云油车队 (LINGYUN OIL RACING)&#10;SEASON: 2026 49号 燃油驱动方程式&#10;POWERTRAIN: 燃油内燃机 · 链传动后驱&#10;STATUS: ● 备战成都耐久赛" class="w-full p-3 bg-white border border-black/[0.08] rounded-xl font-mono text-xs text-zinc-800 focus:border-[#103A82] focus:outline-none leading-relaxed"></textarea>
+                <div class="flex items-center justify-between text-[11px] text-zinc-400 mt-1">
+                  <span>支持自由添加自定义标签（如 SPONSOR: 某某赞助商）</span>
+                  <span class="font-telemetry">按回车换行添加多条</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 模块 2: 次页次屏与赛季标语 -->
+        <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm space-y-4">
+          <div class="flex items-center gap-2 border-b border-black/[0.06] pb-3">
+            <i data-lucide="sparkles" class="w-5 h-5 text-[#D9232D]"></i>
+            <h3 class="font-display font-bold text-base text-zinc-900">🎯 次页 Hero 次屏区域与赛季标语</h3>
+          </div>
+          <div>
+            <label class="block text-xs font-telemetry text-zinc-600 mb-1">赛季状态微徽章 (Hero Tag)</label>
+            <input id="cms-hero-tag" type="text" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="2026 赛季研发攻坚阶段">
+          </div>
+          <div>
+            <label class="block text-xs font-telemetry text-zinc-600 mb-1">次屏副标语 (Hero Subtitle)</label>
+            <textarea id="cms-hero-subtitle" rows="3" class="w-full p-3 bg-zinc-50 border border-black/[0.08] rounded-xl text-xs text-zinc-800 focus:border-[#103A82] focus:bg-white focus:outline-none">矢志不渝，以燃油之驱突破赛道物理极限</textarea>
+          </div>
+        </div>
+
+        <!-- 模块 3: 赛季倒计时时间日期与当前研发状态看板 (Full Width) -->
+        <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm space-y-5 lg:col-span-2">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-black/[0.06] pb-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="timer" class="w-5 h-5 text-[#D9232D]"></i>
+              <h3 class="font-display font-bold text-base text-zinc-900">🏁 赛季倒计时时间日期与当前状态看板 (Countdown & Status Hub)</h3>
+            </div>
+            <span class="text-[11px] font-telemetry text-zinc-400">实时联动次页 Pit-Board 倒计时看板与状态徽章</span>
+          </div>
+
+          <!-- 拟真实时效果预览条 (Live Strip Preview - 1:1 还原主页视觉) -->
+          <div class="p-4 sm:p-5 rounded-xl border border-black/[0.08] bg-gradient-to-r from-zinc-50 via-white to-zinc-50/50 shadow-inner">
+            <div class="text-[10px] font-telemetry uppercase tracking-wider text-zinc-400 mb-2.5 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#103A82]"></span>
+              <span>主页实际视觉效果实时预览 (LIVE PIT-BOARD STRIP)</span>
+            </div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-3 sm:p-4 rounded-xl bg-white border border-black/[0.06] shadow-xs">
+              <!-- 左侧倒计时预览 -->
+              <div class="flex items-center gap-3 sm:gap-4 flex-wrap">
+                <div class="flex items-center gap-1.5 font-telemetry">
+                  <div class="flex flex-col items-center">
+                    <span class="text-[9px] text-zinc-400 font-semibold">DAYS</span>
+                    <span id="preview-count-days" class="w-10 h-9 sm:w-11 sm:h-10 rounded-lg border border-black/[0.08] bg-zinc-50 flex items-center justify-center text-lg sm:text-xl font-bold text-zinc-800">28</span>
+                  </div>
+                  <span class="text-zinc-300 font-light mt-3">:</span>
+                  <div class="flex flex-col items-center">
+                    <span class="text-[9px] text-zinc-400 font-semibold">HOURS</span>
+                    <span class="w-10 h-9 sm:w-11 sm:h-10 rounded-lg border border-black/[0.08] bg-zinc-50 flex items-center justify-center text-lg sm:text-xl font-bold text-zinc-800">16</span>
+                  </div>
+                  <span class="text-zinc-300 font-light mt-3">:</span>
+                  <div class="flex flex-col items-center">
+                    <span class="text-[9px] text-zinc-400 font-semibold">MINS</span>
+                    <span class="w-10 h-9 sm:w-11 sm:h-10 rounded-lg border border-black/[0.08] bg-zinc-50 flex items-center justify-center text-lg sm:text-xl font-bold text-zinc-800">55</span>
+                  </div>
+                  <span class="text-zinc-300 font-light mt-3">:</span>
+                  <div class="flex flex-col items-center">
+                    <span class="text-[9px] text-zinc-400 font-semibold">SECS</span>
+                    <span class="w-10 h-9 sm:w-11 sm:h-10 rounded-lg border border-[#D9232D]/30 bg-red-50/50 flex items-center justify-center text-lg sm:text-xl font-bold text-[#D9232D]">41</span>
+                  </div>
+                </div>
+
+                <div class="border-l border-black/[0.08] pl-4 text-xs text-zinc-600 font-light leading-relaxed">
+                  <div id="preview-count-title" class="font-medium text-zinc-800">距 2026FSC 全国总决赛开幕倒计时</div>
+                  <div id="preview-count-period" class="text-[10px] font-telemetry text-zinc-400">拟定赛期：2026.11.03 - 11.08</div>
+                </div>
+              </div>
+
+              <!-- 右侧状态徽章预览 -->
+              <div class="flex items-center gap-2.5 font-telemetry text-xs text-zinc-600">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-black/[0.06] bg-zinc-50 shadow-xs">
+                  <span id="preview-status-dot" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span id="preview-status-text" class="font-medium text-zinc-800">整车装配中</span>
+                </span>
+                <span class="text-zinc-300">|</span>
+                <span id="preview-status-location" class="text-zinc-500">科信学院成学楼东侧机械装备与制造学院</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 编辑表单控制网格 (双列拆分) -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
+            
+            <!-- 左列：倒计时时间日期与文案设置 -->
+            <div class="space-y-3.5 p-4 rounded-xl bg-zinc-50/70 border border-black/[0.05]">
+              <div class="flex items-center gap-1.5 text-xs font-telemetry font-bold text-zinc-800">
+                <i data-lucide="calendar-clock" class="w-4 h-4 text-[#103A82]"></i>
+                <span>左侧：倒计时时间日期与标题文案</span>
+              </div>
+
+              <div>
+                <label class="block text-xs font-telemetry text-zinc-600 mb-1">大赛官方全称 (Event Full Title)</label>
+                <input id="cms-countdown-title" type="text" class="w-full px-3 py-2 bg-white border border-black/[0.08] rounded-lg text-xs text-zinc-900 focus:border-[#103A82] focus:outline-none" value="2026 中国大学生方程式汽车大赛 (FSC)">
+              </div>
+
+              <div>
+                <label class="block text-xs font-telemetry text-zinc-600 mb-1">倒计时主标题文案 (Label)</label>
+                <input id="cms-countdown-label" type="text" class="w-full px-3 py-2 bg-white border border-black/[0.08] rounded-lg text-xs text-zinc-900 focus:border-[#103A82] focus:outline-none" value="距 2026FSC 全国总决赛开幕倒计时">
+              </div>
+
+              <div>
+                <label class="block text-xs font-telemetry text-zinc-600 mb-1">拟定赛期区间说明文案 (Period Note)</label>
+                <input id="cms-countdown-period" type="text" class="w-full px-3 py-2 bg-white border border-black/[0.08] rounded-lg text-xs text-zinc-900 focus:border-[#103A82] focus:outline-none" value="拟定赛期：2026.11.03 - 11.08">
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div>
+                  <label class="block text-xs font-telemetry text-zinc-600 mb-1">📅 点击选择开幕日期与时间</label>
+                  <input id="cms-countdown-picker" type="datetime-local" class="w-full px-3 py-2 bg-white border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-900 focus:border-[#103A82] focus:outline-none">
+                </div>
+                <div>
+                  <label class="block text-xs font-telemetry text-zinc-600 mb-1">ISO 8601 标准格式 (带时区)</label>
+                  <input id="cms-countdown-date" type="text" class="w-full px-3 py-2 bg-white border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-900 focus:border-[#103A82] focus:outline-none" value="2026-11-03T09:00:00+08:00">
+                </div>
+              </div>
+              <p class="text-[11px] text-zinc-400">选择日期时间后，主页将自动毫秒级计算剩余天数、小时、分钟和秒数。</p>
+            </div>
+
+            <!-- 右列：当前研发/备赛状态看板设置 -->
+            <div class="space-y-3.5 p-4 rounded-xl bg-zinc-50/70 border border-black/[0.05]">
+              <div class="flex items-center gap-1.5 text-xs font-telemetry font-bold text-zinc-800">
+                <i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i>
+                <span>右侧：当前研发/备赛状态看板</span>
+              </div>
+
+              <div>
+                <label class="block text-xs font-telemetry text-zinc-600 mb-1">当前状态名称 (Current Season Status) *</label>
+                <input id="cms-current-status" type="text" class="w-full px-3 py-2 bg-white border border-black/[0.08] rounded-lg text-xs text-zinc-900 font-medium focus:border-emerald-600 focus:outline-none" value="整车装配中">
+                <!-- 快捷标签一键填入 -->
+                <div class="flex items-center gap-1.5 flex-wrap mt-2">
+                  <span class="text-[10px] text-zinc-400 font-telemetry">快捷预设：</span>
+                  <button type="button" class="btn-preset-status text-[10px] font-telemetry px-2 py-0.5 rounded bg-white border border-black/[0.08] hover:border-emerald-600 text-zinc-700 transition-colors" data-status="整车装配中" data-color="emerald">整车装配中</button>
+                  <button type="button" class="btn-preset-status text-[10px] font-telemetry px-2 py-0.5 rounded bg-white border border-black/[0.08] hover:border-blue-600 text-zinc-700 transition-colors" data-status="赛道测试中" data-color="blue">赛道测试中</button>
+                  <button type="button" class="btn-preset-status text-[10px] font-telemetry px-2 py-0.5 rounded bg-white border border-black/[0.08] hover:border-blue-600 text-zinc-700 transition-colors" data-status="底盘装调中" data-color="blue">底盘装调中</button>
+                  <button type="button" class="btn-preset-status text-[10px] font-telemetry px-2 py-0.5 rounded bg-white border border-black/[0.08] hover:border-amber-600 text-zinc-700 transition-colors" data-status="高压车检中" data-color="amber">高压车检中</button>
+                  <button type="button" class="btn-preset-status text-[10px] font-telemetry px-2 py-0.5 rounded bg-white border border-black/[0.08] hover:border-red-600 text-zinc-700 transition-colors" data-status="备战总决赛" data-color="red">备战总决赛</button>
+                  <button type="button" class="btn-preset-status text-[10px] font-telemetry px-2 py-0.5 rounded bg-white border border-black/[0.08] hover:border-emerald-600 text-zinc-700 transition-colors" data-status="赛季圆满收官" data-color="emerald">赛季圆满收官</button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-telemetry text-zinc-600 mb-1">状态呼吸指示灯颜色 (Indicator Light Color)</label>
+                <select id="cms-status-color" class="w-full px-3 py-2 bg-white border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-900 focus:border-[#103A82] focus:outline-none">
+                  <option value="emerald">🟢 实践推进 / 正常 (emerald - 绿色呼吸灯)</option>
+                  <option value="amber">🟡 攻坚冲刺 / 阶段重点 (amber - 琥珀黄呼吸灯)</option>
+                  <option value="blue">🔵 研发装调 / 车队深蓝 (blue - 深蓝呼吸灯)</option>
+                  <option value="red">🔴 决战正赛 / 赛道极速 (red - 竞技红呼吸灯)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-telemetry text-zinc-600 mb-1">研发基地 / 车间地点附注 (Workshop / Location)</label>
+                <input id="cms-status-location" type="text" class="w-full px-3 py-2 bg-white border border-black/[0.08] rounded-lg text-xs text-zinc-900 focus:border-[#103A82] focus:outline-none" value="科信学院成学楼东侧机械装备与制造学院">
+              </div>
+
+              <p class="text-[11px] text-zinc-400">修改后将同步更新次页倒计时条右侧状态，以及“历程”板块的当前赛季状态徽章。</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 模块 4: 队员招募通道与状态 -->
+        <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm space-y-4">
+          <div class="flex items-center gap-2 border-b border-black/[0.06] pb-3">
+            <i data-lucide="users" class="w-5 h-5 text-emerald-600"></i>
+            <h3 class="font-display font-bold text-base text-zinc-900">👥 队员招募通道状态 (Recruitment Control)</h3>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-telemetry text-zinc-600 mb-1">招募通道开关</label>
+              <select id="cms-recruit-is-open" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900">
+                <option value="true">🟢 招贤纳新通道开放中</option>
+                <option value="false">🟡 招新暂时关闭</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-telemetry text-zinc-600 mb-1">当前招募赛季年份</label>
+              <input id="cms-recruit-season" type="text" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-900" value="2026">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-telemetry text-zinc-600 mb-1">招募状态通告文案</label>
+            <textarea id="cms-recruit-notice" rows="2" class="w-full p-3 bg-zinc-50 border border-black/[0.08] rounded-xl text-xs text-zinc-800">凌云油车队 2026 赛季全系招新正式开启，欢迎怀揣赛车梦想的同学加入！</textarea>
+          </div>
+        </div>
+
+        <!-- 模块 5: 车间基地与对外联络 -->
+        <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm space-y-4 lg:col-span-2">
+          <div class="flex items-center gap-2 border-b border-black/[0.06] pb-3">
+            <i data-lucide="map-pin" class="w-5 h-5 text-[#103A82]"></i>
+            <h3 class="font-display font-bold text-base text-zinc-900">📍 车间基地地址与对外公开展现</h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="md:col-span-2">
+              <label class="block text-xs font-telemetry text-zinc-600 mb-1">车间工程实训基地详细地址</label>
+              <input id="cms-workshop-address" type="text" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="河北省邯郸市科信学院成学楼东侧机械装备与制造学院">
+            </div>
+            <div>
+              <label class="block text-xs font-telemetry text-zinc-600 mb-1">车队联络电话 / 手机</label>
+              <input id="cms-coordinator-phone" type="text" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="138-3100-2026">
+            </div>
+            <div>
+              <label class="block text-xs font-telemetry text-zinc-600 mb-1">官方微信公众号名称</label>
+              <input id="cms-official-wechat" type="text" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="河北工程大学科信学院凌云油车队">
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-telemetry text-zinc-600 mb-1">网站底栏版权文案 (Copyright)</label>
+              <input id="cms-copyright" type="text" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="© 2026 河北工程大学科信学院凌云油车队 (Lingyun Oil Racing Team). 保留所有权利.">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         TAB 5: 零代码交接中心 (Zero-Code Handover & Cloud Center)
+         ========================================================================= -->
+    <div id="tab-content-handover" class="tab-pane hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-black/[0.06] pb-6">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <h2 class="font-display font-bold text-2xl sm:text-3xl text-zinc-900 tracking-tight">
+              零代码交接与全网发布中枢
+            </h2>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-telemetry bg-emerald-100 text-emerald-800 font-semibold border border-emerald-300">
+              云端一键同步
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-zinc-500 font-light mt-1">
+            致后继车队管理人员：在此一键同步到云端即可让全网生效；即便完全不懂代码也能轻松维护官网
+          </p>
+        </div>
+      </div>
+
+      <!-- 快捷操作栏卡片 -->
+      <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm space-y-4">
+        <h3 class="font-display font-bold text-base text-zinc-900">🚀 云端全网同步与数据迁移工具</h3>
+        <p class="text-xs text-zinc-500 font-light leading-relaxed">
+          您在管理后台修改的“赛道纪实”、“各组邮箱”和“网页内容”目前已保存在本地。点击下方【一键全网保存发布】，系统将自动把最新配置上传至 Google Apps Script 云端中枢，使全网访客在任何手机或电脑上均能即时看到更新！
+        </p>
+
+        <div class="flex flex-wrap items-center gap-3 pt-2">
+          <button id="btn-sync-cloud" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-telemetry font-bold shadow-md transition-all">
+            <i data-lucide="cloud-upload" class="w-4 h-4"></i>
+            <span>☁️ 一键全网保存发布 (Sync to Cloud)</span>
+          </button>
+
+          <button id="btn-export-config" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white border border-black/[0.12] hover:border-[#103A82] text-zinc-800 hover:text-[#103A82] text-xs font-telemetry font-semibold shadow-xs transition-all">
+            <i data-lucide="download" class="w-4 h-4 text-[#103A82]"></i>
+            <span>📥 导出配置文件备份 (site_config.json)</span>
+          </button>
+
+          <label class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white border border-black/[0.12] hover:border-[#103A82] text-zinc-800 hover:text-[#103A82] text-xs font-telemetry font-semibold shadow-xs transition-all cursor-pointer">
+            <i data-lucide="upload" class="w-4 h-4 text-[#103A82]"></i>
+            <span>📤 导入已有配置文件</span>
+            <input id="input-import-config" type="file" accept=".json" class="hidden">
+          </label>
+
+          <button id="btn-reset-factory" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white border border-red-200 text-red-600 hover:bg-red-50 text-xs font-telemetry font-semibold shadow-xs transition-all">
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            <span>🔄 恢复车队出厂初始配置</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 零代码新手维护手册 (Step-by-Step Manual) -->
+      <div class="bg-white rounded-2xl border border-black/[0.08] p-6 sm:p-8 shadow-sm space-y-6">
+        <div class="flex items-center gap-3 border-b border-black/[0.06] pb-4">
+          <div class="w-10 h-10 rounded-xl bg-[#103A82]/10 text-[#103A82] flex items-center justify-center">
+            <i data-lucide="book-open" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-lg text-zinc-900">📖 《凌云油车队官网 · 零代码新手交接与维护指南》</h3>
+            <p class="text-xs text-zinc-500 font-telemetry">ZERO-CODE BEGINNER HANDOVER & MAINTENANCE MANUAL</p>
+          </div>
+        </div>
+
+        <div class="space-y-4 text-xs text-zinc-700 leading-relaxed">
+          
+          <!-- Guide Step 1 -->
+          <div class="p-4 rounded-xl bg-zinc-50 border border-black/[0.04] space-y-2">
+            <div class="flex items-center gap-2 font-semibold text-zinc-900 text-sm">
+              <span class="w-6 h-6 rounded-full bg-[#103A82] text-white flex items-center justify-center text-xs font-telemetry">1</span>
+              <span>管理员账号与登录方式</span>
+            </div>
+            <p class="pl-8 text-zinc-600">
+              在官网任意页面点击底栏【管理登录】或直接访问网址 <code>/admin/</code>，输入管理员账号（如 <code>admin</code>）与管理密码（默认：<code>lingyun2026</code>）即可进入本控制台。
+            </p>
+          </div>
+
+          <!-- Guide Step 2 -->
+          <div class="p-4 rounded-xl bg-zinc-50 border border-black/[0.04] space-y-2">
+            <div class="flex items-center gap-2 font-semibold text-zinc-900 text-sm">
+              <span class="w-6 h-6 rounded-full bg-[#103A82] text-white flex items-center justify-center text-xs font-telemetry">2</span>
+              <span>如何 1 分钟发布一篇新的《赛道纪实》战报？</span>
+            </div>
+            <p class="pl-8 text-zinc-600">
+              切换到上方【赛道纪实管理】Tab，点击右上角【发布新纪实战报】按钮：<br>
+              ① 选择分类（大赛战报 / 研发制造 / 科普交流）；<br>
+              ② 填入标题与日期；<br>
+              ③ 挑选封面图（可直接选择车间或赛道预设图，或粘贴外部图床链接，亦可本地上传图片）；<br>
+              ④ 填写简短摘要与复盘全文（访客点击“赛报复盘”时在弹窗中完整展开）；<br>
+              ⑤ 点击【保存并发布】，随后在【零代码交接中心】点击【☁️ 一键全网保存发布】即可推向全网！
+            </p>
+          </div>
+
+          <!-- Guide Step 3 -->
+          <div class="p-4 rounded-xl bg-zinc-50 border border-black/[0.04] space-y-2">
+            <div class="flex items-center gap-2 font-semibold text-zinc-900 text-sm">
+              <span class="w-6 h-6 rounded-full bg-[#103A82] text-white flex items-center justify-center text-xs font-telemetry">3</span>
+              <span>每年换届后，如何修改各组负责人邮箱？</span>
+            </div>
+            <p class="pl-8 text-zinc-600">
+              切换到【各组邮箱路由】Tab，找到对应组别（电气组、机械组、商业组、赞助部、队长），直接输入新任负责人的姓名与工作邮箱，点击【保存负责人与邮箱配置】，再点击【☁️ 一键全网保存发布】。<br>
+              此后新申报者提交招新或赞助时，邮件将 100% 自动投递给新负责人的邮箱！
+            </p>
+          </div>
+
+          <!-- Guide Step 4 -->
+          <div class="p-4 rounded-xl bg-zinc-50 border border-black/[0.04] space-y-2">
+            <div class="flex items-center gap-2 font-semibold text-zinc-900 text-sm">
+              <span class="w-6 h-6 rounded-full bg-[#103A82] text-white flex items-center justify-center text-xs font-telemetry">4</span>
+              <span>如何修改跑马灯公告与招募状态？</span>
+            </div>
+            <p class="pl-8 text-zinc-600">
+              切换到【网页内容修改】Tab，修改跑马灯通告文字，或在招新结束后将招募通道开关切换为【🟡 招新暂时关闭】，点击【保存网页内容修改】即可即刻生效。
+            </p>
+          </div>
+
+          <!-- Guide Step 5 -->
+          <div class="p-4 rounded-xl bg-zinc-50 border border-black/[0.04] space-y-2">
+            <div class="flex items-center gap-2 font-semibold text-zinc-900 text-sm">
+              <span class="w-6 h-6 rounded-full bg-[#103A82] text-white flex items-center justify-center text-xs font-telemetry">5</span>
+              <span>常见疑问与技术求助</span>
+            </div>
+            <p class="pl-8 text-zinc-600">
+              • <strong>邮件收不到？</strong> 请确保在 Google Apps Script 中部署了最新代码，并检查负责人邮箱的“垃圾邮件箱”；<br>
+              • <strong>配置想备份？</strong> 定期点击【📥 导出配置文件备份 (site_config.json)】保存到电脑，任何时候均可一键导入还原；<br>
+              • 详细开发者文档位于仓库根目录的 <code>README.md</code> 与 <code>HANDOVER.md</code>。
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       4. 赛道纪实发布与编辑弹窗 (Activity Edit Modal)
+       ========================================================================= -->
+  <div id="activity-edit-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+    <div class="bg-white border border-black/[0.08] rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-5 border-b border-black/[0.06] flex items-center justify-between bg-zinc-50/50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-red-100 text-[#D9232D] flex items-center justify-center">
+            <i data-lucide="flag" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 id="act-modal-header-title" class="font-display font-bold text-base text-zinc-900">发布新纪实战报</h3>
+            <p class="text-[11px] text-zinc-400 font-telemetry">DISPATCH & OUTREACH CONTENT EDITOR</p>
+          </div>
+        </div>
+        <button id="btn-close-act-modal" class="text-zinc-400 hover:text-zinc-800 p-1.5 rounded-lg hover:bg-zinc-100 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="activity-edit-form" class="p-6 overflow-y-auto space-y-4 text-xs font-telemetry flex-1 custom-scrollbar">
+        <input type="hidden" id="act-edit-id" value="">
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-zinc-600 uppercase tracking-wider mb-1">所属分类 *</label>
+            <select id="act-category" required class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900">
+              <option value="race">🏆 大赛战报 (RACE)</option>
+              <option value="tech">🔧 研发制造 (TECH)</option>
+              <option value="science">📖 科普交流 (SCIENCE)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-zinc-600 uppercase tracking-wider mb-1">发生日期 / 年月份 *</label>
+            <input id="act-date" type="text" required placeholder="例如：2026.04" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-zinc-600 uppercase tracking-wider mb-1">战报 / 纪实大标题 *</label>
+          <input id="act-title" type="text" required placeholder="例如：2026FSC：赛车完成次次整车高压点火启动" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900 focus:border-[#103A82] focus:outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-zinc-600 uppercase tracking-wider mb-1">亮点小角标文案 *</label>
+            <input id="act-tag" type="text" required placeholder="例如：技术突破 · 次次点火成功" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900">
+          </div>
+          <div>
+            <label class="block text-zinc-600 uppercase tracking-wider mb-1">角标徽章底色</label>
+            <select id="act-tag-color" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900">
+              <option value="bg-[#D9232D]">🔴 凌云赛车红 (bg-[#D9232D])</option>
+              <option value="bg-[#103A82]">🔵 工程深海蓝 (bg-[#103A82])</option>
+              <option value="bg-amber-500">🟡 荣誉金色 (bg-amber-500)</option>
+              <option value="bg-emerald-600">🟢 实践绿色 (bg-emerald-600)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 封面图选择/上传 -->
+        <div>
+          <label class="block text-zinc-600 uppercase tracking-wider mb-1">封面图片来源 *</label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
+            <select id="act-img-preset" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900">
+              <option value="assets/images/track_action_card.jpg">📷 预设：赛道过弯动态抓拍</option>
+              <option value="assets/images/activity_2024_award.jpg">📷 预设：全国总决赛颁奖典礼</option>
+              <option value="assets/images/activity_garage_tuning.jpg">📷 预设：科信学院成学楼实训车间调试</option>
+              <option value="assets/images/activity_stem_outreach.jpg">📷 预设：中学生与职校科普交流</option>
+              <option value="assets/images/car_paddock_2025.jpg">📷 预设：赛车围场静态检车</option>
+              <option value="custom">🌐 自定义外部图片 URL / 本地上传</option>
+            </select>
+            <input id="act-img-custom" type="text" placeholder="输入外部图片 URL 或从本地选择" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900">
+          </div>
+          <div class="flex items-center gap-3">
+            <label class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-black/[0.1] bg-zinc-100 hover:bg-zinc-200 text-zinc-700 text-[11px] cursor-pointer">
+              <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+              <span>本地上传图片</span>
+              <input id="act-img-file" type="file" accept="image/*" class="hidden">
+            </label>
+            <span class="text-[11px] text-zinc-400">支持 jpg/png/webp</span>
+          </div>
+          <!-- 图片预览 -->
+          <div class="mt-2 h-28 rounded-lg overflow-hidden border border-black/[0.08] bg-zinc-100 relative">
+            <img id="act-img-preview" src="../assets/images/track_action_card.jpg" alt="预览" class="w-full h-full object-cover">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-zinc-600 uppercase tracking-wider mb-1">次页卡片简短摘要 * (Card Summary, 1~2 句话)</label>
+          <textarea id="act-summary" rows="2" required placeholder="简要描述本次战报的核心要点，展示在次页卡片上..." class="w-full p-2.5 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-zinc-600 uppercase tracking-wider mb-1">赛报复盘全文 * (Full Recap Text, 在弹窗中完整呈现)</label>
+          <textarea id="act-fulltext" rows="5" required placeholder="详细复盘赛事历程、技术攻坚细节或科普交流感悟，支持换行与多段落..." class="w-full p-2.5 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900"></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-zinc-600 uppercase tracking-wider mb-1">硬核技术参数 / 战报荣誉数据</label>
+            <input id="act-stats" type="text" placeholder="例如：次次点火启动圆满成功 | 内燃机" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900">
+          </div>
+          <div>
+            <label class="block text-zinc-600 uppercase tracking-wider mb-1">卡片底栏荣誉文字</label>
+            <input id="act-badge" type="text" placeholder="例如：国家级三等奖 / 工程研发" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900" value="赛报纪实">
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-black/[0.06] flex items-center justify-end gap-2">
+          <button type="button" id="btn-cancel-act-modal" class="px-4 py-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-semibold rounded-lg">取消</button>
+          <button type="submit" class="px-5 py-2 bg-[#D9232D] hover:bg-[#B81D25] text-white font-semibold rounded-lg shadow-sm">保存并发布纪实</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       5. 表单详情与备忘弹窗 (Detail Modal)
+       ========================================================================= -->
+  <div id="detail-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+    <div class="bg-white border border-black/[0.08] rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-6 border-b border-black/[0.06] flex items-center justify-between bg-zinc-50/50">
+        <div class="flex items-center gap-3">
+          <span id="detail-category-badge" class="px-2.5 py-1 rounded text-xs font-telemetry font-semibold uppercase bg-blue-100 text-blue-800">招募申请</span>
+          <div>
+            <h3 id="detail-modal-title" class="font-display font-bold text-lg text-zinc-900">填报详情查阅</h3>
+            <span id="detail-modal-id" class="text-[11px] font-telemetry text-zinc-400">ID: rec_12345</span>
+          </div>
+        </div>
+        <button id="btn-close-detail" class="text-zinc-400 hover:text-zinc-800 p-1.5 rounded-lg hover:bg-zinc-100 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-5 flex-1 custom-scrollbar text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl bg-zinc-50 border border-black/[0.04]">
+          <div>
+            <span class="text-zinc-400 block mb-1 font-telemetry">提交时间</span>
+            <span id="detail-time" class="font-telemetry font-semibold text-zinc-800">-</span>
+          </div>
+          <div>
+            <span class="text-zinc-400 block mb-1 font-telemetry">姓名 / 联络人</span>
+            <span id="detail-name" class="font-semibold text-zinc-900">-</span>
+          </div>
+          <div>
+            <span class="text-zinc-400 block mb-1 font-telemetry">电子邮箱</span>
+            <span id="detail-email" class="font-telemetry text-[#103A82] font-semibold">-</span>
+          </div>
+          <div>
+            <span class="text-zinc-400 block mb-1 font-telemetry">联系电话 / 手机</span>
+            <span id="detail-phone" class="font-telemetry text-zinc-800">-</span>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <h4 class="font-telemetry uppercase tracking-wider text-zinc-500 font-semibold text-[11px]">填报完整详细内容</h4>
+          <div id="detail-fields-container" class="space-y-2"></div>
+        </div>
+
+        <div class="pt-4 border-t border-black/[0.06] space-y-3">
+          <h4 class="font-telemetry uppercase tracking-wider text-zinc-500 font-semibold text-[11px]">车队内部协同与跟进管理</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="detail-status-select" class="block text-zinc-600 mb-1 font-telemetry text-[11px]">流转状态更改：</label>
+              <select id="detail-status-select" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-900 focus:border-[#103A82] focus:outline-none">
+                <option value="待审核">待审核 (未处理)</option>
+                <option value="已联络">已联络 (沟通中)</option>
+                <option value="面试中">面试考核/实训</option>
+                <option value="合作推进">合作推进中</option>
+                <option value="已录取">已考核通过/签约</option>
+                <option value="已归档">已归档 (完成)</option>
+              </select>
+            </div>
+            <div>
+              <label for="detail-notes-input" class="block text-zinc-600 mb-1 font-telemetry text-[11px]">跟进处理备忘：</label>
+              <input id="detail-notes-input" type="text" placeholder="例如：9/15已发考核题，等待提交" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900 focus:border-[#103A82] focus:outline-none">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 border-t border-black/[0.06] flex items-center justify-between bg-zinc-50/50">
+        <a id="detail-mail-btn" href="#" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-xs font-telemetry font-semibold transition-colors">
+          <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+          <span>调用邮箱直发回复</span>
+        </a>
+        <button id="btn-save-detail" class="px-5 py-2 rounded-lg bg-[#103A82] hover:bg-[#0C2B64] text-white text-xs font-telemetry font-semibold shadow-sm transition-colors">
+          保存状态与备忘
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       6. 智能同步真实邮件数据弹窗 (Email Table Sync Modal)
+       ========================================================================= -->
+  <div id="email-sync-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+    <div class="bg-white border border-black/[0.08] rounded-2xl max-w-xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-5 border-b border-black/[0.06] flex items-center justify-between bg-zinc-50/50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center">
+            <i data-lucide="mail-check" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-base text-zinc-900">同步真实邮件数据 (官方邮箱回执解析)</h3>
+            <p class="text-[11px] text-zinc-400 font-telemetry">PASTE & PARSE FORM NOTIFICATION EMAILS</p>
+          </div>
+        </div>
+        <button id="btn-close-sync-email" class="text-zinc-400 hover:text-zinc-800 p-1.5 rounded-lg hover:bg-zinc-100 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4 text-xs font-telemetry flex-1 custom-scrollbar">
+        <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-blue-800 leading-relaxed text-[11px]">
+          <strong>使用说明：</strong> 当有人在官网提交表单后，接收邮箱会收到一封包含结构化表格的邮件通知。直接将邮件全文或表格内容复制并粘贴到下方文本框中，系统将智能提取真实字段并完成同步入库。
+        </div>
+
+        <div>
+          <label for="email-sync-textarea" class="block text-zinc-700 font-semibold mb-1">粘贴邮件文本或表格内容：</label>
+          <textarea id="email-sync-textarea" rows="8" placeholder="例如：&#10;【申请意向组别】: 电气组&#10;【申请人姓名】: 张同学&#10;【学院与专业年级】: 机装学院车辆大二&#10;【手机联系电话】: 13800138000&#10;【申请人电子邮箱】: zhang@example.com&#10;【掌握技能储备与入队初衷】: 熟悉STM32与CAN总线..." class="w-full p-3 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900 font-mono text-xs focus:border-emerald-600 focus:outline-none"></textarea>
+        </div>
+
+        <div id="email-sync-result" class="hidden p-3 rounded-lg text-xs"></div>
+
+        <div class="pt-2 border-t border-black/[0.06] flex items-center justify-between">
+          <span class="text-[11px] text-zinc-400">支持自动识别招新、赞助或在线留言</span>
+          <div class="flex items-center gap-2">
+            <button id="btn-cancel-sync-email" class="px-4 py-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-semibold rounded-lg">取消</button>
+            <button id="btn-parse-sync-email" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-sm">一键解析并入库</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       7. 线下数据快速补录弹窗 (Manual Intake Modal)
+       ========================================================================= -->
+  <div id="manual-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+    <div class="bg-white border border-black/[0.08] rounded-2xl max-w-lg w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-5 border-b border-black/[0.06] flex items-center justify-between bg-zinc-50/50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-[#103A82]/10 text-[#103A82] flex items-center justify-center">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          </div>
+          <h3 class="font-display font-bold text-base text-zinc-900">线下纸质表单与名片快速补录</h3>
+        </div>
+        <button id="btn-close-manual" class="text-zinc-400 hover:text-zinc-800 p-1.5 rounded-lg hover:bg-zinc-100 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="manual-form" class="p-6 overflow-y-auto space-y-4 text-xs font-telemetry flex-1 custom-scrollbar">
+        <div>
+          <label class="block text-zinc-600 uppercase tracking-wider mb-1">补录数据类别 *</label>
+          <select id="manual-category" required class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900 focus:border-[#103A82] focus:outline-none">
+            <option value="recruit">🏎️ 队员招募申请 (Recruitment)</option>
+            <option value="sponsor">🤝 校企商务赞助 (Sponsorship)</option>
+            <option value="contact">📬 基地探访与在线留言 (Paddock Message)</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-zinc-600 uppercase tracking-wider mb-1">姓名 / 联络人 *</label>
+            <input id="manual-name" type="text" required placeholder="请输入真实姓名" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900 focus:border-[#103A82] focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-zinc-600 uppercase tracking-wider mb-1">所属机构 / 学院专业 *</label>
+            <input id="manual-org" type="text" required placeholder="例如：机装学院车辆大二" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900 focus:border-[#103A82] focus:outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-zinc-600 uppercase tracking-wider mb-1">电子邮箱 *</label>
+            <input id="manual-email" type="email" required placeholder="真实邮箱地址" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900 focus:border-[#103A82] focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-zinc-600 uppercase tracking-wider mb-1">手机联系电话 *</label>
+            <input id="manual-phone" type="tel" required placeholder="真实11位手机号" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900 focus:border-[#103A82] focus:outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-zinc-600 uppercase tracking-wider mb-1">意向组别 / 合作级别 / 咨询类别 *</label>
+          <input id="manual-target" type="text" required placeholder="例如：电气组 / 官方战略合作伙伴" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900 focus:border-[#103A82] focus:outline-none">
+        </div>
+
+        <div>
+          <label class="block text-zinc-600 uppercase tracking-wider mb-1">详细需求说明 / 掌握技能备注 *</label>
+          <textarea id="manual-content" rows="4" required placeholder="例如：具备单片机开发基础，曾获省级比赛二等奖..." class="w-full p-2.5 bg-zinc-50 border border-black/[0.08] rounded-lg text-zinc-900 focus:border-[#103A82] focus:outline-none"></textarea>
+        </div>
+
+        <div class="pt-2 border-t border-black/[0.06] flex items-center justify-end gap-2">
+          <button type="button" id="btn-cancel-manual" class="px-4 py-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-semibold rounded-lg">取消</button>
+          <button type="submit" class="px-5 py-2 bg-[#103A82] hover:bg-[#0C2B64] text-white font-semibold rounded-lg shadow-sm">提交并录入系统</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="admin-toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2.5 pointer-events-none"></div>
+
+  <!-- =========================================================================
+       8. 管理控制台核心业务逻辑 (JavaScript Engine)
+       ========================================================================= -->
+  <script>
+    (function() {
+      'use strict';
+
+      const STORAGE_KEY = 'ly_collected_forms';
+      const SESSION_KEY = 'ly_admin_auth_session';
+      const LOCK_KEY = 'ly_admin_lockout';
+      const GAS_URL = 'https://script.google.com/macros/s/AKfycby2fH0M9vHrxhEobrLTyeD6OGuXbqPNL1lZOY3HWCEJ-TV-UrmQk7epJ-PwBSpsrhNb/exec';
+
+      const CATEGORY_NAMES = {
+        recruit: '队员招募申请',
+        sponsor: '商务赞助洽谈',
+        contact: '基地留言探访'
+      };
+
+      const CATEGORY_BADGES = {
+        recruit: '<span class="px-2 py-0.5 rounded text-[11px] font-telemetry font-medium bg-red-50 text-[#D9232D] border border-red-200">🏎️ 招新</span>',
+        sponsor: '<span class="px-2 py-0.5 rounded text-[11px] font-telemetry font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">🤝 赞助</span>',
+        contact: '<span class="px-2 py-0.5 rounded text-[11px] font-telemetry font-medium bg-blue-50 text-[#103A82] border border-blue-200">📬 留言</span>'
+      };
+
+      const ADMIN_CREDENTIALS = [
+        { user: 'admin', pass: 'lingyun2026' },
+        { user: 'lingyun_admin', pass: 'FSC2026!ly' },
+        { user: 'wangjiashuo', pass: 'lingyun2026' }
+      ];
+
+      const AppState = {
+        records: [],
+        filteredRecords: [],
+        currentCategory: 'all',
+        currentStatus: 'all',
+        searchQuery: '',
+        currentPage: 1,
+        pageSize: 10,
+        activeDetailId: null,
+        activeMainTab: 'forms',
+        activities: [],
+        siteConfig: null
+      };
+
+      function showToast(message, type = 'info') {
+        const container = document.getElementById('admin-toast-container');
+        if (!container) return;
+
+        const toast = document.createElement('div');
+        toast.className = 'pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl border text-xs font-telemetry shadow-xl transition-all transform translate-y-2 opacity-0 duration-300';
+
+        if (type === 'success') {
+          toast.classList.add('bg-white', 'text-emerald-800', 'border-emerald-200');
+          toast.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 text-emerald-600 shrink-0"></i><span>${message}</span>`;
+        } else if (type === 'error') {
+          toast.classList.add('bg-white', 'text-red-800', 'border-red-200');
+          toast.innerHTML = `<i data-lucide="alert-circle" class="w-4 h-4 text-red-600 shrink-0"></i><span>${message}</span>`;
+        } else {
+          toast.classList.add('bg-white', 'text-zinc-800', 'border-black/[0.08]');
+          toast.innerHTML = `<i data-lucide="info" class="w-4 h-4 text-[#103A82] shrink-0"></i><span>${message}</span>`;
+        }
+
+        container.appendChild(toast);
+        if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+
+        requestAnimationFrame(() => {
+          toast.classList.remove('translate-y-2', 'opacity-0');
+        });
+
+        setTimeout(() => {
+          toast.classList.add('translate-y-2', 'opacity-0');
+          setTimeout(() => {
+            if (toast.parentElement) toast.parentElement.removeChild(toast);
+          }, 300);
+        }, 3200);
+      }
+
+      const AuthEngine = {
+        isAuthenticated() {
+          try {
+            const raw = sessionStorage.getItem(SESSION_KEY);
+            if (!raw) return false;
+            const session = JSON.parse(raw);
+            if (!session || !session.expiresAt) return false;
+            if (Date.now() > session.expiresAt) {
+              sessionStorage.removeItem(SESSION_KEY);
+              return false;
+            }
+            return true;
+          } catch (e) {
+            return false;
+          }
+        },
+
+        getCurrentUser() {
+          try {
+            const raw = sessionStorage.getItem(SESSION_KEY);
+            if (!raw) return null;
+            return JSON.parse(raw);
+          } catch (e) {
+            return null;
+          }
+        },
+
+        login(username, password) {
+          const rawLock = sessionStorage.getItem(LOCK_KEY);
+          if (rawLock) {
+            try {
+              const lock = JSON.parse(rawLock);
+              if (lock.lockUntil && Date.now() < lock.lockUntil) {
+                const remain = Math.ceil((lock.lockUntil - Date.now()) / 1000);
+                return { success: false, message: `多次尝试错误，安全保护锁定中，请在 ${remain} 秒后重试。` };
+              }
+            } catch (_) {}
+          }
+
+          const cleanUser = String(username || '').trim().toLowerCase();
+          const cleanPass = String(password || '').trim();
+
+          const matched = ADMIN_CREDENTIALS.some(
+            c => c.user.toLowerCase() === cleanUser && c.pass === cleanPass
+          );
+
+          if (matched) {
+            sessionStorage.removeItem(LOCK_KEY);
+            const session = {
+              user: cleanUser,
+              token: 'ly_adm_' + Math.random().toString(36).substring(2),
+              loginAt: Date.now(),
+              expiresAt: Date.now() + 8 * 60 * 60 * 1000
+            };
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+            return { success: true, session };
+          } else {
+            let lockData = { attempts: 0 };
+            try {
+              if (rawLock) lockData = JSON.parse(rawLock);
+            } catch (_) {}
+            lockData.attempts = (lockData.attempts || 0) + 1;
+            if (lockData.attempts >= 5) {
+              lockData.lockUntil = Date.now() + 60 * 1000;
+            }
+            sessionStorage.setItem(LOCK_KEY, JSON.stringify(lockData));
+            const remain = Math.max(0, 5 - lockData.attempts);
+            return {
+              success: false,
+              message: lockData.lockUntil
+                ? '密码连续错误 5 次，系统已启动安全防爆破锁定 60 秒！'
+                : `账号或密码错误！还可尝试 ${remain} 次。`
+            };
+          }
+        },
+
+        logout() {
+          sessionStorage.removeItem(SESSION_KEY);
+          renderApp();
+          showToast('您已安全退出管理中枢。', 'info');
+        }
+      };
+
+      /**
+       * 纯净真实表单数据持久化层
+       */
+      const DataStore = {
+        load() {
+          try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return [];
+            const parsed = JSON.parse(raw);
+            if (!Array.isArray(parsed)) return [];
+
+            const fakeKeywords = ['张天逸', '李思源', '陈雅茹', '刘振华', '赵明远', '王建国 老师', '孙志强 队长'];
+            const cleanList = parsed.filter(r => {
+              if (!r || !r.id) return false;
+              if (r.id.includes('demo')) return false;
+              if (r.data?.email?.includes('example.com')) return false;
+              const name = r.data?.name || r.data?.['申请人姓名'] || r.data?.['企业/机构全称'] || r.data?.['来访人姓名/称呼'] || '';
+              if (fakeKeywords.includes(name)) return false;
+              return true;
+            });
+
+            if (cleanList.length !== parsed.length) {
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(cleanList));
+            }
+            return cleanList;
+          } catch (e) {
+            return [];
+          }
+        },
+
+        save(records) {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+          } catch (e) {
+            console.error('Save to localStorage failed', e);
+          }
+        },
+
+        updateStatus(id, newStatus, newNotes) {
+          const index = AppState.records.findIndex(r => r.id === id);
+          if (index !== -1) {
+            if (newStatus) AppState.records[index].status = newStatus;
+            if (newNotes !== undefined) AppState.records[index].notes = newNotes;
+            this.save(AppState.records);
+            applyFilters();
+            renderTable();
+            renderStats();
+            return true;
+          }
+          return false;
+        },
+
+        addRecord(category, name, org, email, phone, target, content) {
+          const idPrefix = category === 'recruit' ? 'rec' : (category === 'sponsor' ? 'sps' : 'cnt');
+          const now = new Date();
+          const pad = n => String(n).padStart(2, '0');
+          const timeStr = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())} (CST)`;
+
+          const entry = {
+            id: `${idPrefix}_real_${Date.now().toString(36)}`,
+            category: category,
+            timestamp: timeStr,
+            status: '待审核',
+            notes: '真实线下数据补录',
+            data: {
+              '申请人/企业/来访人': name,
+              '所属机构/学院专业': org,
+              '联络邮箱': email,
+              '联系电话': phone,
+              '意向目标/级别/类别': target,
+              '填报详细说明': content,
+              name: name,
+              role: target,
+              company: org,
+              tier: target,
+              inquiryType: target,
+              email: email,
+              phone: phone
+            }
+          };
+
+          AppState.records.unshift(entry);
+          this.save(AppState.records);
+          applyFilters();
+          renderTable();
+          renderStats();
+          return entry;
+        },
+
+        deleteRecord(id) {
+          AppState.records = AppState.records.filter(r => r.id !== id);
+          this.save(AppState.records);
+          applyFilters();
+          renderTable();
+          renderStats();
+        },
+
+        purgeFake() {
+          AppState.records = this.load();
+          this.save(AppState.records);
+          applyFilters();
+          renderTable();
+          renderStats();
+        },
+
+        clearAll() {
+          AppState.records = [];
+          this.save([]);
+          applyFilters();
+          renderTable();
+          renderStats();
+        }
+      };
+
+      /**
+       * 动态全站配置管理器 (SiteConfigManager 桥接)
+       */
+      const ConfigManager = (window.LingYun && window.LingYun.SiteConfigManager) || {
+        load() {
+          try {
+            const raw = localStorage.getItem('ly_site_config_v2');
+            return raw ? JSON.parse(raw) : null;
+          } catch (_) { return null; }
+        },
+        save(cfg) {
+          try {
+            localStorage.setItem('ly_site_config_v2', JSON.stringify(cfg));
+            window.dispatchEvent(new CustomEvent('ly_config_updated', { detail: cfg }));
+          } catch (_) {}
+        },
+        reset() {
+          try {
+            localStorage.removeItem('ly_site_config_v2');
+            window.dispatchEvent(new CustomEvent('ly_config_updated'));
+          } catch (_) {}
+        }
+      };
+
+      function parseEmailContent(text) {
+        if (!text || !text.trim()) return { success: false, message: '请先粘贴邮件内容' };
+        const cleanText = text.trim();
+        const extracted = {};
+
+        const regex1 = /【([^】]+)】\s*[:：]\s*([^\n\r]+)/g;
+        let match;
+        while ((match = regex1.exec(cleanText)) !== null) {
+          extracted[match[1].trim()] = match[2].trim();
+        }
+
+        if (Object.keys(extracted).length === 0) {
+          const lines = cleanText.split(/[\r\n]+/);
+          lines.forEach(line => {
+            const parts = line.split(/[:：]/);
+            if (parts.length >= 2) {
+              const k = parts[0].trim().replace(/^[-*•\s]+/, '');
+              const v = parts.slice(1).join(':').trim();
+              if (k && v) extracted[k] = v;
+            }
+          });
+        }
+
+        if (Object.keys(extracted).length === 0) {
+          return { success: false, message: '未能识别出有效的结构化字段，请确保复制了邮件表格文本' };
+        }
+
+        let category = 'contact';
+        if (extracted['申请意向组别'] || extracted['学院与专业年级'] || extracted['掌握技能储备与入队初衷'] || cleanText.includes('招募申请')) {
+          category = 'recruit';
+        } else if (extracted['意向合作级别'] || extracted['企业/机构全称'] || extracted['企业对接邮箱'] || cleanText.includes('赞助洽谈')) {
+          category = 'sponsor';
+        }
+
+        const now = new Date();
+        const pad = n => String(n).padStart(2, '0');
+        const defaultTime = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())} (CST)`;
+
+        const timestamp = extracted['提交时间'] || defaultTime;
+        const name = extracted['申请人姓名'] || extracted['企业/机构全称'] || extracted['来访人姓名/称呼'] || extracted['name'] || extracted['姓名'] || '真实填报人';
+        const email = extracted['申请人电子邮箱'] || extracted['企业对接邮箱'] || extracted['来访人联络邮箱'] || extracted['email'] || extracted['邮箱'] || '';
+        const phone = extracted['手机联系电话'] || extracted['商务联络电话'] || extracted['phone'] || extracted['电话'] || '';
+        const target = extracted['申请意向组别'] || extracted['意向合作级别'] || extracted['咨询交流类型'] || extracted['role'] || extracted['tier'] || '未填';
+
+        const idPrefix = category === 'recruit' ? 'rec' : (category === 'sponsor' ? 'sps' : 'cnt');
+        const newRecord = {
+          id: `${idPrefix}_mail_${Date.now().toString(36)}`,
+          category: category,
+          timestamp: timestamp,
+          status: '待审核',
+          notes: '由官方接收邮箱回执一键同步导入',
+          data: {
+            ...extracted,
+            name: name,
+            email: email,
+            phone: phone,
+            role: target,
+            tier: target,
+            inquiryType: target
+          }
+        };
+
+        const isDuplicate = AppState.records.some(r => {
+          if (r.data?.email && email && r.data.email === email && r.timestamp === timestamp) return true;
+          return false;
+        });
+
+        if (isDuplicate) {
+          return { success: false, message: '该记录此前已同步导入，无需重复添加！' };
+        }
+
+        AppState.records.unshift(newRecord);
+        DataStore.save(AppState.records);
+        applyFilters();
+        renderTable();
+        renderStats();
+
+        return { success: true, record: newRecord };
+      }
+
+      function exportToCSV() {
+        const records = AppState.filteredRecords;
+        if (!records.length) {
+          showToast('当前无真实数据可供导出。', 'error');
+          return;
+        }
+
+        const headers = [
+          '记录编号',
+          '提交时间',
+          '表单类别',
+          '申请人/企业机构',
+          '意向组别/合作级别',
+          '电子邮箱',
+          '联系电话',
+          '跟进状态',
+          '内部备忘',
+          '填报详细内容'
+        ];
+
+        const rows = records.map(r => {
+          const d = r.data || {};
+          const name = d.name || d['申请人姓名'] || d['企业/机构全称'] || d['来访人姓名/称呼'] || '未填';
+          const target = d.role || d.tier || d.inquiryType || d['申请意向组别'] || d['意向合作级别'] || d['咨询交流类型'] || '';
+          const email = d.email || d['申请人电子邮箱'] || d['企业对接邮箱'] || d['来访人联络邮箱'] || '';
+          const phone = d.phone || d['手机联系电话'] || d['商务联络电话'] || '';
+          
+          let fullDetail = '';
+          for (const [k, v] of Object.entries(d)) {
+            if (!k.startsWith('_') && typeof v === 'string') {
+              fullDetail += `[${k}]: ${v}; `;
+            }
+          }
+
+          const escapeCSV = (str) => {
+            if (!str) return '""';
+            const s = String(str).replace(/"/g, '""').replace(/\r?\n/g, ' ');
+            return `"${s}"`;
+          };
+
+          return [
+            escapeCSV(r.id),
+            escapeCSV(r.timestamp),
+            escapeCSV(CATEGORY_NAMES[r.category] || r.category),
+            escapeCSV(name),
+            escapeCSV(target),
+            escapeCSV(email),
+            escapeCSV(phone),
+            escapeCSV(r.status || '待审核'),
+            escapeCSV(r.notes || ''),
+            escapeCSV(fullDetail)
+          ].join(',');
+        });
+
+        const csvContent = '\uFEFF' + [headers.join(','), ...rows].join('\r\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        
+        const now = new Date();
+        const pad = n => String(n).padStart(2, '0');
+        const dateTag = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}`;
+        
+        link.setAttribute('href', url);
+        link.setAttribute('download', `凌云油车队_真实表单数据统筹表_${dateTag}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        showToast(`📊 成功导出 ${records.length} 条真实数据至 Excel (CSV)！`, 'success');
+      }
+
+      function exportToJSON() {
+        const jsonStr = JSON.stringify(AppState.records, null, 2);
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', `lingyun_real_forms_${Date.now()}.json`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showToast('💾 成功备份为 JSON 格式快照！', 'success');
+      }
+
+      function applyFilters() {
+        const q = AppState.searchQuery.trim().toLowerCase();
+        
+        AppState.filteredRecords = AppState.records.filter(r => {
+          if (AppState.currentCategory !== 'all' && r.category !== AppState.currentCategory) {
+            return false;
+          }
+
+          if (AppState.currentStatus !== 'all' && r.status !== AppState.currentStatus) {
+            return false;
+          }
+
+          if (q) {
+            const d = r.data || {};
+            const searchPool = [
+              r.id,
+              r.timestamp,
+              r.notes,
+              r.status,
+              CATEGORY_NAMES[r.category],
+              d.name,
+              d.role,
+              d.company,
+              d.tier,
+              d.inquiryType,
+              d.email,
+              d.phone,
+              d['学院与专业年级'],
+              d['掌握技能储备与入队初衷'],
+              d['合作构想与需求备注'],
+              d['详细需求与说明事项']
+            ].filter(Boolean).join(' ').toLowerCase();
+
+            if (!searchPool.includes(q)) return false;
+          }
+
+          return true;
+        });
+
+        AppState.currentPage = 1;
+      }
+
+      function renderStats() {
+        const total = AppState.records.length;
+        const recruits = AppState.records.filter(r => r.category === 'recruit');
+        const sponsors = AppState.records.filter(r => r.category === 'sponsor');
+        const contacts = AppState.records.filter(r => r.category === 'contact');
+        const pending = AppState.records.filter(r => !r.status || r.status === '待审核');
+
+        const ele = recruits.filter(r => (r.data?.role || '').includes('电气') || (r.data?.['申请意向组别'] || '').includes('电气')).length;
+        const mech = recruits.filter(r => (r.data?.role || '').includes('机械') || (r.data?.['申请意向组别'] || '').includes('机械')).length;
+        const biz = recruits.filter(r => (r.data?.role || '').includes('商业') || (r.data?.['申请意向组别'] || '').includes('商业')).length;
+
+        document.getElementById('stat-total').textContent = total;
+        document.getElementById('stat-recruit').textContent = recruits.length;
+        document.getElementById('stat-recruit-detail').textContent = total > 0 ? `电 ${ele} · 机 ${mech} · 商 ${biz}` : '暂无招新';
+        document.getElementById('stat-sponsor').textContent = sponsors.length;
+        document.getElementById('stat-contact').textContent = contacts.length;
+        document.getElementById('stat-pending').textContent = pending.length;
+
+        document.getElementById('tab-count-all').textContent = total;
+        document.getElementById('tab-count-recruit').textContent = recruits.length;
+        document.getElementById('tab-count-sponsor').textContent = sponsors.length;
+        document.getElementById('tab-count-contact').textContent = contacts.length;
+      }
+
+      function renderTable() {
+        const tbody = document.getElementById('data-table-body');
+        const emptyState = document.getElementById('table-empty-state');
+        const countSpan = document.getElementById('page-item-count');
+        const indicator = document.getElementById('page-indicator');
+        const btnPrev = document.getElementById('btn-prev-page');
+        const btnNext = document.getElementById('btn-next-page');
+
+        const totalItems = AppState.filteredRecords.length;
+        countSpan.textContent = totalItems;
+
+        if (totalItems === 0) {
+          tbody.innerHTML = '';
+          emptyState.classList.remove('hidden');
+          indicator.textContent = '0 / 0';
+          btnPrev.disabled = true;
+          btnNext.disabled = true;
+          return;
+        }
+
+        emptyState.classList.add('hidden');
+
+        const totalPages = Math.ceil(totalItems / AppState.pageSize) || 1;
+        if (AppState.currentPage > totalPages) AppState.currentPage = totalPages;
+        if (AppState.currentPage < 1) AppState.currentPage = 1;
+
+        indicator.textContent = `${AppState.currentPage} / ${totalPages}`;
+        btnPrev.disabled = AppState.currentPage <= 1;
+        btnNext.disabled = AppState.currentPage >= totalPages;
+
+        const start = (AppState.currentPage - 1) * AppState.pageSize;
+        const pageRecords = AppState.filteredRecords.slice(start, start + AppState.pageSize);
+
+        let html = '';
+        pageRecords.forEach((item, i) => {
+          const d = item.data || {};
+          const indexNum = start + i + 1;
+          const name = d.name || d['申请人姓名'] || d['企业/机构全称'] || d['来访人姓名/称呼'] || '未填名称';
+          const subTitle = d.org || d['学院与专业年级'] || d['主营行业领域'] || d['所属机构/学院/企业'] || '';
+          const target = d.role || d.tier || d.inquiryType || d['申请意向组别'] || d['意向合作级别'] || d['咨询交流类型'] || '-';
+          const email = d.email || d['申请人电子邮箱'] || d['企业对接邮箱'] || d['来访人联络邮箱'] || '';
+          const phone = d.phone || d['手机联系电话'] || d['商务联络电话'] || '';
+
+          const catBadge = CATEGORY_BADGES[item.category] || item.category;
+
+          html += `
+            <tr class="hover:bg-zinc-50/80 transition-colors group">
+              <td class="py-3.5 px-4 font-telemetry text-zinc-400 font-semibold">${indexNum}</td>
+              <td class="py-3.5 px-4 font-telemetry text-zinc-600 whitespace-nowrap">${item.timestamp.split(' ')[0]} <span class="text-[10px] text-zinc-400">${item.timestamp.split(' ')[1] || ''}</span></td>
+              <td class="py-3.5 px-4 whitespace-nowrap">${catBadge}</td>
+              <td class="py-3.5 px-4">
+                <div class="font-semibold text-zinc-900">${name}</div>
+                ${subTitle ? `<div class="text-[11px] text-zinc-400 font-light truncate max-w-[180px]">${subTitle}</div>` : ''}
+              </td>
+              <td class="py-3.5 px-4">
+                <span class="inline-block font-telemetry font-semibold text-zinc-800 bg-zinc-100 px-2 py-0.5 rounded text-[11px]">${target}</span>
+              </td>
+              <td class="py-3.5 px-4 font-telemetry text-xs">
+                ${email ? `<div><a href="mailto:${email}" class="text-[#103A82] hover:underline">${email}</a></div>` : ''}
+                ${phone ? `<div class="text-zinc-500">${phone}</div>` : ''}
+              </td>
+              <td class="py-3.5 px-4 whitespace-nowrap">
+                <div class="inline-flex items-center gap-1.5">
+                  <select data-id="${item.id}" class="inline-status-select text-[11px] font-telemetry py-1 px-2 rounded-md border border-black/[0.08] bg-white text-zinc-800 focus:border-[#103A82] focus:outline-none cursor-pointer">
+                    <option value="待审核" ${item.status === '待审核' ? 'selected' : ''}>待审核</option>
+                    <option value="已联络" ${item.status === '已联络' ? 'selected' : ''}>已联络</option>
+                    <option value="面试中" ${item.status === '面试中' ? 'selected' : ''}>面试中</option>
+                    <option value="合作推进" ${item.status === '合作推进' ? 'selected' : ''}>合作推进</option>
+                    <option value="已录取" ${item.status === '已录取' ? 'selected' : ''}>已考核通过</option>
+                    <option value="已归档" ${item.status === '已归档' ? 'selected' : ''}>已归档</option>
+                  </select>
+                </div>
+              </td>
+              <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                <div class="flex items-center justify-end gap-1.5">
+                  <button data-id="${item.id}" class="btn-view-detail px-2.5 py-1 rounded bg-zinc-100 hover:bg-[#103A82] hover:text-white text-zinc-700 text-xs font-telemetry font-medium transition-colors" title="查看完整详情">
+                    详情
+                  </button>
+                  <a href="mailto:${email}?subject=【河北工程大学科信学院凌云油车队】关于您的信息对接答复" class="p-1 rounded text-zinc-400 hover:text-[#103A82] hover:bg-zinc-100 transition-colors" title="直发邮件">
+                    <i data-lucide="mail" class="w-4 h-4"></i>
+                  </a>
+                  <button data-id="${item.id}" class="btn-delete-row p-1 rounded text-zinc-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="删除记录">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        });
+
+        tbody.innerHTML = html;
+        if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+
+        tbody.querySelectorAll('.inline-status-select').forEach(sel => {
+          sel.addEventListener('change', () => {
+            const id = sel.getAttribute('data-id');
+            const newStatus = sel.value;
+            DataStore.updateStatus(id, newStatus);
+            showToast(`状态已更新为【${newStatus}】`, 'success');
+          });
+        });
+
+        tbody.querySelectorAll('.btn-view-detail').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            openDetailModal(id);
+          });
+        });
+
+        tbody.querySelectorAll('.btn-delete-row').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            if (confirm('确认删除该条表单记录吗？此操作无法撤销。')) {
+              DataStore.deleteRecord(id);
+              showToast('记录已删除', 'info');
+            }
+          });
+        });
+      }
+
+      function openDetailModal(id) {
+        const item = AppState.records.find(r => r.id === id);
+        if (!item) return;
+
+        AppState.activeDetailId = id;
+        const d = item.data || {};
+        const modal = document.getElementById('detail-modal');
+
+        document.getElementById('detail-modal-id').textContent = `RECORD ID: ${item.id}`;
+        document.getElementById('detail-category-badge').textContent = CATEGORY_NAMES[item.category] || item.category;
+        document.getElementById('detail-time').textContent = item.timestamp;
+        
+        const name = d.name || d['申请人姓名'] || d['企业/机构全称'] || d['来访人姓名/称呼'] || '-';
+        document.getElementById('detail-name').textContent = name;
+
+        const email = d.email || d['申请人电子邮箱'] || d['企业对接邮箱'] || d['来访人联络邮箱'] || '-';
+        document.getElementById('detail-email').textContent = email;
+
+        const phone = d.phone || d['手机联系电话'] || d['商务联络电话'] || '-';
+        document.getElementById('detail-phone').textContent = phone;
+
+        document.getElementById('detail-status-select').value = item.status || '待审核';
+        document.getElementById('detail-notes-input').value = item.notes || '';
+
+        const mailBtn = document.getElementById('detail-mail-btn');
+        if (email && email !== '-') {
+          mailBtn.href = `mailto:${email}?subject=【河北工程大学科信学院凌云油车队】关于您的申请与合作意向答复`;
+          mailBtn.classList.remove('opacity-50', 'pointer-events-none');
+        } else {
+          mailBtn.href = '#';
+          mailBtn.classList.add('opacity-50', 'pointer-events-none');
+        }
+
+        const container = document.getElementById('detail-fields-container');
+        let fieldsHtml = '';
+        for (const [key, val] of Object.entries(d)) {
+          if (!key.startsWith('_') && typeof val === 'string' && val.trim()) {
+            fieldsHtml += `
+              <div class="p-3 bg-zinc-50 rounded-lg border border-black/[0.04]">
+                <span class="text-zinc-500 font-telemetry block mb-1 font-semibold">${key}</span>
+                <p class="text-zinc-800 whitespace-pre-wrap leading-relaxed">${val}</p>
+              </div>
+            `;
+          }
+        }
+        container.innerHTML = fieldsHtml || '<p class="text-zinc-400">无更多详细字段</p>';
+
+        modal.classList.remove('hidden');
+        if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+      }
+
+      function closeDetailModal() {
+        document.getElementById('detail-modal').classList.add('hidden');
+        AppState.activeDetailId = null;
+      }
+
+      // ─────────────────────────────────────────────────────────────────────────
+      // 赛道纪实管理逻辑 (Activities CMS Engine)
+      // ─────────────────────────────────────────────────────────────────────────
+      let currentActFilter = 'all';
+
+      function renderAdminActivities() {
+        const cfg = ConfigManager.load();
+        if (!cfg) return;
+        AppState.activities = cfg.activities || [];
+
+        const grid = document.getElementById('admin-activity-grid');
+        const filterCat = currentActFilter;
+
+        const filtered = AppState.activities.filter(a => filterCat === 'all' || a.category === filterCat);
+
+        document.getElementById('act-count-all').textContent = AppState.activities.length;
+        document.getElementById('act-count-race').textContent = AppState.activities.filter(a => a.category === 'race').length;
+        document.getElementById('act-count-tech').textContent = AppState.activities.filter(a => a.category === 'tech').length;
+        document.getElementById('act-count-science').textContent = AppState.activities.filter(a => a.category === 'science').length;
+
+        if (!filtered.length) {
+          grid.innerHTML = `
+            <div class="col-span-full py-16 text-center bg-white rounded-2xl border border-black/[0.06] p-8">
+              <i data-lucide="flag" class="w-10 h-10 text-zinc-300 mx-auto mb-3"></i>
+              <p class="text-zinc-600 font-semibold">该分类下暂无已发布的赛道纪实</p>
+              <p class="text-zinc-400 text-xs mt-1 font-light">点击右上角【发布新纪实战报】即可创建发布</p>
+            </div>
+          `;
+          if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+          return;
+        }
+
+        let html = '';
+        filtered.forEach((act, index) => {
+          const catNames = { race: '🏆 大赛战报', tech: '🔧 研发制造', science: '📖 科普交流' };
+          const catName = catNames[act.category] || act.category;
+
+          html += `
+            <div class="bg-white rounded-2xl border border-black/[0.08] overflow-hidden shadow-sm flex flex-col justify-between group hover:border-[#D9232D]/30 transition-all">
+              <div>
+                <!-- Cover Image & Badge -->
+                <div class="relative h-44 overflow-hidden bg-zinc-100">
+                  <img src="../${act.image || 'assets/images/track_action_card.jpg'}" alt="${act.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='../assets/images/track_action_card.jpg'">
+                  <span class="absolute top-3 left-3 ${act.tagColor || 'bg-[#D9232D]'} text-white font-telemetry font-semibold text-[10px] px-2.5 py-1 rounded shadow-sm">
+                    ${act.tag || '赛道纪实'}
+                  </span>
+                  <span class="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-white/90 backdrop-blur-md text-zinc-700 font-telemetry text-xs shadow-sm font-semibold">
+                    ${act.date || '2026'}
+                  </span>
+                </div>
+
+                <!-- Body -->
+                <div class="p-5 space-y-2.5">
+                  <div class="text-[11px] font-telemetry text-zinc-400 uppercase tracking-wider font-semibold">
+                    ${catName}
+                  </div>
+                  <h3 class="font-display font-bold text-sm text-zinc-900 line-clamp-2 leading-snug">
+                    ${act.title}
+                  </h3>
+                  <p class="text-zinc-500 text-xs line-clamp-2 leading-relaxed font-light">
+                    ${act.summary}
+                  </p>
+                  ${act.stats ? `
+                    <div class="pt-2 border-t border-black/[0.04] text-[11px] font-telemetry text-[#103A82] truncate font-medium">
+                      ● ${act.stats}
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+
+              <!-- Footer Operations -->
+              <div class="p-4 bg-zinc-50 border-t border-black/[0.06] flex items-center justify-between">
+                <div class="flex items-center gap-1">
+                  <button data-id="${act.id}" data-dir="up" class="btn-act-move p-1.5 rounded hover:bg-zinc-200 text-zinc-600 transition-colors" title="上移">
+                    <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button data-id="${act.id}" data-dir="down" class="btn-act-move p-1.5 rounded hover:bg-zinc-200 text-zinc-600 transition-colors" title="下移">
+                    <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <button data-id="${act.id}" class="btn-act-edit px-3 py-1.5 rounded-lg bg-white border border-black/[0.08] hover:border-[#103A82] text-zinc-700 hover:text-[#103A82] text-xs font-telemetry font-semibold shadow-xs transition-colors">
+                    编辑
+                  </button>
+                  <button data-id="${act.id}" class="btn-act-delete p-1.5 rounded-lg text-zinc-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="删除纪实">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        grid.innerHTML = html;
+        if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+
+        // 绑定编辑
+        grid.querySelectorAll('.btn-act-edit').forEach(b => {
+          b.addEventListener('click', () => openActivityModal(b.getAttribute('data-id')));
+        });
+
+        // 绑定删除
+        grid.querySelectorAll('.btn-act-delete').forEach(b => {
+          b.addEventListener('click', () => {
+            const id = b.getAttribute('data-id');
+            if (confirm('确认删除该条赛道纪实吗？')) {
+              const cfg = ConfigManager.load();
+              cfg.activities = cfg.activities.filter(a => a.id !== id);
+              ConfigManager.save(cfg);
+              renderAdminActivities();
+              showToast('赛道纪实已删除，并在全站同步！', 'success');
+            }
+          });
+        });
+
+        // 绑定上下移动
+        grid.querySelectorAll('.btn-act-move').forEach(b => {
+          b.addEventListener('click', () => {
+            const id = b.getAttribute('data-id');
+            const dir = b.getAttribute('data-dir');
+            const cfg = ConfigManager.load();
+            const idx = cfg.activities.findIndex(a => a.id === id);
+            if (idx === -1) return;
+            if (dir === 'up' && idx > 0) {
+              const temp = cfg.activities[idx];
+              cfg.activities[idx] = cfg.activities[idx - 1];
+              cfg.activities[idx - 1] = temp;
+              ConfigManager.save(cfg);
+              renderAdminActivities();
+            } else if (dir === 'down' && idx < cfg.activities.length - 1) {
+              const temp = cfg.activities[idx];
+              cfg.activities[idx] = cfg.activities[idx + 1];
+              cfg.activities[idx + 1] = temp;
+              ConfigManager.save(cfg);
+              renderAdminActivities();
+            }
+          });
+        });
+      }
+
+      function openActivityModal(actId = null) {
+        const modal = document.getElementById('activity-edit-modal');
+        const headerTitle = document.getElementById('act-modal-header-title');
+        const form = document.getElementById('activity-edit-form');
+        const previewImg = document.getElementById('act-img-preview');
+
+        form.reset();
+
+        if (actId) {
+          const cfg = ConfigManager.load();
+          const act = (cfg.activities || []).find(a => a.id === actId);
+          if (act) {
+            headerTitle.textContent = '编辑赛道纪实 · 战报复盘';
+            document.getElementById('act-edit-id').value = act.id;
+            document.getElementById('act-category').value = act.category || 'race';
+            document.getElementById('act-date').value = act.date || '';
+            document.getElementById('act-title').value = act.title || '';
+            document.getElementById('act-tag').value = act.tag || '';
+            document.getElementById('act-tag-color').value = act.tagColor || 'bg-[#D9232D]';
+            document.getElementById('act-summary').value = act.summary || '';
+            document.getElementById('act-fulltext').value = act.fullText || '';
+            document.getElementById('act-stats').value = act.stats || '';
+            document.getElementById('act-badge').value = act.badge || '';
+
+            const presetSelect = document.getElementById('act-img-preset');
+            const customInput = document.getElementById('act-img-custom');
+            if (Array.from(presetSelect.options).some(o => o.value === act.image)) {
+              presetSelect.value = act.image;
+              customInput.value = '';
+            } else {
+              presetSelect.value = 'custom';
+              customInput.value = act.image || '';
+            }
+            previewImg.src = act.image.startsWith('http') || act.image.startsWith('data:') ? act.image : `../${act.image}`;
+          }
+        } else {
+          headerTitle.textContent = '发布新纪实战报 · 实践科普';
+          document.getElementById('act-edit-id').value = '';
+          const now = new Date();
+          document.getElementById('act-date').value = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2, '0')}`;
+          document.getElementById('act-img-preset').value = 'assets/images/track_action_card.jpg';
+          previewImg.src = '../assets/images/track_action_card.jpg';
+        }
+
+        modal.classList.remove('hidden');
+        if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+      }
+
+      function closeActivityModal() {
+        document.getElementById('activity-edit-modal').classList.add('hidden');
+      }
+
+      // ─────────────────────────────────────────────────────────────────────────
+      // 各组负责人与邮箱路由管理 (Routing CMS Engine)
+      // ─────────────────────────────────────────────────────────────────────────
+      function populateRoutingForm() {
+        const cfg = ConfigManager.load();
+        if (!cfg || !cfg.departments) return;
+        const d = cfg.departments;
+
+        // 电气组
+        if (d.electrical) {
+          document.getElementById('dept-electrical-name').value = d.electrical.name || '电气组';
+          document.getElementById('dept-electrical-head').value = d.electrical.head || '';
+          document.getElementById('dept-electrical-email').value = d.electrical.email || '';
+          document.getElementById('dept-electrical-guide').value = d.electrical.prepGuide || '';
+        }
+        // 机械组
+        if (d.mechanical) {
+          document.getElementById('dept-mechanical-name').value = d.mechanical.name || '机械组';
+          document.getElementById('dept-mechanical-head').value = d.mechanical.head || '';
+          document.getElementById('dept-mechanical-email').value = d.mechanical.email || '';
+          document.getElementById('dept-mechanical-guide').value = d.mechanical.prepGuide || '';
+        }
+        // 商业组
+        if (d.business) {
+          document.getElementById('dept-business-name').value = d.business.name || '商业组';
+          document.getElementById('dept-business-head').value = d.business.head || '';
+          document.getElementById('dept-business-email').value = d.business.email || '';
+          document.getElementById('dept-business-guide').value = d.business.prepGuide || '';
+        }
+        // 赞助部
+        if (d.sponsor) {
+          document.getElementById('dept-sponsor-name').value = d.sponsor.name || '商务合作委员会';
+          document.getElementById('dept-sponsor-head').value = d.sponsor.head || '';
+          document.getElementById('dept-sponsor-email').value = d.sponsor.email || '';
+          document.getElementById('dept-sponsor-phone').value = d.sponsor.phone || '';
+        }
+        // 队长/统筹
+        if (d.general) {
+          document.getElementById('dept-general-name').value = d.general.name || '车队队长 / 官方统筹';
+          document.getElementById('dept-general-head').value = d.general.head || '';
+          document.getElementById('dept-general-email').value = d.general.email || '';
+          document.getElementById('dept-general-cc').checked = d.general.ccAll !== false;
+        }
+      }
+
+      function saveRoutingForm() {
+        const cfg = ConfigManager.load();
+        cfg.departments = cfg.departments || {};
+
+        cfg.departments.electrical = {
+          name: document.getElementById('dept-electrical-name').value.trim(),
+          head: document.getElementById('dept-electrical-head').value.trim(),
+          email: document.getElementById('dept-electrical-email').value.trim(),
+          prepGuide: document.getElementById('dept-electrical-guide').value.trim()
+        };
+
+        cfg.departments.mechanical = {
+          name: document.getElementById('dept-mechanical-name').value.trim(),
+          head: document.getElementById('dept-mechanical-head').value.trim(),
+          email: document.getElementById('dept-mechanical-email').value.trim(),
+          prepGuide: document.getElementById('dept-mechanical-guide').value.trim()
+        };
+
+        cfg.departments.business = {
+          name: document.getElementById('dept-business-name').value.trim(),
+          head: document.getElementById('dept-business-head').value.trim(),
+          email: document.getElementById('dept-business-email').value.trim(),
+          prepGuide: document.getElementById('dept-business-guide').value.trim()
+        };
+
+        cfg.departments.sponsor = {
+          name: document.getElementById('dept-sponsor-name').value.trim(),
+          head: document.getElementById('dept-sponsor-head').value.trim(),
+          email: document.getElementById('dept-sponsor-email').value.trim(),
+          phone: document.getElementById('dept-sponsor-phone').value.trim()
+        };
+
+        cfg.departments.general = {
+          name: document.getElementById('dept-general-name').value.trim(),
+          head: document.getElementById('dept-general-head').value.trim(),
+          email: document.getElementById('dept-general-email').value.trim(),
+          ccAll: document.getElementById('dept-general-cc').checked
+        };
+
+        ConfigManager.save(cfg);
+        showToast('🎉 各组负责人与联络邮箱配置已成功保存！', 'success');
+      }
+
+      // ─────────────────────────────────────────────────────────────────────────
+      // 网页核心内容修改 (Site Content CMS Engine)
+      // ─────────────────────────────────────────────────────────────────────────
+      function updateCmsPreview() {
+        // 倒计时与状态预览
+        const titleVal = document.getElementById('cms-countdown-label') ? document.getElementById('cms-countdown-label').value.trim() : '';
+        const periodVal = document.getElementById('cms-countdown-period') ? document.getElementById('cms-countdown-period').value.trim() : '';
+        const statusVal = document.getElementById('cms-current-status') ? document.getElementById('cms-current-status').value.trim() : '';
+        const locVal = document.getElementById('cms-status-location') ? document.getElementById('cms-status-location').value.trim() : '';
+        const colorVal = document.getElementById('cms-status-color') ? document.getElementById('cms-status-color').value : 'emerald';
+
+        const previewTitle = document.getElementById('preview-count-title');
+        const previewPeriod = document.getElementById('preview-count-period');
+        const previewStatus = document.getElementById('preview-status-text');
+        const previewLoc = document.getElementById('preview-status-location');
+        const previewDot = document.getElementById('preview-status-dot');
+
+        if (previewTitle) previewTitle.textContent = titleVal || '距 2026FSC 全国总决赛开幕倒计时';
+        if (previewPeriod) previewPeriod.textContent = periodVal || '拟定赛期：2026.11.03 - 11.08';
+        if (previewStatus) previewStatus.textContent = statusVal || '整车装配中';
+        if (previewLoc) previewLoc.textContent = locVal || '科信学院成学楼东侧机械装备与制造学院';
+        if (previewDot) {
+          const colorMap = {
+            emerald: 'bg-emerald-500',
+            amber: 'bg-amber-500',
+            blue: 'bg-[#103A82]',
+            red: 'bg-[#D9232D]'
+          };
+          previewDot.className = `w-2 h-2 rounded-full ${colorMap[colorVal] || 'bg-emerald-500'} animate-pulse`;
+        }
+
+        const dateInput = document.getElementById('cms-countdown-date');
+        const previewDays = document.getElementById('preview-count-days');
+        if (dateInput && previewDays) {
+          const targetTime = new Date(dateInput.value.trim()).getTime();
+          if (!isNaN(targetTime)) {
+            const diff = targetTime - Date.now();
+            const days = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
+            previewDays.textContent = String(days).padStart(2, '0');
+          }
+        }
+
+        // 跑马灯滚动预览
+        const tickerPreviewTrack = document.getElementById('admin-ticker-preview-track');
+        const previewSpeedText = document.getElementById('preview-ticker-speed-text');
+        const speedVal = document.getElementById('cms-ticker-speed') ? document.getElementById('cms-ticker-speed').value : 50;
+        if (previewSpeedText) previewSpeedText.textContent = `速度: ${speedVal}s / 周期`;
+
+        if (tickerPreviewTrack) {
+          const tickerTextVal = document.getElementById('cms-ticker-text') ? document.getElementById('cms-ticker-text').value.trim() : '';
+          const rawItemsVal = document.getElementById('cms-ticker-items-raw') ? document.getElementById('cms-ticker-items-raw').value.trim() : '';
+          let previewHtml = '';
+
+          if (tickerTextVal) {
+            previewHtml += `
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#D9232D]/20 text-red-300 border border-[#D9232D]/40 font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#D9232D] animate-pulse"></span>
+                <span>📢 车队通告:</span>
+                <span class="text-white">${tickerTextVal}</span>
+              </span>
+            `;
+          }
+
+          rawItemsVal.split('\n').forEach(line => {
+            const trimmed = line.trim();
+            if (!trimmed) return;
+            const idx = trimmed.indexOf(':');
+            if (idx !== -1) {
+              const label = trimmed.slice(0, idx).trim();
+              const val = trimmed.slice(idx + 1).trim();
+              previewHtml += `
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white/5 border border-white/10 text-zinc-300">
+                  <span class="text-zinc-400 font-semibold">${label}:</span>
+                  <span class="text-white font-medium">${val}</span>
+                </span>
+              `;
+            } else {
+              previewHtml += `
+                <span class="inline-flex items-center px-2 py-0.5 rounded bg-white/5 border border-white/10 text-zinc-300">${trimmed}</span>
+              `;
+            }
+          });
+
+          tickerPreviewTrack.innerHTML = previewHtml || '<span class="text-zinc-500">暂无滚动条目</span>';
+        }
+      }
+
+      function populateCmsForm() {
+        const cfg = ConfigManager.load();
+        if (!cfg) return;
+
+        if (cfg.site) {
+          document.getElementById('cms-ticker-text').value = cfg.site.tickerText || '';
+          document.getElementById('cms-ticker-speed').value = cfg.site.tickerSpeed || 50;
+          document.getElementById('cms-ticker-enabled').value = cfg.site.tickerEnabled === false ? 'false' : 'true';
+
+          const defaultItems = [
+            { label: "UNIVERSITY", val: "河北工程大学 (HEBEI UNIVERSITY OF ENGINEERING)" },
+            { label: "AFFILIATION", val: "机械与装备工程学院 / 教务处" },
+            { label: "TEAM", val: "凌云油车队 (LINGYUN OIL RACING)" },
+            { label: "SEASON", val: "2026 49号 燃油驱动方程式" },
+            { label: "POWERTRAIN", val: "燃油内燃机 · 链传动后驱" },
+            { label: "ACCUMULATOR", val: "防爆燃油箱 · 进气/排气/冷却" },
+            { label: "STATUS", val: "● 备战成都耐久赛" },
+            { label: "HEADQUARTERS", val: "科信学院成学楼东侧机械装备与制造学院" }
+          ];
+          const items = Array.isArray(cfg.site.tickerItems) && cfg.site.tickerItems.length ? cfg.site.tickerItems : defaultItems;
+          const rawLines = items.map(it => `${it.label || it.prefix || 'INFO'}: ${it.val || it.value || ''}`).join('\n');
+          const rawInput = document.getElementById('cms-ticker-items-raw');
+          if (rawInput) rawInput.value = rawLines;
+
+          document.getElementById('cms-hero-tag').value = cfg.site.heroTag || '';
+          document.getElementById('cms-hero-subtitle').value = cfg.site.heroSubtitle || '';
+          document.getElementById('cms-countdown-title').value = cfg.site.countdownTitle || '';
+          document.getElementById('cms-countdown-date').value = cfg.site.countdownDate || '';
+          document.getElementById('cms-countdown-label').value = cfg.site.countdownLabel || '距 2026FSC 全国总决赛开幕倒计时';
+          document.getElementById('cms-countdown-period').value = cfg.site.countdownPeriod || '拟定赛期：2026.11.03 - 11.08';
+          document.getElementById('cms-current-status').value = cfg.site.currentStatus || '整车装配中';
+          document.getElementById('cms-status-color').value = cfg.site.currentStatusColor || 'emerald';
+          document.getElementById('cms-status-location').value = cfg.site.currentLocation || '科信学院成学楼东侧机械装备与制造学院';
+
+          // 同步 datetime-local 拾取器
+          if (cfg.site.countdownDate) {
+            try {
+              const d = new Date(cfg.site.countdownDate);
+              if (!isNaN(d.getTime())) {
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                const hours = String(d.getHours()).padStart(2, '0');
+                const mins = String(d.getMinutes()).padStart(2, '0');
+                const picker = document.getElementById('cms-countdown-picker');
+                if (picker) picker.value = `${year}-${month}-${day}T${hours}:${mins}`;
+              }
+            } catch (_) {}
+          }
+
+          document.getElementById('cms-workshop-address').value = cfg.site.workshopAddress || '';
+          document.getElementById('cms-coordinator-phone').value = cfg.site.coordinatorPhone || '';
+          document.getElementById('cms-official-wechat').value = cfg.site.officialWechat || '';
+          document.getElementById('cms-copyright').value = cfg.site.copyright || '';
+
+          updateCmsPreview();
+        }
+
+        if (cfg.recruitment) {
+          document.getElementById('cms-recruit-is-open').value = cfg.recruitment.isOpen ? 'true' : 'false';
+          document.getElementById('cms-recruit-season').value = cfg.recruitment.seasonYear || '2026';
+          document.getElementById('cms-recruit-notice').value = cfg.recruitment.statusNotice || '';
+        }
+      }
+
+      function saveCmsForm() {
+        const cfg = ConfigManager.load();
+        cfg.site = cfg.site || {};
+        cfg.recruitment = cfg.recruitment || {};
+
+        cfg.site.tickerText = document.getElementById('cms-ticker-text').value.trim();
+        cfg.site.tickerSpeed = parseInt(document.getElementById('cms-ticker-speed').value, 10) || 50;
+        cfg.site.tickerEnabled = document.getElementById('cms-ticker-enabled').value === 'true';
+
+        // 解析 rawLines 为 tickerItems
+        const rawItemsEl = document.getElementById('cms-ticker-items-raw');
+        if (rawItemsEl) {
+          const rawItemsText = rawItemsEl.value.trim();
+          const parsedItems = [];
+          rawItemsText.split('\n').forEach(line => {
+            const trimmed = line.trim();
+            if (!trimmed) return;
+            const colonIdx = trimmed.indexOf(':');
+            if (colonIdx !== -1) {
+              const label = trimmed.slice(0, colonIdx).trim();
+              const val = trimmed.slice(colonIdx + 1).trim();
+              parsedItems.push({
+                label,
+                val,
+                highlight: label === 'TEAM' || label === 'POWERTRAIN',
+                color: label === 'STATUS' ? 'text-emerald-600 font-bold' : ''
+              });
+            } else {
+              parsedItems.push({ label: 'INFO', val: trimmed });
+            }
+          });
+          if (parsedItems.length) {
+            cfg.site.tickerItems = parsedItems;
+          }
+        }
+
+        cfg.site.heroTag = document.getElementById('cms-hero-tag').value.trim();
+        cfg.site.heroSubtitle = document.getElementById('cms-hero-subtitle').value.trim();
+        cfg.site.countdownTitle = document.getElementById('cms-countdown-title').value.trim();
+        cfg.site.countdownDate = document.getElementById('cms-countdown-date').value.trim();
+        cfg.site.countdownLabel = document.getElementById('cms-countdown-label').value.trim();
+        cfg.site.countdownPeriod = document.getElementById('cms-countdown-period').value.trim();
+        cfg.site.currentStatus = document.getElementById('cms-current-status').value.trim();
+        cfg.site.currentStatusColor = document.getElementById('cms-status-color').value;
+        cfg.site.currentLocation = document.getElementById('cms-status-location').value.trim();
+        cfg.site.workshopAddress = document.getElementById('cms-workshop-address').value.trim();
+        cfg.site.coordinatorPhone = document.getElementById('cms-coordinator-phone').value.trim();
+        cfg.site.officialWechat = document.getElementById('cms-official-wechat').value.trim();
+        cfg.site.copyright = document.getElementById('cms-copyright').value.trim();
+
+        cfg.recruitment.isOpen = document.getElementById('cms-recruit-is-open').value === 'true';
+        cfg.recruitment.seasonYear = document.getElementById('cms-recruit-season').value.trim();
+        cfg.recruitment.statusNotice = document.getElementById('cms-recruit-notice').value.trim();
+
+        ConfigManager.save(cfg);
+        updateCmsPreview();
+        showToast('🎉 网页核心内容、跑马灯与状态看板已成功保存！', 'success');
+      }
+
+      // ─────────────────────────────────────────────────────────────────────────
+      // 零代码交接中心操作 (Cloud Sync & Backup Engine)
+      // ─────────────────────────────────────────────────────────────────────────
+      async function syncToCloud() {
+        const btn = document.getElementById('btn-sync-cloud');
+        const cfg = ConfigManager.load();
+        btn.disabled = true;
+        btn.classList.add('opacity-75', 'cursor-not-allowed');
+        const origText = btn.innerHTML;
+        btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>正在向 Google Apps Script 云端同步...</span>`;
+        if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+
+        try {
+          // 以 CORS-safelisted 标头向 GAS 分发 action: 'save_config'
+          await fetch(GAS_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              action: 'save_config',
+              config: cfg
+            })
+          });
+
+          showToast('🚀 全站最新配置已成功推送到云端！公网访客即将即时同步看到最新内容。', 'success');
+        } catch (err) {
+          showToast('云端同步已发起，请确保 Google Apps Script 正常在线。', 'info');
+        } finally {
+          setTimeout(() => {
+            btn.disabled = false;
+            btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            btn.innerHTML = origText;
+            if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+          }, 1200);
+        }
+      }
+
+      function exportSiteConfig() {
+        const cfg = ConfigManager.load();
+        const jsonStr = JSON.stringify(cfg, null, 2);
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `site_config_${Date.now()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('📥 配置文件已成功导出！可作为车队离线备份。', 'success');
+      }
+
+      function importSiteConfig(file) {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          try {
+            const parsed = JSON.parse(e.target.result);
+            if (parsed && (parsed.departments || parsed.activities || parsed.site)) {
+              ConfigManager.save(parsed);
+              renderAdminActivities();
+              populateRoutingForm();
+              populateCmsForm();
+              showToast('🎉 配置文件已成功导入并恢复生效！', 'success');
+            } else {
+              showToast('导入失败：不是有效的车队配置文件格式。', 'error');
+            }
+          } catch (err) {
+            showToast('JSON 语法解析失败，请检查文件。', 'error');
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      function switchTab(tabName) {
+        AppState.activeMainTab = tabName;
+        document.querySelectorAll('.main-tab-btn').forEach(btn => {
+          const t = btn.getAttribute('data-tab');
+          if (t === tabName) {
+            btn.classList.remove('bg-zinc-50', 'hover:bg-zinc-100', 'text-zinc-700');
+            btn.classList.add('bg-[#103A82]', 'text-white', 'shadow-sm');
+          } else {
+            btn.classList.add('bg-zinc-50', 'hover:bg-zinc-100', 'text-zinc-700');
+            btn.classList.remove('bg-[#103A82]', 'text-white', 'shadow-sm');
+          }
+        });
+
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+        const activePane = document.getElementById(`tab-content-${tabName}`);
+        if (activePane) activePane.classList.remove('hidden');
+
+        if (tabName === 'activities') {
+          renderAdminActivities();
+        } else if (tabName === 'routing') {
+          populateRoutingForm();
+        } else if (tabName === 'cms') {
+          populateCmsForm();
+        }
+      }
+
+      // ─────────────────────────────────────────────────────────────────────────
+      // 主应用状态调度 (Main App Controller)
+      // ─────────────────────────────────────────────────────────────────────────
+      function renderApp() {
+        const isAuthed = AuthEngine.isAuthenticated();
+        const gate = document.getElementById('login-gate');
+        const dash = document.getElementById('dashboard-app');
+        const userBadge = document.getElementById('auth-user-badge');
+        const btnLogout = document.getElementById('btn-logout');
+
+        if (isAuthed) {
+          gate.classList.add('hidden');
+          dash.classList.remove('hidden');
+          userBadge.classList.remove('hidden');
+          btnLogout.classList.remove('hidden');
+
+          const user = AuthEngine.getCurrentUser();
+          if (user && user.user) {
+            document.getElementById('current-username').textContent = `管理员：${user.user} (在线)`;
+          }
+
+          AppState.records = DataStore.load();
+          applyFilters();
+          renderStats();
+          renderTable();
+          switchTab(AppState.activeMainTab || 'forms');
+        } else {
+          gate.classList.remove('hidden');
+          dash.classList.add('hidden');
+          userBadge.classList.add('hidden');
+          btnLogout.classList.add('hidden');
+        }
+
+        if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+      }
+
+      function initEvents() {
+        const loginForm = document.getElementById('gate-login-form');
+        const userInput = document.getElementById('gate-user');
+        const passInput = document.getElementById('gate-pass');
+        const passToggle = document.getElementById('gate-pass-toggle');
+        const errorBox = document.getElementById('gate-error-box');
+        const errorMsg = document.getElementById('gate-error-msg');
+
+        if (passToggle && passInput) {
+          passToggle.addEventListener('click', () => {
+            const isPass = passInput.type === 'password';
+            passInput.type = isPass ? 'text' : 'password';
+            const icon = passToggle.querySelector('i');
+            if (icon) {
+              icon.setAttribute('data-lucide', isPass ? 'eye-off' : 'eye');
+              if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+            }
+          });
+        }
+
+        if (loginForm) {
+          loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const res = AuthEngine.login(userInput.value, passInput.value);
+            if (res.success) {
+              errorBox.classList.add('hidden');
+              showToast('🛡️ 身份认证成功，已进入管理工作台！', 'success');
+              renderApp();
+            } else {
+              errorMsg.textContent = res.message;
+              errorBox.classList.remove('hidden');
+              passInput.value = '';
+              passInput.focus();
+            }
+          });
+        }
+
+        document.getElementById('btn-logout').addEventListener('click', () => {
+          if (confirm('确定要退出当前管理会话吗？')) {
+            AuthEngine.logout();
+          }
+        });
+
+        // 顶栏 Tab 切换
+        document.querySelectorAll('.main-tab-btn').forEach(b => {
+          b.addEventListener('click', () => {
+            const t = b.getAttribute('data-tab');
+            switchTab(t);
+          });
+        });
+
+        // 表单分类筛选
+        document.querySelectorAll('.filter-cat-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-cat-btn').forEach(b => {
+              b.classList.remove('bg-white', 'text-zinc-900', 'shadow-xs');
+              b.classList.add('text-zinc-600');
+            });
+            btn.classList.add('bg-white', 'text-zinc-900', 'shadow-xs');
+            btn.classList.remove('text-zinc-600');
+
+            AppState.currentCategory = btn.getAttribute('data-cat');
+            applyFilters();
+            renderTable();
+          });
+        });
+
+        document.getElementById('filter-status-select').addEventListener('change', (e) => {
+          AppState.currentStatus = e.target.value;
+          applyFilters();
+          renderTable();
+        });
+
+        let searchTimeout;
+        document.getElementById('search-input').addEventListener('input', (e) => {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            AppState.searchQuery = e.target.value;
+            applyFilters();
+            renderTable();
+          }, 150);
+        });
+
+        document.getElementById('btn-prev-page').addEventListener('click', () => {
+          if (AppState.currentPage > 1) {
+            AppState.currentPage--;
+            renderTable();
+          }
+        });
+
+        document.getElementById('btn-next-page').addEventListener('click', () => {
+          const totalPages = Math.ceil(AppState.filteredRecords.length / AppState.pageSize) || 1;
+          if (AppState.currentPage < totalPages) {
+            AppState.currentPage++;
+            renderTable();
+          }
+        });
+
+        document.getElementById('btn-close-detail').addEventListener('click', closeDetailModal);
+        document.getElementById('detail-modal').addEventListener('click', (e) => {
+          if (e.target === document.getElementById('detail-modal')) closeDetailModal();
+        });
+
+        document.getElementById('btn-save-detail').addEventListener('click', () => {
+          if (!AppState.activeDetailId) return;
+          const newStatus = document.getElementById('detail-status-select').value;
+          const newNotes = document.getElementById('detail-notes-input').value;
+          DataStore.updateStatus(AppState.activeDetailId, newStatus, newNotes);
+          closeDetailModal();
+          showToast('状态与跟进备忘录已成功保存！', 'success');
+        });
+
+        // 邮件智能同步弹窗
+        const syncModal = document.getElementById('email-sync-modal');
+        const syncTextarea = document.getElementById('email-sync-textarea');
+        const syncResult = document.getElementById('email-sync-result');
+
+        const openSyncModal = () => {
+          syncTextarea.value = '';
+          syncResult.classList.add('hidden');
+          syncModal.classList.remove('hidden');
+        };
+
+        document.getElementById('btn-open-sync-email').addEventListener('click', openSyncModal);
+        document.getElementById('btn-close-sync-email').addEventListener('click', () => syncModal.classList.add('hidden'));
+        document.getElementById('btn-cancel-sync-email').addEventListener('click', () => syncModal.classList.add('hidden'));
+        syncModal.addEventListener('click', (e) => {
+          if (e.target === syncModal) syncModal.classList.add('hidden');
+        });
+
+        document.getElementById('btn-parse-sync-email').addEventListener('click', () => {
+          const content = syncTextarea.value;
+          const res = parseEmailContent(content);
+          if (res.success) {
+            syncResult.className = 'p-3 rounded-lg text-xs bg-emerald-50 text-emerald-800 border border-emerald-200';
+            syncResult.textContent = `✅ 真实填报记录已校验并入库！编号：${res.record.id}`;
+            syncResult.classList.remove('hidden');
+            setTimeout(() => {
+              syncModal.classList.add('hidden');
+              showToast('🎉 真实邮件数据已成功同步！', 'success');
+            }, 800);
+          } else {
+            syncResult.className = 'p-3 rounded-lg text-xs bg-red-50 text-red-800 border border-red-200';
+            syncResult.textContent = `❌ ${res.message}`;
+            syncResult.classList.remove('hidden');
+          }
+        });
+
+        // 线下数据补录
+        const manualModal = document.getElementById('manual-modal');
+        const manualForm = document.getElementById('manual-form');
+        document.getElementById('btn-open-manual-add').addEventListener('click', () => {
+          manualForm.reset();
+          manualModal.classList.remove('hidden');
+        });
+        document.getElementById('btn-close-manual').addEventListener('click', () => manualModal.classList.add('hidden'));
+        document.getElementById('btn-cancel-manual').addEventListener('click', () => manualModal.classList.add('hidden'));
+        manualModal.addEventListener('click', (e) => {
+          if (e.target === manualModal) manualModal.classList.add('hidden');
+        });
+
+        manualForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const category = document.getElementById('manual-category').value;
+          const name = document.getElementById('manual-name').value;
+          const org = document.getElementById('manual-org').value;
+          const email = document.getElementById('manual-email').value;
+          const phone = document.getElementById('manual-phone').value;
+          const target = document.getElementById('manual-target').value;
+          const content = document.getElementById('manual-content').value;
+
+          DataStore.addRecord(category, name, org, email, phone, target, content);
+          manualModal.classList.add('hidden');
+          showToast('🎉 真实数据已成功补录入库！', 'success');
+        });
+
+        document.getElementById('btn-export-csv').addEventListener('click', exportToCSV);
+        document.getElementById('btn-export-json').addEventListener('click', () => {
+          exportToJSON();
+          document.getElementById('more-menu').classList.add('hidden');
+        });
+
+        document.getElementById('btn-more-actions').addEventListener('click', (e) => {
+          e.stopPropagation();
+          const menu = document.getElementById('more-menu');
+          menu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', () => {
+          const menu = document.getElementById('more-menu');
+          if (menu && !menu.classList.contains('hidden')) {
+            menu.classList.add('hidden');
+          }
+        });
+
+        document.getElementById('btn-purge-fake').addEventListener('click', () => {
+          DataStore.purgeFake();
+          showToast('已清理并完成真实数据纯净校验！', 'success');
+          document.getElementById('more-menu').classList.add('hidden');
+        });
+
+        document.getElementById('btn-clear-all').addEventListener('click', () => {
+          if (confirm('⚠️ 警告：确认清空全部表单记录吗？数据清空后将不可逆。')) {
+            DataStore.clearAll();
+            showToast('已清空所有数据记录。', 'info');
+          }
+        });
+
+        // 赛道纪实管理事件
+        document.getElementById('btn-create-activity').addEventListener('click', () => openActivityModal());
+        document.getElementById('btn-close-act-modal').addEventListener('click', closeActivityModal);
+        document.getElementById('btn-cancel-act-modal').addEventListener('click', closeActivityModal);
+        document.getElementById('activity-edit-modal').addEventListener('click', (e) => {
+          if (e.target === document.getElementById('activity-edit-modal')) closeActivityModal();
+        });
+
+        // 纪实分类筛选按钮
+        document.querySelectorAll('.act-admin-filter').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.act-admin-filter').forEach(b => {
+              b.classList.remove('bg-[#D9232D]', 'text-white');
+              b.classList.add('bg-white', 'text-zinc-600', 'border', 'border-zinc-200');
+            });
+            btn.classList.add('bg-[#D9232D]', 'text-white');
+            btn.classList.remove('bg-white', 'text-zinc-600', 'border', 'border-zinc-200');
+            currentActFilter = btn.getAttribute('data-cat');
+            renderAdminActivities();
+          });
+        });
+
+        // 封面图片预设切换与预览
+        const presetSelect = document.getElementById('act-img-preset');
+        const customInput = document.getElementById('act-img-custom');
+        const previewImg = document.getElementById('act-img-preview');
+        const fileInput = document.getElementById('act-img-file');
+
+        presetSelect.addEventListener('change', () => {
+          if (presetSelect.value === 'custom') {
+            customInput.focus();
+          } else {
+            customInput.value = '';
+            previewImg.src = `../${presetSelect.value}`;
+          }
+        });
+
+        customInput.addEventListener('input', () => {
+          if (customInput.value.trim()) {
+            presetSelect.value = 'custom';
+            previewImg.src = customInput.value.trim();
+          }
+        });
+
+        fileInput.addEventListener('change', () => {
+          const file = fileInput.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              presetSelect.value = 'custom';
+              customInput.value = e.target.result;
+              previewImg.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+        // 赛道纪实表单保存提交
+        document.getElementById('activity-edit-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const actId = document.getElementById('act-edit-id').value;
+          const category = document.getElementById('act-category').value;
+          const date = document.getElementById('act-date').value.trim();
+          const title = document.getElementById('act-title').value.trim();
+          const tag = document.getElementById('act-tag').value.trim();
+          const tagColor = document.getElementById('act-tag-color').value;
+          const summary = document.getElementById('act-summary').value.trim();
+          const fullText = document.getElementById('act-fulltext').value.trim();
+          const stats = document.getElementById('act-stats').value.trim();
+          const badge = document.getElementById('act-badge').value.trim() || '赛报纪实';
+
+          let image = presetSelect.value;
+          if (image === 'custom') {
+            image = customInput.value.trim() || 'assets/images/track_action_card.jpg';
+          }
+
+          const cfg = ConfigManager.load();
+          cfg.activities = cfg.activities || [];
+
+          if (actId) {
+            // 更新已有
+            const idx = cfg.activities.findIndex(a => a.id === actId);
+            if (idx !== -1) {
+              cfg.activities[idx] = {
+                ...cfg.activities[idx],
+                category,
+                date,
+                title,
+                tag,
+                tagColor,
+                image,
+                summary,
+                fullText,
+                stats,
+                badge
+              };
+            }
+          } else {
+            // 新增
+            const newAct = {
+              id: `act_${Date.now().toString(36)}`,
+              category,
+              date,
+              title,
+              tag,
+              tagColor,
+              image,
+              summary,
+              fullText,
+              stats,
+              badge,
+              badgeIcon: category === 'race' ? 'trophy' : (category === 'tech' ? 'wrench' : 'book-open')
+            };
+            cfg.activities.unshift(newAct);
+          }
+
+          ConfigManager.save(cfg);
+          closeActivityModal();
+          renderAdminActivities();
+          showToast('🎉 赛道纪实战报已成功保存并实时发布至官网！', 'success');
+        });
+
+        // 路由与 CMS 保存
+        document.getElementById('btn-save-routing').addEventListener('click', saveRoutingForm);
+        document.getElementById('btn-save-cms').addEventListener('click', saveCmsForm);
+
+        // 顶部跑马灯遥测流即时联动与预览绑定
+        ['cms-ticker-text', 'cms-ticker-items-raw', 'cms-ticker-speed'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener('input', updateCmsPreview);
+        });
+        const tickerEnabledSelect = document.getElementById('cms-ticker-enabled');
+        if (tickerEnabledSelect) tickerEnabledSelect.addEventListener('change', updateCmsPreview);
+
+        const btnResetTicker = document.getElementById('btn-reset-ticker-items');
+        if (btnResetTicker) {
+          btnResetTicker.addEventListener('click', () => {
+            const defaultItems = [
+              "UNIVERSITY: 河北工程大学 (HEBEI UNIVERSITY OF ENGINEERING)",
+              "AFFILIATION: 机械与装备工程学院 / 教务处",
+              "TEAM: 凌云油车队 (LINGYUN OIL RACING)",
+              "SEASON: 2026 49号 燃油驱动方程式",
+              "POWERTRAIN: 燃油内燃机 · 链传动后驱",
+              "FUEL SYSTEM: 防爆燃油箱 · 进气/排气/冷却",
+              "STATUS: ● 备战成都耐久赛",
+              "HEADQUARTERS: 科信学院成学楼东侧机械装备与制造学院"
+            ];
+            const rawEl = document.getElementById('cms-ticker-items-raw');
+            if (rawEl) {
+              rawEl.value = defaultItems.join('\n');
+              updateCmsPreview();
+              showToast('已恢复跑马灯默认预设遥测条目！', 'info');
+            }
+          });
+        }
+
+        // 倒计时与当前状态即时联动与预览绑定
+        ['cms-countdown-label', 'cms-countdown-period', 'cms-current-status', 'cms-status-location', 'cms-countdown-date'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener('input', updateCmsPreview);
+        });
+        const statusColorSelect = document.getElementById('cms-status-color');
+        if (statusColorSelect) statusColorSelect.addEventListener('change', updateCmsPreview);
+
+        const datePicker = document.getElementById('cms-countdown-picker');
+        if (datePicker) {
+          datePicker.addEventListener('input', (e) => {
+            const val = e.target.value;
+            if (val) {
+              document.getElementById('cms-countdown-date').value = `${val}:00+08:00`;
+              updateCmsPreview();
+            }
+          });
+        }
+
+        document.querySelectorAll('.btn-preset-status').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const st = btn.getAttribute('data-status');
+            const col = btn.getAttribute('data-color');
+            if (st) document.getElementById('cms-current-status').value = st;
+            if (col) document.getElementById('cms-status-color').value = col;
+            updateCmsPreview();
+          });
+        });
+
+        // 路由测试邮件外发
+        document.querySelectorAll('.btn-test-dept-email').forEach(b => {
+          b.addEventListener('click', async () => {
+            const dept = b.getAttribute('data-dept');
+            const emailInput = document.getElementById(`dept-${dept}-email`);
+            const targetEmail = emailInput ? emailInput.value.trim() : '';
+            if (!targetEmail) {
+              showToast('请先输入有效的邮箱地址。', 'error');
+              return;
+            }
+
+            b.disabled = true;
+            b.textContent = '正在发送...';
+            try {
+              await fetch(GAS_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({
+                  _subject: `【凌云油车队路由测试】${dept} 负责人接收测试`,
+                  _targetEmail: targetEmail,
+                  '测试部门': dept,
+                  '目标邮箱': targetEmail,
+                  '发送时间': new Date().toLocaleString()
+                })
+              });
+              showToast(`📨 已向 ${targetEmail} 发送测试探针邮件，请查收验证！`, 'success');
+            } catch (_) {
+              showToast(`已向 ${targetEmail} 发起发送，请检查邮箱。`, 'info');
+            } finally {
+              b.disabled = false;
+              b.textContent = '发送测试';
+            }
+          });
+        });
+
+        // 零代码交接中心
+        document.getElementById('btn-sync-cloud').addEventListener('click', syncToCloud);
+        document.getElementById('btn-export-config').addEventListener('click', exportSiteConfig);
+
+        const importInput = document.getElementById('input-import-config');
+        importInput.addEventListener('change', (e) => {
+          if (e.target.files && e.target.files[0]) {
+            importSiteConfig(e.target.files[0]);
+          }
+        });
+
+        document.getElementById('btn-reset-factory').addEventListener('click', () => {
+          if (confirm('⚠️ 警告：确认恢复为车队出厂初始配置吗？当前所有自定义修改将被重置。')) {
+            ConfigManager.reset();
+            renderAdminActivities();
+            populateRoutingForm();
+            populateCmsForm();
+            showToast('已恢复出厂预设配置！', 'info');
+          }
+        });
+
+        // 跨标签页同步
+        window.addEventListener('storage', (e) => {
+          if (e.key === STORAGE_KEY) {
+            AppState.records = DataStore.load();
+            applyFilters();
+            renderStats();
+            renderTable();
+          }
+          if (e.key === 'ly_site_config_v2') {
+            renderAdminActivities();
+            populateRoutingForm();
+            populateCmsForm();
+          }
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        initEvents();
+        renderApp();
+      });
+    })();
+  </script>
+</body>
+</html>

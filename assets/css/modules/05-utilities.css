@@ -1,0 +1,37 @@
+/* ==========================================================================
+   🏎️ LINGYUN RACING TEAM - APPLE-INSPIRED MOTORSPORT DESIGN SYSTEM
+   Layer 05: Utilities & Accessibility (布局隔离、无障碍聚焦指示、动效降级)
+   ========================================================================== */
+
+/* High-Performance Layout Containment (大幅削减长列表滚动重排损耗) */
+#about, #dual-pillars, #machinery, #milestones, #activities, #recruitment, #sponsorship, #contact {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+/* Accessible Focus Indicator (键盘 Tab 聚焦可访问性光标增强) */
+:focus-visible {
+  outline: 2px solid var(--color-school-blue);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion Accessibility (系统减弱动态偏好无缝降级) */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .telemetry-ticker-track {
+    animation: none !important;
+    transform: none !important;
+  }
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .modal-card-anim {
+    transform: none !important;
+  }
+}

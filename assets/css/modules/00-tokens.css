@@ -1,0 +1,43 @@
+/* ==========================================================================
+   🏎️ LINGYUN RACING TEAM - APPLE-INSPIRED MOTORSPORT DESIGN SYSTEM
+   Layer 00: Design Tokens (色彩体系、高精度圆角、系统字体、表面层级)
+   ========================================================================== */
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+  --font-telemetry: 'JetBrains Mono', monospace;
+
+  /* Apple Pristine Light Canvas */
+  --color-bg-base: #FFFFFF;
+  --color-bg-subtle: #F5F5F7;
+  --color-bg-elevated: #FFFFFF;
+  
+  /* Text System (Apple Charcoal & Grayscale) */
+  --color-text-primary: #1D1D1F;
+  --color-text-secondary: #424245;
+  --color-text-tertiary: #6E6E73;
+  --color-text-quaternary: #86868B;
+  
+  /* Dual Brand Colors */
+  --color-school-blue: #103A82;
+  --color-school-blue-hover: #0C2B64;
+  --color-school-blue-light: rgba(16, 58, 130, 0.08);
+  
+  --color-racing-red: #D9232D;
+  --color-racing-red-hover: #B81D25;
+  --color-racing-red-light: rgba(217, 35, 45, 0.08);
+
+  /* Hairlines & Apple Soft Surfaces */
+  --hairline-border: rgba(0, 0, 0, 0.08);
+  --hairline-border-subtle: rgba(0, 0, 0, 0.04);
+  --hairline-border-hover: rgba(16, 58, 130, 0.25);
+  
+  --glass-surface-base: rgba(255, 255, 255, 0.92);
+  --glass-surface-card: #FFFFFF;
+  
+  /* Crisp Geometry (Reduced Radii) */
+  --radius-card: 12px;
+  --radius-button: 8px;
+  --radius-pill: 6px;
+}

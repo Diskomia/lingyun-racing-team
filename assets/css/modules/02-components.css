@@ -1,0 +1,233 @@
+/* ==========================================================================
+   🏎️ LINGYUN RACING TEAM - APPLE-INSPIRED MOTORSPORT DESIGN SYSTEM
+   Layer 02: Components (导航栏指标、赛道进度条、毛玻璃卡片、微质感按钮、3D视差)
+   ========================================================================== */
+
+/* Nav Link ScrollSpy Active Indicator */
+.nav-link {
+  position: relative;
+  transition: color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--color-racing-red);
+  border-radius: 1px;
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s ease;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.nav-link.active {
+  color: var(--color-school-blue) !important;
+  font-weight: 600;
+}
+
+.nav-link.active::after {
+  width: 18px;
+}
+
+.mobile-nav-link {
+  transition: all 0.2s ease;
+  border-left: 2px solid transparent;
+  padding-left: 8px;
+}
+
+.mobile-nav-link.active {
+  color: var(--color-school-blue) !important;
+  font-weight: 600;
+  border-left-color: var(--color-racing-red);
+  background: rgba(16, 58, 130, 0.04);
+}
+
+/* Hairline Structural Classes */
+.border-hairline {
+  border: 1px solid var(--hairline-border);
+}
+
+.border-hairline-t {
+  border-top: 1px solid var(--hairline-border);
+}
+
+.border-hairline-b {
+  border-bottom: 1px solid var(--hairline-border);
+}
+
+.border-hairline-r {
+  border-right: 1px solid var(--hairline-border);
+}
+
+.border-hairline-l {
+  border-left: 1px solid var(--hairline-border);
+}
+
+/* Ultra-Slim Telemetry Progress Bar (纯 GPU 合成，零重排零重绘) */
+#track-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2.5px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  z-index: 9999;
+  background: linear-gradient(90deg, #103A82 0%, #D9232D 100%);
+  box-shadow: 0 1px 6px rgba(217, 35, 45, 0.3);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Precision Telemetry Stream (Apple Clean Minimalist Ribbon) */
+.telemetry-ticker-wrap {
+  width: 100%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid var(--hairline-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  z-index: 40;
+  contain: content;
+  transform: translateZ(0);
+}
+
+.telemetry-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: telemetryScroll 50s linear infinite;
+  will-change: transform;
+}
+
+.telemetry-ticker-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes telemetryScroll {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.telemetry-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 24px;
+  font-family: var(--font-telemetry);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  border-right: 1px solid var(--hairline-border-subtle);
+  white-space: nowrap;
+}
+
+.telemetry-pill span.val {
+  color: var(--color-school-blue);
+  font-weight: 600;
+}
+
+.telemetry-pill span.highlight {
+  color: var(--color-racing-red);
+  font-weight: 600;
+}
+
+/* Apple-Grade Clean Frosted Glass & Surface Panels */
+.glass-panel {
+  background: var(--glass-surface-base) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--hairline-border);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  border-radius: var(--radius-card);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.glass-card {
+  background: var(--glass-surface-card) !important;
+  border: 1px solid var(--hairline-border);
+  border-radius: var(--radius-card);
+  box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.04);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  transition: 
+    background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: var(--hairline-border-hover);
+  box-shadow: 0 10px 28px -4px rgba(16, 58, 130, 0.08);
+  transform: translate3d(0, -2px, 0);
+}
+
+.glass-dock {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--hairline-border);
+  border-radius: var(--radius-button);
+}
+
+.glass-pill {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border: 1px solid var(--hairline-border);
+  border-radius: var(--radius-pill);
+}
+
+/* High-End Precision Action Buttons (Apple Geometry, Crisp 8px) */
+.btn-speed {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-button);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+}
+
+.btn-speed:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -2px rgba(217, 35, 45, 0.2);
+}
+
+.btn-speed:active {
+  transform: translateY(0);
+}
+
+/* 3D Tilt Engine (Selective & Crisp Micro-Glare) */
+.tilt-card {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.tilt-inner {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+  position: relative;
+}
+
+.tilt-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 100px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.tilt-inner:hover::after {
+  opacity: 1;
+}

@@ -1,0 +1,80 @@
+/* ==========================================================================
+   🏎️ LINGYUN RACING TEAM - APPLE-INSPIRED MOTORSPORT DESIGN SYSTEM
+   Layer 03: Sections (领奖台高光、Pit-Board 倒计时看板、专属滚动条、背景水印)
+   ========================================================================== */
+
+/* Podium Highlights: Crisp hairline tint */
+.podium-p1 {
+  border-color: rgba(217, 119, 6, 0.4) !important;
+  background: #FFFDF7 !important;
+}
+
+.podium-p2 {
+  border-color: rgba(16, 58, 130, 0.4) !important;
+  background: #F8FAFC !important;
+}
+
+.podium-p3 {
+  border-color: rgba(234, 88, 12, 0.4) !important;
+  background: #FFFBF7 !important;
+}
+
+/* Pit-Board F1 Telemetry Countdown Box */
+.pit-digit-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  height: 52px;
+  padding: 0 10px;
+  border-radius: 10px;
+  background: rgba(245, 245, 247, 0.9);
+  border: 1px solid var(--hairline-border);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F5F7;
+}
+::-webkit-scrollbar-thumb {
+  background: #D1D1D6;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #AEAEB2;
+}
+
+/* Watermark Emblems for Hero Background */
+.watermark-emblem-school {
+  position: absolute;
+  top: 6%;
+  left: 2%;
+  width: 440px;
+  height: 440px;
+  background-image: url('../images/school_logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.045;
+  filter: grayscale(15%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.watermark-emblem-team {
+  position: absolute;
+  bottom: 4%;
+  right: 2%;
+  width: 500px;
+  height: 350px;
+  background-image: url('../images/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.045;
+  pointer-events: none;
+  z-index: 0;
+}
