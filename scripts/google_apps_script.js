@@ -50,8 +50,19 @@ function doPost(e) {
     var timestamp = data['提交时间'] || Utilities.formatDate(new Date(), "GMT+8", "yyyy-MM-dd HH:mm:ss 'CST'");
     var targetRole = data['申报意向/合作级别'] || data['申请意向组别'] || data['意向合作级别'] || data['咨询交流类型'] || "凌云油车队申请";
 
-    var logoUrl = "https://cdn.jsdelivr.net/gh/Diskomia/lingyun-racing-team@main/assets/images/logo.png";
     var siteUrl = "https://diskomia.github.io/lingyun-racing-team/";
+
+    // 把远程图片转成 base64 内嵌，避免邮箱拦截外部图片
+    function embedImage(url) {
+      try {
+        var resp = UrlFetchApp.fetch(url, {muteHttpExceptions: true});
+        if (resp.getResponseCode() === 200) {
+          var blob = resp.getBlob();
+          return "data:" + blob.getContentType() + ";base64," + Utilities.base64Encode(blob.getBytes());
+        }
+      } catch (_) {}
+      return url;
+    }
 
     // 根据申请组别返回对应部门图标
     function getDeptIcon(role) {
@@ -60,9 +71,11 @@ function doPost(e) {
       if (role.indexOf("底盘") >= 0 || role.indexOf("chassis") >= 0) return base + "icon_chassis.png";
       if (role.indexOf("车身") >= 0 || role.indexOf("body") >= 0 || role.indexOf("空套") >= 0) return base + "icon_body.png";
       if (role.indexOf("商业") >= 0 || role.indexOf("business") >= 0 || role.indexOf("商务") >= 0) return base + "icon_business.png";
-      return logoUrl;
+      return base + "logo.png";
     }
-    var deptIconUrl = getDeptIcon(targetRole);
+
+    var logoUrl = embedImage("https://cdn.jsdelivr.net/gh/Diskomia/lingyun-racing-team@main/assets/images/logo.png");
+    var deptIconUrl = embedImage(getDeptIcon(targetRole));
 
     // 1. 生成排版考究的 HTML 汇总表格并投递给车队管理员邮箱 (Bloomberg & Google Style)
     var adminHtmlBody = '<div style="background-color: #f1f5f9; padding: 24px 12px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif;">' +
