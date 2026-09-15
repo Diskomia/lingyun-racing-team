@@ -476,6 +476,24 @@ window.LingYun = window.LingYun || {};
         });
       }
 
+      // 拦截所有导航链接点击，用 JS 精确计算位置滚动
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          if (!href || href === '#') return;
+          const target = document.querySelector(href);
+          if (!target) return;
+          e.preventDefault();
+          // 等一帧确保布局稳定，再精确滚动
+          requestAnimationFrame(() => {
+            const rect = target.getBoundingClientRect();
+            const top = rect.top + window.pageYOffset - 100;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+            history.pushState(null, '', href);
+          });
+        });
+      });
+
       // 初次执行校准当前位置
       this.onScroll();
 
