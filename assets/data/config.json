@@ -1,0 +1,129 @@
+{
+  "site": {
+    "tickerText": "⚡ 凌云油车队 2026 赛季全新燃油方程式赛车研发进行中 · 招贤纳新通道持续开放",
+    "tickerSpeed": 50,
+    "tickerEnabled": true,
+    "tickerItems": [
+      { "label": "UNIVERSITY", "val": "河北工程大学科信学院 (KEXIN COLLEGE)", "pulse": true },
+      { "label": "AFFILIATION", "val": "机械装备与制造学院 / 教务处" },
+      { "label": "TEAM", "val": "凌云油车队 (LINGYUN OIL RACING)", "highlight": true },
+      { "label": "SEASON", "val": "2026 49号 燃油驱动方程式" },
+      { "label": "POWERTRAIN", "val": "燃油内燃机 · 链传动后驱", "highlight": true },
+      { "label": "ACCUMULATOR", "val": "防爆燃油箱 · 进气/排气/冷却" },
+      { "label": "STATUS", "val": "● 备战成都耐久赛", "color": "text-emerald-600" },
+      { "label": "HEADQUARTERS", "val": "科信学院成学楼东侧机械装备与制造学院" }
+    ],
+    "heroTag": "2026 赛季研发攻坚阶段",
+    "heroSubtitle": "矢志不渝，以燃油之驱突破赛道物理极限",
+    "countdownTitle": "2026 中国大学生方程式汽车大赛 (FSC)",
+    "countdownDate": "2026-11-03T09:00:00+08:00",
+    "countdownLabel": "距 2026FSC 全国总决赛开幕倒计时",
+    "countdownPeriod": "拟定赛期：2026.11.03 - 11.08",
+    "currentStatus": "整车装配中",
+    "currentStatusColor": "emerald",
+    "currentLocation": "科信学院成学楼东侧机械装备与制造学院",
+    "workshopAddress": "河北省邯郸市光明南大街199号河北工程大学科信学院成学楼东侧机械装备与制造学院",
+    "coordinatorPhone": "138-3100-2026",
+    "officialWechat": "河北工程大学科信学院凌云油车队",
+    "copyright": "© 2026 河北工程大学科信学院凌云油车队 (Lingyun Oil Racing Team). 保留所有权利."
+  },
+  "departments": {
+    "electrical": {
+      "name": "动力总成组",
+      "head": "动力总成负责人",
+      "email": "diskomiakhan@gmail.com",
+      "phone": "",
+      "prepGuide": "建议学习内燃机、进排气与发动机控制相关知识或准备过往作品。"
+    },
+    "mechanical": {
+      "name": "底盘组",
+      "head": "底盘负责人",
+      "email": "diskomiakhan@gmail.com",
+      "phone": "",
+      "prepGuide": "建议学习车架、悬架与机械设计相关知识或准备过往作品。"
+    },
+    "business": {
+      "name": "商业组",
+      "head": "商业负责人",
+      "email": "diskomiakhan@gmail.com",
+      "phone": "",
+      "prepGuide": "建议学习相关知识或准备过往作品。"
+    },
+    "sponsor": {
+      "name": "商务赞助",
+      "head": "商业总监 / 外联主管",
+      "email": "diskomiakhan@gmail.com",
+      "phone": ""
+    },
+    "general": {
+      "name": "官方统筹 / 队长",
+      "head": "车队队长",
+      "email": "diskomiakhan@gmail.com",
+      "phone": "",
+      "ccAll": true
+    }
+  },
+  "recruitment": {
+    "isOpen": true,
+    "seasonYear": "2026",
+    "statusNotice": "凌云油车队 2026 赛季全系招新正式开启，欢迎怀揣赛车梦想的同学加入！"
+  },
+  "activities": [
+    {
+      "id": "act_2025_fsec",
+      "category": "race",
+      "tag": "FSEC 大赛 · 全国三等奖",
+      "tagColor": "bg-amber-500",
+      "date": "2025.11",
+      "title": "2025FSEC：荣获中国大学生方程式汽车大赛全国三等奖",
+      "summary": "全国总决赛赛场攻坚突破，车检顺畅过检，技术组与商业组再度斩获国家级殊荣。",
+      "fullText": "在中国大学生方程式汽车大赛中，凌云油车队经过车辆技术检验、车检与静态商业答辩，并在多项动态赛事中稳定完赛，斩获全国三等奖！",
+      "image": "assets/images/track_action_card.jpg",
+      "stats": "FSEC 全国三等奖 | 技术与商业协同攻坚",
+      "badge": "国家级三等奖",
+      "badgeIcon": "trophy"
+    },
+    {
+      "id": "act_2024_fsec",
+      "category": "race",
+      "tag": "FSEC 大赛 · 全国二等奖",
+      "tagColor": "bg-[#D9232D]",
+      "date": "2024.11",
+      "title": "2024FSEC：斩获全国二等奖并蝉联优秀宣传团队",
+      "summary": "全国总决赛赛场再续辉煌，车检全优通过，商业组与技术组共同捧起两座国家级大奖。",
+      "fullText": "在中国大学生方程式汽车大赛中，河北工程大学科信学院凌云油车队技术组与商业组协同作战，以优异成绩斩获全国二等奖，并凭借高质量的新媒体传播与赛事纪实，再次蝉联年度优秀宣传团队荣誉称号！",
+      "image": "assets/images/activity_2024_award.jpg",
+      "stats": "FSEC 全国二等奖 | 蝉联年度优秀宣传团队",
+      "badge": "国家级二等奖",
+      "badgeIcon": "trophy"
+    },
+    {
+      "id": "act_stem_outreach",
+      "category": "science",
+      "tag": "社会交流 · 科普开放日",
+      "tagColor": "bg-[#103A82]",
+      "date": "2024",
+      "title": "践行社会责任：接待邯郸四中及石家庄工程技术学校师生科普",
+      "summary": "开放赛车车间，生动讲解赛车构造与原理，发挥高校工程实践育人社会效益。",
+      "fullText": "作为河北工程大学实践教学与社会服务的重要载体，凌云油车队先后接待了邯郸市第四中学和石家庄工程技术学校师生来访。队员们在科信学院成学楼东侧机械装备与制造学院热情带领中学生走进车间，深入讲解方程式赛车悬架几何、碳纤维成型与散热系统原理，点亮青少年的工程强国梦想。",
+      "image": "assets/images/activity_stem_outreach.jpg",
+      "stats": "接待中学生及职校师生 120+ 人 | 赛车构造原理科普",
+      "badge": "工程科普实践",
+      "badgeIcon": "book-open"
+    },
+    {
+      "id": "act_garage_tuning",
+      "category": "tech",
+      "tag": "实训车间 · 研发纪实",
+      "tagColor": "bg-[#103A82]",
+      "date": "2026.01",
+      "title": "实训车间：4130桁架与燃油动力总成调试",
+      "summary": "践行每年推出一辆新赛车的庄严承诺，师生携手攻坚 49 号燃油方程式赛车车架与底盘制造。",
+      "fullText": "在河北工程大学科信学院成学楼东侧机械装备与制造学院，技术组队员正紧锣密鼓进行 49 号燃油方程式赛车的装配调试。团队严格执行工程规范，完成整车管路布置、燃油箱密封测试、TC4钛合金半轴与悬架四轮定位，力求在动态赛中再破纪录。",
+      "image": "assets/images/activity_garage_tuning.jpg",
+      "stats": "燃油动力 | 防爆燃油箱 | 4130桁架与TC4钛合金半轴",
+      "badge": "工程实训研发车间",
+      "badgeIcon": "wrench"
+    }
+  ]
+}

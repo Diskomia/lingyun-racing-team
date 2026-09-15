@@ -196,6 +196,30 @@
         }
       } catch (_) {}
       return null;
+    },
+
+    async fetchRepoConfig() {
+      try {
+        const resp = await fetch('assets/data/config.json?v=' + Date.now(), { cache: 'no-cache' });
+        if (!resp.ok) return null;
+        const parsed = await resp.json();
+        if (!parsed) return null;
+        const merged = {
+          site: Object.assign({}, DEFAULT_SITE_CONFIG.site, parsed.site || {}),
+          departments: Object.assign({}, DEFAULT_SITE_CONFIG.departments, parsed.departments || {}),
+          recruitment: Object.assign({}, DEFAULT_SITE_CONFIG.recruitment, parsed.recruitment || {}),
+          activities: Array.isArray(parsed.activities) && parsed.activities.length ? parsed.activities : DEFAULT_SITE_CONFIG.activities
+        };
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(merged));
+        }
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('ly_config_updated', { detail: merged }));
+        }
+        return merged;
+      } catch (_) {
+        return null;
+      }
     }
   };
 

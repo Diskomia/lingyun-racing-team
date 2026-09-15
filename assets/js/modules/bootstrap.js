@@ -188,10 +188,10 @@
 
     if (typeof window !== 'undefined') {
       window.addEventListener('ly_config_updated', () => applyDynamicContent());
-      // 异步尝试从云端拉取最新配置 (静默同步)
+      // 异步从仓库 config.json 拉取最新全站配置 (全员可见，改完即生效)
       const mgr = (global.LingYun && global.LingYun.SiteConfigManager) || global.SiteConfigManager;
-      if (mgr && typeof mgr.fetchCloudConfig === 'function') {
-        mgr.fetchCloudConfig();
+      if (mgr && typeof mgr.fetchRepoConfig === 'function') {
+        mgr.fetchRepoConfig();
       }
     }
 

@@ -366,6 +366,30 @@ window.LingYun = window.LingYun || {};
         }
       } catch (_) {}
       return null;
+    },
+
+    async fetchRepoConfig() {
+      try {
+        const resp = await fetch('assets/data/config.json?v=' + Date.now(), { cache: 'no-cache' });
+        if (!resp.ok) return null;
+        const parsed = await resp.json();
+        if (!parsed) return null;
+        const merged = {
+          site: Object.assign({}, DEFAULT_SITE_CONFIG.site, parsed.site || {}),
+          departments: Object.assign({}, DEFAULT_SITE_CONFIG.departments, parsed.departments || {}),
+          recruitment: Object.assign({}, DEFAULT_SITE_CONFIG.recruitment, parsed.recruitment || {}),
+          activities: Array.isArray(parsed.activities) && parsed.activities.length ? parsed.activities : DEFAULT_SITE_CONFIG.activities
+        };
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(merged));
+        }
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('ly_config_updated', { detail: merged }));
+        }
+        return merged;
+      } catch (_) {
+        return null;
+      }
     }
   };
 
@@ -3213,8 +3237,7 @@ window.LingYun.debug = LYDebug;
  * 错误边界机制：每个模块的 init() 调用被独立 try/catch 隔离，
  * 任何单一模块初始化失败不会阻断其余模块正常启动。
  * 所有异常通过 LYDebug 记录，可通过 LingYun.debug.dump() 查看。
- */
-  function initApp() {
+ */  function initApp() {
     const debug = (window.LingYun && window.LingYun.debug) || window.LYDebug || {
       log: () => {},
       warn: () => {},
@@ -3390,15 +3413,19 @@ window.LingYun.debug = LYDebug;
 
     if (typeof window !== 'undefined') {
       window.addEventListener('ly_config_updated', () => applyDynamicContent());
-      // 异步尝试从云端拉取最新配置 (静默同步)
+      // 异步从仓库 config.json 拉取最新全站配置 (全员可见，改完即生效)
       const mgr = (window.LingYun && window.LingYun.SiteConfigManager) || window.SiteConfigManager;
-      if (mgr && typeof mgr.fetchCloudConfig === 'function') {
-        mgr.fetchCloudConfig();
+      if (mgr && typeof mgr.fetchRepoConfig === 'function') {
+        mgr.fetchRepoConfig();
       }
     }
 
     debug.log('bootstrap', 'All core subsystems mounted');
   }
+
+  // 挂载至统一命名空间
+  window.LingYun = window.LingYun || {};
+
   // 页面 DOM 就绪即刻初始化
   if (typeof document !== 'undefined') {
     if (document.readyState === 'loading') {

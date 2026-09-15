@@ -992,31 +992,40 @@
 
       <!-- 快捷操作栏卡片 -->
       <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm space-y-4">
-        <h3 class="font-display font-bold text-base text-zinc-900">🚀 云端全网同步与数据迁移工具</h3>
+        <h3 class="font-display font-bold text-base text-zinc-900">🚀 一键发布到官网 (GitHub 自动部署)</h3>
         <p class="text-xs text-zinc-500 font-light leading-relaxed">
-          您在管理后台修改的“赛道纪实”、“各组邮箱”和“网页内容”目前已保存在本地。点击下方【一键全网保存发布】，系统将自动把最新配置上传至 Google Apps Script 云端中枢，使全网访客在任何手机或电脑上均能即时看到更新！
+          第一次使用：在 GitHub 生成一个 Personal Access Token (classic)，勾选 <code>repo</code> 权限，粘贴到下面。以后在"网页内容修改"里点保存，就会自动提交到仓库并重新发布，约1分钟后全站访客看到最新内容。令牌只存在你自己的浏览器里。
         </p>
 
+        <div>
+          <label class="block text-xs font-telemetry text-zinc-600 mb-1.5">GitHub 发布令牌 (Personal Access Token, 需 repo 权限)</label>
+          <div class="flex gap-2">
+            <input id="github-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxx" class="flex-1 px-3 py-2.5 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-mono text-zinc-900 focus:border-[#103A82] focus:bg-white focus:outline-none">
+            <button id="btn-save-token" type="button" class="px-4 py-2.5 rounded-lg bg-[#103A82] hover:bg-[#0C2B64] text-white text-xs font-telemetry font-semibold">保存令牌</button>
+          </div>
+          <p class="text-[11px] text-zinc-400 mt-1">生成地址：github.com → Settings → Developer settings → Personal access tokens (classic) → 勾 repo → Generate。令牌只保存在本机浏览器。</p>
+        </div>
+
         <div class="flex flex-wrap items-center gap-3 pt-2">
-          <button id="btn-sync-cloud" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-telemetry font-bold shadow-md transition-all">
-            <i data-lucide="cloud-upload" class="w-4 h-4"></i>
-            <span>☁️ 一键全网保存发布 (Sync to Cloud)</span>
+          <button id="btn-publish-now" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-telemetry font-bold shadow-md transition-all">
+            <i data-lucide="rocket" class="w-4 h-4"></i>
+            <span>🚀 立即发布当前内容到官网</span>
           </button>
 
           <button id="btn-export-config" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white border border-black/[0.12] hover:border-[#103A82] text-zinc-800 hover:text-[#103A82] text-xs font-telemetry font-semibold shadow-xs transition-all">
             <i data-lucide="download" class="w-4 h-4 text-[#103A82]"></i>
-            <span>📥 导出配置文件备份 (site_config.json)</span>
+            <span>📥 导出配置备份</span>
           </button>
 
           <label class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white border border-black/[0.12] hover:border-[#103A82] text-zinc-800 hover:text-[#103A82] text-xs font-telemetry font-semibold shadow-xs transition-all cursor-pointer">
             <i data-lucide="upload" class="w-4 h-4 text-[#103A82]"></i>
-            <span>📤 导入已有配置文件</span>
+            <span>📤 导入配置</span>
             <input id="input-import-config" type="file" accept=".json" class="hidden">
           </label>
 
           <button id="btn-reset-factory" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white border border-red-200 text-red-600 hover:bg-red-50 text-xs font-telemetry font-semibold shadow-xs transition-all">
             <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-            <span>🔄 恢复车队出厂初始配置</span>
+            <span>🔄 恢复初始配置</span>
           </button>
         </div>
       </div>
@@ -2600,7 +2609,65 @@
 
         ConfigManager.save(cfg);
         updateCmsPreview();
-        showToast('🎉 网页核心内容、跑马灯与状态看板已成功保存！', 'success');
+
+        // 异步推送到 GitHub 仓库，全员可见
+        pushConfigToGithub(cfg);
+      }
+
+      const GH_REPO = 'Diskomia/lingyun-racing-team';
+      const GH_PATH = 'assets/data/config.json';
+
+      async function pushConfigToGithub(cfg) {
+        const token = localStorage.getItem('ly_github_token') || '';
+        if (!token) {
+          showToast('已保存到本机。请到"零代码交接中心"填入 GitHub 令牌后点"发布到官网"，才会让访客看到。', 'info');
+          return;
+        }
+        const btn = document.getElementById('btn-save-cms');
+        const origHtml = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>正在发布到官网...</span>';
+        if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+
+        try {
+          const content = btoa(unescape(encodeURIComponent(JSON.stringify(cfg, null, 2))));
+          let sha = '';
+          try {
+            const gr = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_PATH}`, {
+              headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github+json' }
+            });
+            if (gr.ok) {
+              const gj = await gr.json();
+              sha = gj.sha;
+            }
+          } catch (_) {}
+
+          const pr = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${GH_PATH}`, {
+            method: 'PUT',
+            headers: {
+              'Authorization': `token ${token}`,
+              'Accept': 'application/vnd.github+json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              message: 'CMS: update site config via admin',
+              content: content,
+              sha: sha
+            })
+          });
+          if (pr.ok) {
+            showToast('🚀 已发布到官网！约1分钟后全站访客即可看到最新内容。', 'success');
+          } else {
+            const errTxt = await pr.text();
+            showToast('发布失败：' + pr.status + '，请检查 GitHub 令牌是否有 repo 权限。', 'error');
+          }
+        } catch (err) {
+          showToast('发布失败：' + err.message, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = origHtml;
+          if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+        }
       }
 
       // ─────────────────────────────────────────────────────────────────────────
@@ -3175,7 +3242,23 @@
         });
 
         // 零代码交接中心
-        document.getElementById('btn-sync-cloud').addEventListener('click', syncToCloud);
+        const tokenInput = document.getElementById('github-token-input');
+        const savedToken = localStorage.getItem('ly_github_token') || '';
+        if (tokenInput && savedToken) tokenInput.value = savedToken;
+        document.getElementById('btn-save-token').addEventListener('click', () => {
+          const v = (tokenInput.value || '').trim();
+          if (v) {
+            localStorage.setItem('ly_github_token', v);
+            showToast('✅ GitHub 令牌已保存到本机浏览器。', 'success');
+          } else {
+            localStorage.removeItem('ly_github_token');
+            showToast('已清空 GitHub 令牌。', 'info');
+          }
+        });
+        document.getElementById('btn-publish-now').addEventListener('click', () => {
+          const cfg = ConfigManager.load();
+          pushConfigToGithub(cfg);
+        });
         document.getElementById('btn-export-config').addEventListener('click', exportSiteConfig);
 
         const importInput = document.getElementById('input-import-config');
