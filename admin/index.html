@@ -575,6 +575,38 @@
               <textarea id="dept-mechanical-guide" rows="2" class="w-full p-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-800">建议学习相关知识或准备过往作品。</textarea>
             </div>
           </div>
+        <!-- 卡片 2.5: 车身组 -->
+        <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between border-b border-black/[0.06] pb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                <h3 class="font-display font-bold text-base text-zinc-900">🎨 车身组 (Bodywork & Aero)</h3>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-telemetry bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200">车身/空气动力学</span>
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">组别名称</label>
+              <input id="dept-bodywork-name" type="text" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-semibold text-zinc-900" value="车身组">
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">当前负责人姓名 / 职务</label>
+              <input id="dept-bodywork-head" type="text" placeholder="例如：张同学 (车身主管)" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="车身负责人">
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">招新接收邮箱 * (Direct Email)</label>
+              <input id="dept-bodywork-email" type="email" required placeholder="如：bodywork@racing.com" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-900 focus:border-[#103A82] focus:outline-none" value="diskomiakhan@gmail.com">
+            </div>
+            <div>
+              <label class="block text-xs text-zinc-500 font-telemetry mb-1">回执信中【建议准备】指引文案</label>
+              <textarea id="dept-bodywork-guide" rows="2" class="w-full p-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-800">建议学习复合材料、空气动力学与工业设计相关知识或准备过往作品。</textarea>
+            </div>
+          </div>
+          <div class="pt-4 mt-4 border-t border-black/[0.06] flex items-center justify-between">
+            <span class="text-[11px] text-zinc-400 font-telemetry">接收【车身组】招新申请</span>
+            <button class="btn-test-dept-email px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-[11px] font-telemetry font-semibold transition-colors" data-dept="bodywork">发送测试</button>
+          </div>
+        </div>
 
           <div class="pt-4 mt-4 border-t border-black/[0.06] flex items-center justify-between">
             <span class="text-[11px] text-zinc-400 font-telemetry">接收【底盘组】招新申请</span>
@@ -588,7 +620,7 @@
             <div class="flex items-center justify-between border-b border-black/[0.06] pb-3">
               <div class="flex items-center gap-2">
                 <span class="w-3 h-3 rounded-full bg-[#D9232D]"></span>
-                <h3 class="font-display font-bold text-base text-zinc-900">💼 商业与宣传部 (Business)</h3>
+                <h3 class="font-display font-bold text-base text-zinc-900">💼 商业组 (Business)</h3>
               </div>
               <span class="px-2 py-0.5 rounded text-[10px] font-telemetry bg-red-50 text-[#D9232D] font-semibold border border-red-200">商业逻辑/BOM/宣传</span>
             </div>
@@ -620,89 +652,6 @@
           </div>
         </div>
 
-        <!-- 卡片 4: 商务赞助部 -->
-        <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm flex flex-col justify-between">
-          <div class="space-y-4">
-            <div class="flex items-center justify-between border-b border-black/[0.06] pb-3">
-              <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
-                <h3 class="font-display font-bold text-base text-zinc-900">🤝 商务赞助委员会 (Sponsorship)</h3>
-              </div>
-              <span class="px-2 py-0.5 rounded text-[10px] font-telemetry bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200">校企合作/冠名/物料</span>
-            </div>
-
-            <div>
-              <label class="block text-xs text-zinc-500 font-telemetry mb-1">部门对接职能</label>
-              <input id="dept-sponsor-name" type="text" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-semibold text-zinc-900" value="商务合作委员会">
-            </div>
-
-            <div>
-              <label class="block text-xs text-zinc-500 font-telemetry mb-1">对接主管姓名 / 职务</label>
-              <input id="dept-sponsor-head" type="text" placeholder="例如：商业总监 / 外联主管" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="商业总监 / 外联主管">
-            </div>
-
-            <div>
-              <label class="block text-xs text-zinc-500 font-telemetry mb-1">赞助接收邮箱 * (Sponsor Email)</label>
-              <input id="dept-sponsor-email" type="email" required placeholder="如：sponsor@racing.com" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-900 focus:border-[#103A82] focus:outline-none" value="diskomiakhan@gmail.com">
-            </div>
-
-            <div>
-              <label class="block text-xs text-zinc-500 font-telemetry mb-1">商务联络专线 (电话/微信)</label>
-              <input id="dept-sponsor-phone" type="text" placeholder="商务对接电话" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="138-3100-2026">
-            </div>
-          </div>
-
-          <div class="pt-4 mt-4 border-t border-black/[0.06] flex items-center justify-between">
-            <span class="text-[11px] text-zinc-400 font-telemetry">接收【企业赞助意向】</span>
-            <button class="btn-test-dept-email px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-[11px] font-telemetry font-semibold transition-colors" data-dept="sponsor">发送测试</button>
-          </div>
-        </div>
-
-        <!-- 卡片 5: 车队统筹与队长 -->
-        <div class="bg-white rounded-2xl border border-black/[0.08] p-6 shadow-sm flex flex-col justify-between">
-          <div class="space-y-4">
-            <div class="flex items-center justify-between border-b border-black/[0.06] pb-3">
-              <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-purple-600"></span>
-                <h3 class="font-display font-bold text-base text-zinc-900">🏆 车队队长 / 官方统筹 (Captain)</h3>
-              </div>
-              <span class="px-2 py-0.5 rounded text-[10px] font-telemetry bg-purple-50 text-purple-700 font-semibold border border-purple-200">最高统筹中枢</span>
-            </div>
-
-            <div>
-              <label class="block text-xs text-zinc-500 font-telemetry mb-1">职能身份</label>
-              <input id="dept-general-name" type="text" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-semibold text-zinc-900" value="车队队长 / 官方统筹">
-            </div>
-
-            <div>
-              <label class="block text-xs text-zinc-500 font-telemetry mb-1">队长姓名 / 称谓</label>
-              <input id="dept-general-head" type="text" placeholder="例如：车队队长" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs text-zinc-900" value="车队队长">
-            </div>
-
-            <div>
-              <label class="block text-xs text-zinc-500 font-telemetry mb-1">车队主邮箱 * (Captain/Admin Email)</label>
-              <input id="dept-general-email" type="email" required placeholder="官方主邮箱" class="w-full px-3 py-2 bg-zinc-50 border border-black/[0.08] rounded-lg text-xs font-telemetry text-zinc-900 focus:border-[#103A82] focus:outline-none" value="diskomiakhan@gmail.com">
-            </div>
-
-            <div class="pt-2">
-              <label class="flex items-center gap-2 text-xs text-zinc-700 cursor-pointer">
-                <input id="dept-general-cc" type="checkbox" checked class="w-4 h-4 rounded text-[#103A82] border-zinc-300">
-                <span class="font-medium">自动抄送所有组别的填报邮件 (CC All)</span>
-              </label>
-              <p class="text-[11px] text-zinc-400 mt-1">开启后，队长将实时掌握招募与赞助动向</p>
-            </div>
-          </div>
-
-          <div class="pt-4 mt-4 border-t border-black/[0.06] flex items-center justify-between">
-            <span class="text-[11px] text-zinc-400 font-telemetry">接收【基地留言】与全量抄送</span>
-            <button class="btn-test-dept-email px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-[11px] font-telemetry font-semibold transition-colors" data-dept="general">发送测试</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- =========================================================================
          TAB 4: 网页内容可视化修改 (Site Content CMS)
          ========================================================================= -->
     <div id="tab-content-cms" class="tab-pane hidden space-y-6">
@@ -2381,28 +2330,27 @@
           document.getElementById('dept-mechanical-head').value = d.mechanical.head || '';
           document.getElementById('dept-mechanical-email').value = d.mechanical.email || '';
           document.getElementById('dept-mechanical-guide').value = d.mechanical.prepGuide || '';
+
+  if (d.bodywork) {
+    document.getElementById('dept-bodywork-name').value = d.bodywork.name || '车身组';
+    document.getElementById('dept-bodywork-head').value = d.bodywork.head || '';
+    document.getElementById('dept-bodywork-email').value = d.bodywork.email || '';
+    document.getElementById('dept-bodywork-guide').value = d.bodywork.prepGuide || '';
+  }
         }
         // 商业组
         if (d.business) {
-          document.getElementById('dept-business-name').value = d.business.name || '商业与宣传部';
+          document.getElementById('dept-business-name').value = d.business.name || '商业组';
           document.getElementById('dept-business-head').value = d.business.head || '';
           document.getElementById('dept-business-email').value = d.business.email || '';
           document.getElementById('dept-business-guide').value = d.business.prepGuide || '';
         }
         // 赞助部
         if (d.sponsor) {
-          document.getElementById('dept-sponsor-name').value = d.sponsor.name || '商务合作委员会';
-          document.getElementById('dept-sponsor-head').value = d.sponsor.head || '';
-          document.getElementById('dept-sponsor-email').value = d.sponsor.email || '';
-          document.getElementById('dept-sponsor-phone').value = d.sponsor.phone || '';
-        }
+                                                }
         // 队长/统筹
         if (d.general) {
-          document.getElementById('dept-general-name').value = d.general.name || '车队队长 / 官方统筹';
-          document.getElementById('dept-general-head').value = d.general.head || '';
-          document.getElementById('dept-general-email').value = d.general.email || '';
-          document.getElementById('dept-general-cc').checked = d.general.ccAll !== false;
-        }
+                                                }
       }
 
       function saveRoutingForm() {
@@ -2421,6 +2369,13 @@
           head: document.getElementById('dept-mechanical-head').value.trim(),
           email: document.getElementById('dept-mechanical-email').value.trim(),
           prepGuide: document.getElementById('dept-mechanical-guide').value.trim()
+,
+  bodywork: {
+    name: document.getElementById('dept-bodywork-name').value.trim(),
+    head: document.getElementById('dept-bodywork-head').value.trim(),
+    email: document.getElementById('dept-bodywork-email').value.trim(),
+    prepGuide: document.getElementById('dept-bodywork-guide').value.trim()
+  }
         };
 
         cfg.departments.business = {
@@ -2431,18 +2386,10 @@
         };
 
         cfg.departments.sponsor = {
-          name: document.getElementById('dept-sponsor-name').value.trim(),
-          head: document.getElementById('dept-sponsor-head').value.trim(),
-          email: document.getElementById('dept-sponsor-email').value.trim(),
-          phone: document.getElementById('dept-sponsor-phone').value.trim()
-        };
+                                                };
 
         cfg.departments.general = {
-          name: document.getElementById('dept-general-name').value.trim(),
-          head: document.getElementById('dept-general-head').value.trim(),
-          email: document.getElementById('dept-general-email').value.trim(),
-          ccAll: document.getElementById('dept-general-cc').checked
-        };
+                                        ccAll:         };
 
         ConfigManager.save(cfg);
         showToast('🎉 各组负责人与联络邮箱配置已成功保存！', 'success');
