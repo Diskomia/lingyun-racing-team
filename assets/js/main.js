@@ -3023,8 +3023,7 @@ window.LingYun = window.LingYun || {};
       // 授权的管理员凭据列表
       credentials: [
         { user: 'admin', pass: 'lingyun2026' },
-        { user: 'lingyun_admin', pass: 'FSEC2026!ly' },
-        { user: 'wangjiashuo', pass: 'lingyun2026' }
+        { user: 'ZhenpoLi', pass: 'lingyun2026' }
       ],
 
       /**
