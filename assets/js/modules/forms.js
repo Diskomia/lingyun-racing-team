@@ -20,7 +20,7 @@
   const FormDispatcher = {
     targetEmail: 'diskomiakhan@gmail.com',
     endpoint: 'https://formsubmit.co/ajax/diskomiakhan@gmail.com',
-    gasEndpoint: 'https://script.google.com/macros/s/AKfycby2fH0M9vHrxhEobrLTyeD6OGuXbqPNL1lZOY3HWCEJ-TV-UrmQk7epJ-PwBSpsrhNb/exec', // 车队官方 Google Apps Script 原生 Gmail 邮件与回执中枢
+    gasEndpoint: '', // 原作者 GAS 已停用，表单直接走 FormSubmit 到官方邮箱
 
     init() {
       this.initContactForm();
