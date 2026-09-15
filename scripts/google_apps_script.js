@@ -50,12 +50,12 @@ function doPost(e) {
     var timestamp = data['提交时间'] || Utilities.formatDate(new Date(), "GMT+8", "yyyy-MM-dd HH:mm:ss 'CST'");
     var targetRole = data['申报意向/合作级别'] || data['申请意向组别'] || data['意向合作级别'] || data['咨询交流类型'] || "凌云油车队申请";
 
-    var logoUrl = "https://raw.githubusercontent.com/Diskomia/lingyun-racing-team/main/assets/images/logo.png";
+    var logoUrl = "https://cdn.jsdelivr.net/gh/Diskomia/lingyun-racing-team@main/assets/images/logo.png";
     var siteUrl = "https://diskomia.github.io/lingyun-racing-team/";
 
     // 根据申请组别返回对应部门图标
     function getDeptIcon(role) {
-      var base = "https://raw.githubusercontent.com/Diskomia/lingyun-racing-team/main/assets/images/";
+      var base = "https://cdn.jsdelivr.net/gh/Diskomia/lingyun-racing-team@main/assets/images/";
       if (role.indexOf("动力总成") >= 0 || role.indexOf("powertrain") >= 0) return base + "icon_powertrain.png";
       if (role.indexOf("底盘") >= 0 || role.indexOf("chassis") >= 0) return base + "icon_chassis.png";
       if (role.indexOf("车身") >= 0 || role.indexOf("body") >= 0 || role.indexOf("空套") >= 0) return base + "icon_body.png";
