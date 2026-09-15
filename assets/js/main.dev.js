@@ -1793,35 +1793,20 @@ window.LingYun = window.LingYun || {};
       const depts = (cfg && cfg.departments) || {};
       const generalEmail = (depts.general && depts.general.email) || defaultEmail;
 
+      // 组别邮箱硬编码（后台配置存 localStorage，前台读不到，直接硬编码）
+      const HARDCODED = {
+        '动力总成': { name: '动力总成组', head: '李振坡', email: '293676192@qq.com' },
+        '底盘': { name: '底盘组', head: '于鑫泽', email: '2021991482@qq.com' },
+        '车身': { name: '车身组', head: '纪浩鹏', email: 'diskomiakhan@gmail.com' },
+        '商业': { name: '商业组', head: '郭傲涵', email: 'diskomiakhan@gmail.com' }
+      };
+
       if (category === 'recruit') {
         const r = String(role || '');
-        if ((r.includes('动力总成') || r.includes('动力') || r.includes('电气')) && depts.electrical && depts.electrical.email) {
-          return {
-            name: depts.electrical.name || '电气组',
-            head: depts.electrical.head || '电控负责人',
-            targetEmail: depts.electrical.email,
-            ccEmail: generalEmail,
-            prepGuide: depts.electrical.prepGuide || '建议学习相关知识或准备过往作品。'
-          };
-        }
-        if ((r.includes('底盘') || r.includes('车身') || r.includes('机械')) && depts.mechanical && depts.mechanical.email) {
-          return {
-            name: depts.mechanical.name || '机械组',
-            head: depts.mechanical.head || '机械负责人',
-            targetEmail: depts.mechanical.email,
-            ccEmail: generalEmail,
-            prepGuide: depts.mechanical.prepGuide || '建议学习相关知识或准备过往作品。'
-          };
-        }
-        if (r.includes('商业') && depts.business && depts.business.email) {
-          return {
-            name: depts.business.name || '商业组',
-            head: depts.business.head || '商业负责人',
-            targetEmail: depts.business.email,
-            ccEmail: generalEmail,
-            prepGuide: depts.business.prepGuide || '建议学习相关知识或准备过往作品。'
-          };
-        }
+        if (r.includes('动力')) return { ...HARDCODED['动力总成'], ccEmail: defaultEmail };
+        if (r.includes('底盘')) return { ...HARDCODED['底盘'], ccEmail: defaultEmail };
+        if (r.includes('车身') || r.includes('空套')) return { ...HARDCODED['车身'], ccEmail: defaultEmail };
+        if (r.includes('商业')) return { ...HARDCODED['商业'], ccEmail: defaultEmail };
       }
 
       if (category === 'sponsor') {
@@ -2198,7 +2183,6 @@ window.LingYun = window.LingYun || {};
       if (this.targetEmail && targetDeptEmail && this.targetEmail !== targetDeptEmail) {
         finalAutoResponse = finalAutoResponse.split(this.targetEmail).join(targetDeptEmail);
       }
-
       const applicantHtml = this.generateApplicantReceiptHtml({
         receiptId,
         name: submitterName,
