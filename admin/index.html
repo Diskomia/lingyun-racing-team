@@ -2345,12 +2345,13 @@
           document.getElementById('dept-business-email').value = d.business.email || '';
           document.getElementById('dept-business-guide').value = d.business.prepGuide || '';
         }
-        // 赞助部
-        if (d.sponsor) {
-                                                }
-        // 队长/统筹
-        if (d.general) {
-                                                }
+        // 车身组
+        if (d.bodywork) {
+          document.getElementById('dept-bodywork-name').value = d.bodywork.name || '车身组';
+          document.getElementById('dept-bodywork-head').value = d.bodywork.head || '';
+          document.getElementById('dept-bodywork-email').value = d.bodywork.email || '';
+          document.getElementById('dept-bodywork-guide').value = d.bodywork.prepGuide || '';
+        }
       }
 
       function saveRoutingForm() {
@@ -2369,13 +2370,13 @@
           head: document.getElementById('dept-mechanical-head').value.trim(),
           email: document.getElementById('dept-mechanical-email').value.trim(),
           prepGuide: document.getElementById('dept-mechanical-guide').value.trim()
-,
-  bodywork: {
-    name: document.getElementById('dept-bodywork-name').value.trim(),
-    head: document.getElementById('dept-bodywork-head').value.trim(),
-    email: document.getElementById('dept-bodywork-email').value.trim(),
-    prepGuide: document.getElementById('dept-bodywork-guide').value.trim()
-  }
+        };
+
+        cfg.departments.bodywork = {
+          name: document.getElementById('dept-bodywork-name').value.trim(),
+          head: document.getElementById('dept-bodywork-head').value.trim(),
+          email: document.getElementById('dept-bodywork-email').value.trim(),
+          prepGuide: document.getElementById('dept-bodywork-guide').value.trim()
         };
 
         cfg.departments.business = {
@@ -2384,12 +2385,6 @@
           email: document.getElementById('dept-business-email').value.trim(),
           prepGuide: document.getElementById('dept-business-guide').value.trim()
         };
-
-        cfg.departments.sponsor = {
-                                                };
-
-        cfg.departments.general = {
-                                        ccAll:         };
 
         ConfigManager.save(cfg);
         showToast('🎉 各组负责人与联络邮箱配置已成功保存！', 'success');
