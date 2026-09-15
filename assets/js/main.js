@@ -484,7 +484,15 @@ window.LingYun = window.LingYun || {};
         setTimeout(() => {
           this.cacheMetrics();
           this.onScroll();
-        }, 100);
+          // 如果 URL 有 hash，重新滚动到正确位置
+          if (window.location.hash) {
+            const target = document.querySelector(window.location.hash);
+            if (target) {
+              const top = target.getBoundingClientRect().top + window.pageYOffset - 100;
+              window.scrollTo({ top: top, behavior: 'instant' });
+            }
+          }
+        }, 200);
       });
 
       // 也监听图片加载事件，每张图加载完都重新校准
