@@ -103,15 +103,14 @@
             }
           }
 
-          // 1.4 ScrollSpy: 实时动态高亮当前视口所在章节 (基于内存缓存高度比较，彻底免除 DOM 访问开销)
-          if (this.sectionOffsets.length && (this.navLinks.length || this.mobileNavLinks.length)) {
+          // 1.4 ScrollSpy: 实时动态高亮当前视口所在章节 (实时读取 getBoundingClientRect，避免图片加载后缓存偏移)
+          if (this.sections.length && (this.navLinks.length || this.mobileNavLinks.length)) {
+            const navLine = 110; // 导航栏底部下方约 30px 的判定线
             let currentSectionId = '';
-            const offset = 180;
-            for (let i = this.sectionOffsets.length - 1; i >= 0; i--) {
-              const item = this.sectionOffsets[i];
-              if (item.top - offset <= scrollY) {
-                currentSectionId = item.id;
-                break;
+            for (const sec of this.sections) {
+              const rect = sec.getBoundingClientRect();
+              if (rect.top <= navLine) {
+                currentSectionId = sec.id;
               }
             }
             if (currentSectionId) {

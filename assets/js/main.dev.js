@@ -410,8 +410,7 @@ window.LingYun = window.LingYun || {};
  * 🏎️ LINGYUN OIL RACING TEAM - 2026 49号 模块化架构
  * Module: 01 - UnifiedScrollEngine (统一滚动调度与布局指标缓存引擎)
  * =========================================================================
- */
-  const UnifiedScrollEngine = {
+ */  const UnifiedScrollEngine = {
     progressBar: null,
     navbar: null,
     backToTopBtn: null,
@@ -506,15 +505,14 @@ window.LingYun = window.LingYun || {};
             }
           }
 
-          // 1.4 ScrollSpy: 实时动态高亮当前视口所在章节 (基于内存缓存高度比较，彻底免除 DOM 访问开销)
-          if (this.sectionOffsets.length && (this.navLinks.length || this.mobileNavLinks.length)) {
+          // 1.4 ScrollSpy: 实时动态高亮当前视口所在章节 (实时读取 getBoundingClientRect，避免图片加载后缓存偏移)
+          if (this.sections.length && (this.navLinks.length || this.mobileNavLinks.length)) {
+            const navLine = 110; // 导航栏底部下方约 30px 的判定线
             let currentSectionId = '';
-            const offset = 180;
-            for (let i = this.sectionOffsets.length - 1; i >= 0; i--) {
-              const item = this.sectionOffsets[i];
-              if (item.top - offset <= scrollY) {
-                currentSectionId = item.id;
-                break;
+            for (const sec of this.sections) {
+              const rect = sec.getBoundingClientRect();
+              if (rect.top <= navLine) {
+                currentSectionId = sec.id;
               }
             }
             if (currentSectionId) {
@@ -543,6 +541,12 @@ window.LingYun = window.LingYun || {};
       }
     }
   };
+
+  // 挂载至统一命名空间
+  window.LingYun = window.LingYun || {};
+
+  // 向后兼容全局作用域
+  window.UnifiedScrollEngine = UnifiedScrollEngine;
 
 /* ==========================================================================
    ticker - TickerLifecycle
