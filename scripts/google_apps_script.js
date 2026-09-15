@@ -4,8 +4,9 @@
  * =========================================================================
  * 
  * 部署指引（仅需 30 秒）：
- * 1. 打开 Google Apps Script 项目编辑器：
- *    https://script.google.com/home/projects/1JfBbgkhueOICP5JvYCYfpvOznzdmykvUapDursyw5cYIBKv7vUbyRrg4/edit
+ * 1. 打开 Google Apps Script 项目编辑器（你自己新建的项目，注意不是原作者的）：
+ *    https://script.google.com/home/projects/
+ *    或直接打开你自己的项目后，把下面整段代码全选替换
  * 2. 全选并替换为本文件的最新代码，按 Ctrl+S 保存
  * 3. 点击右上角「部署」(Deploy) ->「管理部署」(Manage deployments)
  * 4. 点击右上角铅笔编辑图标 (Edit)
@@ -49,8 +50,8 @@ function doPost(e) {
     var timestamp = data['提交时间'] || Utilities.formatDate(new Date(), "GMT+8", "yyyy-MM-dd HH:mm:ss (CST)");
     var targetRole = data['申报意向/合作级别'] || data['申请意向组别'] || data['意向合作级别'] || data['咨询交流类型'] || "凌云油车队申请";
 
-    var logoUrl = "https://raw.githubusercontent.com/j0shuA378/lyracingteam_official_website/main/assets/images/logo.png";
-    var siteUrl = "https://j0shua378.github.io/lyracingteam_official_website/";
+    var logoUrl = "https://raw.githubusercontent.com/Diskomia/lingyun-racing-team/main/assets/images/logo.png";
+    var siteUrl = "https://diskomia.github.io/lingyun-racing-team/";
 
     // 1. 生成排版考究的 HTML 汇总表格并投递给车队管理员邮箱 (Bloomberg & Google Style)
     var adminHtmlBody = '<div style="background-color: #f1f5f9; padding: 24px 12px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif;">' +
@@ -225,7 +226,7 @@ function doPost(e) {
             '<!-- Official Engineering Base Footer (Figure 1 Exact) -->' +
             '<div style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 20px 24px; text-align: center; font-size: 11px; color: #64748b; line-height: 1.6;">' +
               '<div style="font-weight: 600; color: #334155; margin-bottom: 4px;">河北工程大学科信学院凌云油车队 (Lingyun Oil Racing Team)</div>' +
-              '车间基地：河北省邯郸市科信学院成学楼东侧机械装备与制造学院<br>' +
+              '车间基地：河北省邯郸市光明南大街199号河北工程大学科信学院成学楼东侧机械装备与制造学院<br>' +
               '官方联络邮箱：<a href="mailto:' + targetAdminEmail + '" style="color: #103a82; text-decoration: none;">' + targetAdminEmail + '</a>' +
             '</div>' +
 
