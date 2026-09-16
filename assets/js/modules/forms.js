@@ -455,23 +455,16 @@
         targetAdminEmail: targetDeptEmail
       });
 
-      // 组装带 HTML Table 模板与自动回复 (_autoresponse, _replyto, _applicantHtml) 的 Payload
+      // 组装 FormSubmit 标准 Payload
       const payload = {
         _subject: subject,
-        _template: 'table',           // 触发 FormSubmit 的自动表格排版引擎
-        _captcha: 'false',            // 免验证码极速提交
-        _replyto: submitterEmail,     // 车队在邮箱中点击回复直达申请人
-        _autoresponse: applicantHtml, // 精美HTML回执
-        _applicantHtml: applicantHtml,// Bloomberg & Google 风格精美 HTML 回执 (含队徽)
-        _targetEmail: targetDeptEmail,// 动态组别接收邮箱 (电气/机械/商业/赞助负责人)
-        _ccEmail: ccAdminEmail,       // 抄送官方队长邮箱
-        'email': submitterEmail,      // 识别收件人邮箱
+        _captcha: 'false',
+        _replyto: submitterEmail,
+        _autoresponse: autoResponse || '',
+        'email': submitterEmail,
         '受理编号': receiptId,
         '申请人/单位': submitterName,
         '申报意向/合作级别': submitterTarget,
-        '对口接收组别': routing.name,
-        '组别负责人': routing.head,
-        '对口工作邮箱': targetDeptEmail,
         ...tableData,
         '提交时间': timestamp,
         '来源站点': '河北工程大学科信学院凌云油车队官方网站 (FSC)'
