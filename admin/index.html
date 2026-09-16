@@ -2061,10 +2061,32 @@
         });
 
         tbody.querySelectorAll('.btn-delete-row').forEach(btn => {
-          btn.addEventListener('click', () => {
+          btn.addEventListener('click', async () => {
             const id = btn.getAttribute('data-id');
             if (confirm('确认删除该条表单记录吗？此操作无法撤销。')) {
               DataStore.deleteRecord(id);
+              // 同时删除 GitHub 云端记录
+              try {
+                const token = localStorage.getItem('ly_github_token') || '';
+                if (token) {
+                  const records = DataStore.getAll();
+                  const content = btoa(unescape(encodeURIComponent(JSON.stringify(records, null, 2))));
+                  // 获取当前 sha
+                  let sha = '';
+                  const getRes = await fetch('https://api.github.com/repos/Diskomia/lingyun-racing-team/contents/data/submissions.json', {
+                    headers: { 'Authorization': `token ${token}` }
+                  });
+                  if (getRes.ok) {
+                    const data = await getRes.json();
+                    sha = data.sha;
+                  }
+                  await fetch('https://api.github.com/repos/Diskomia/lingyun-racing-team/contents/data/submissions.json', {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: 'delete submission', content: content, sha: sha })
+                  });
+                }
+              } catch (_) {}
               showToast('记录已删除', 'info');
             }
           });
