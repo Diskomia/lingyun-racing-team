@@ -1755,14 +1755,10 @@ window.LingYun = window.LingYun || {};
  *      2. 向申请人邮箱自动外发专属定制确认回执 (_autoresponse)，按组别与合作级别差异化定制
  *  - 容错兜底：离线或网络受限时自动降级调起本地 mailto 邮件客户端发送 ASCII 表格
  *  - 状态管理：按钮防连击 Loading 态与 Apple 风格 Toast 结果反馈
- */// 页面加载时从 SCF 拉取组别配置，存到全局变量
-fetch('https://1488993078-67xfxov1j1.ap-guangzhou.tencentscf.com?action=get_config')
-  .then(r => r.json())
-  .then(data => { if (data.config) window.LINGYUN_DEPT_CONFIG = data.config; })
-  .catch(() => {});  const FormDispatcher = {
+ */  const FormDispatcher = {
     targetEmail: 'diskomiakhan@gmail.com',
     endpoint: 'https://formsubmit.co/ajax/diskomiakhan@gmail.com',
-    gasEndpoint: 'https://1488993078-67xfxov1j1.ap-guangzhou.tencentscf.com',
+    gasEndpoint: 'https://formsubmit.co/ajax/diskomiakhan@gmail.com',
 
     init() {
       this.initContactForm();
@@ -1797,27 +1793,20 @@ fetch('https://1488993078-67xfxov1j1.ap-guangzhou.tencentscf.com?action=get_conf
       const depts = (cfg && cfg.departments) || {};
       const generalEmail = (depts.general && depts.general.email) || defaultEmail;
 
-      // 组别邮箱从全局缓存读（页面加载时已从 SCF 拉好）
-      const ghDepts = (window.LINGYUN_DEPT_CONFIG && window.LINGYUN_DEPT_CONFIG.departments) || depts;
+      // 组别邮箱硬编码
+      const HARDCODED = {
+        '动力': { name: '动力总成组', head: '李振坡', email: '293676192@qq.com' },
+        '底盘': { name: '底盘组', head: '于鑫泽', email: '2021991482@qq.com' },
+        '车身': { name: '车身组', head: '纪浩鹏', email: 'diskomiakhan@gmail.com' },
+        '商业': { name: '商业组', head: '郭傲涵', email: 'diskomiakhan@gmail.com' }
+      };
 
       if (category === 'recruit') {
         const r = String(role || '');
-        const map = [
-          { kw: '动力', key: 'electrical' },
-          { kw: '底盘', key: 'mechanical' },
-          { kw: '车身', key: 'bodywork' },
-          { kw: '商业', key: 'business' }
-        ];
-        for (const m of map) {
-          if (r.includes(m.kw) && ghDepts[m.key] && ghDepts[m.key].email) {
-            return {
-              name: ghDepts[m.key].name || m.kw + '组',
-              head: ghDepts[m.key].head || '',
-              targetEmail: ghDepts[m.key].email,
-              ccEmail: defaultEmail
-            };
-          }
-        }
+        if (r.includes('动力')) return { ...HARDCODED['动力'], ccEmail: defaultEmail };
+        if (r.includes('底盘')) return { ...HARDCODED['底盘'], ccEmail: defaultEmail };
+        if (r.includes('车身') || r.includes('空套')) return { ...HARDCODED['车身'], ccEmail: defaultEmail };
+        if (r.includes('商业')) return { ...HARDCODED['商业'], ccEmail: defaultEmail };
       }
 
       if (category === 'sponsor') {
