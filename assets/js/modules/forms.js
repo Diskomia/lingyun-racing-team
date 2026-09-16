@@ -20,7 +20,7 @@
   const FormDispatcher = {
     targetEmail: 'diskomiakhan@gmail.com',
     endpoint: 'https://formsubmit.co/ajax/diskomiakhan@gmail.com',
-    gasEndpoint: '', // 动态拼接，根据组别邮箱选择 FormSubmit endpoint
+    gasEndpoint: 'https://formsubmit.co/ajax/diskomiakhan@gmail.com',
 
     init() {
       this.initContactForm();
