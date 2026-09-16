@@ -1795,10 +1795,10 @@ window.LingYun = window.LingYun || {};
 
       // 组别邮箱硬编码
       const HARDCODED = {
-        '动力': { name: '动力总成组', head: '李振坡', email: '293676192@qq.com' },
-        '底盘': { name: '底盘组', head: '于鑫泽', email: '2021991482@qq.com' },
-        '车身': { name: '车身组', head: '纪浩鹏', email: 'diskomiakhan@gmail.com' },
-        '商业': { name: '商业组', head: '郭傲涵', email: 'diskomiakhan@gmail.com' }
+        '动力': { name: '动力总成组', head: '李振坡', targetEmail: '293676192@qq.com' },
+        '底盘': { name: '底盘组', head: '于鑫泽', targetEmail: '2021991482@qq.com' },
+        '车身': { name: '车身组', head: '纪浩鹏', targetEmail: 'diskomiakhan@gmail.com' },
+        '商业': { name: '商业组', head: '郭傲涵', targetEmail: 'diskomiakhan@gmail.com' }
       };
 
       if (category === 'recruit') {
