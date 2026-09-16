@@ -1758,7 +1758,7 @@ window.LingYun = window.LingYun || {};
  */  const FormDispatcher = {
     targetEmail: 'diskomiakhan@gmail.com',
     endpoint: 'https://formsubmit.co/ajax/diskomiakhan@gmail.com',
-    gasEndpoint: 'https://formsubmit.co/ajax/diskomiakhan@gmail.com',
+    gasEndpoint: '', // 动态拼接，根据组别邮箱选择 FormSubmit endpoint
 
     init() {
       this.initContactForm();
