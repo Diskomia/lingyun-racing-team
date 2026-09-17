@@ -1,38 +1,39 @@
-# 🏎️ 河北工程大学 · 凌云车队 (LingYun Racing Team)
+# 🏎️ 河北工程大学科信学院 · 凌云油车队 (Lingyun Oil Racing Team)
 
-**中国大学生电动方程式大赛 (Formula Student Electric China - FSEC) 官方车队门户网站**
+**中国大学生方程式汽车大赛 (Formula Student China - FSC) 官方车队门户网站**
 
 > **队训 / 校训**：崇德尚善，精工铸新 · 智造梦想，擎动未来  
 > **创立时间**：2012年12月（学校卓越工程创新名片）  
-> **主管部门**：河北工程大学教务处 / 机械与装备工程学院  
-> **车间基地**：河北工程大学42号楼工程实训中心101 / 105  
-> **官方邮箱**：`joshuawang1225@gmail.com`  
+> **主管部门**：河北工程大学科信学院 / 机械装备与制造学院  
+> **车间基地**：河北省邯郸市光明南大街199号河北工程大学科信学院成学楼东侧机械装备与制造学院  
+> **官方邮箱**：`diskomiakhan@gmail.com`  
 
 ---
 
 ## ⚡ 技术与商业 · 双核驱动 (Dual Pillars: Technology & Business)
 
 车队构建了工程研发与商业运营高度协同的现代化方程式赛车队体系：
-- **技术硬实力 (Engineering Excellence)**：深耕双永磁同步电机同轴电驱架构、504V/7.1kWh 15C 动力电池箱、4130 铬钼钢高刚度空间桁架、全碳纤维推杆悬架、TC4 钛合金半轴与 STAR-CCM+ 气动套件。
-- **商业软实力 (Commercial & Operations)**：严谨推行项目制管理，涵盖全生命周期成本控制 (Cost Report)、商业逻辑答辩 (BOP)、品牌赞助拓展与全媒体宣发矩阵（蝉联 FSEC 年度优秀宣传团队）。
+- **技术硬实力 (Engineering Excellence)**：深耕内燃机动力总成调校、进排气系统优化、燃油喷射与 ECU 标定、4130 铬钼钢高刚度空间桁架、全碳纤维推杆悬架、TC4 钛合金半轴与 STAR-CCM+ 气动套件。
+- **商业软实力 (Commercial & Operations)**：严谨推行项目制管理，涵盖全生命周期成本控制 (Cost Report)、商业逻辑答辩 (BOP)、品牌赞助拓展与全媒体宣发矩阵（蝉联 FSC 年度优秀宣传团队）。
 
 ## 🏛️ 两大组织中枢体系 (Two Big Divisions)
 
 1. **技术组 (Technical Division - 技术总监分管)**：
-   - **机械组 (Mechanical Group)**：4130 空间桁架设计与高斯焊接应力仿真、全碳推杆双横臂悬架动力学、43% 阿克曼转向、STAR-CCM+ 气动套件、TC4 钛合金半轴与 AP Racing 制动系统。
-   - **电气组 (Electrical Group)**：双 EMRAX 208 同轴高压电驱、504V/7.1kWh 15C 动力电池箱与流热耦合风冷温控、自研 BMS 架构、Burckhardt 驱动防滑与电子差速、STM32H7 智能方向盘与 CAN-FD 高速遥测。
-2. **商业组 (Business Division - 商业经理分管)**：
-   - **FSEC 静态赛答辩**：主导商业逻辑报告 (BOP) 与工程制造成本分析 (Cost Report) 全英文答辩。
+   - **动力总成组 (Powertrain Group)**：内燃机性能开发、进排气系统设计、燃油喷射与 ECU 标定、传动差速器匹配、冷却与润滑系统优化。
+   - **底盘组 (Chassis Group)**：4130 空间桁架设计与高斯焊接应力仿真、全碳推杆双横臂悬架动力学、43% 阿克曼转向、STAR-CCM+ 气动套件、TC4 钛合金半轴与 AP Racing 制动系统。
+   - **车身组 (Bodywork Group)**：碳纤维车身覆盖件制造、空气动力学套件开发、人机工程与驾驶舱设计。
+2. **商业与宣传部 (Business & PR Division - 商业经理分管)**：
+   - **FSC 静态赛答辩**：主导商业逻辑报告 (BOP) 与工程制造成本分析 (Cost Report) 全英文答辩。
    - **校企赞助招商对接**：开拓企业赞助伙伴，争取软硬件工具与资金支持，落实校招直聘通道与品牌车身露出。
-   - **品牌宣传与文创**：运营官方公众号、B站与抖音新媒体矩阵（连续两年荣获 FSEC 年度优秀宣传团队）。
-   - **社会服务与科普**：承担科普实践教学功能，接待邯郸四中、石家庄工程技术学校等师生参观车间。
+   - **品牌宣传与文创**：运营官方公众号、B站与抖音新媒体矩阵（连续两年荣获 FSC 年度优秀宣传团队）。
+   - **社会服务与科普**：承担科普实践教学功能，接待周边中学师生参观车间。
 
 ## 🏗️ 工业级分模块统一工程架构 (Modular Architecture)
 
 项目遵循高内聚、低耦合、分层解耦的工业级静态站点规范，实现 JS、CSS 与 HTML 的三维模块化架构：
 
 ```text
-racing-team-website/
+lingyun-racing-team/
 ├── index.html                    # 统一标注 data-module 与 data-component 的语义化主文档
 ├── README.md
 ├── scripts/
@@ -59,16 +60,16 @@ racing-team-website/
     │       ├── car-specs.js      # CarSpecTabs (5 大专业面板与仿真工具链)
     │       ├── reveal.js         # ScrollRevealEngine (视口平滑渐入流)
     │       ├── counters.js       # TelemetryCounters (三次方插值与脏值过滤)
-    │       ├── countdown.js      # CountdownTimer (FSEC 赛历倒计时与休眠)
+    │       ├── countdown.js      # CountdownTimer (FSC 赛历倒计时与休眠)
     │       ├── filters.js        # ActivityFilters (赛事动态与纪实筛选)
     │       ├── modal.js          # ModalEngine (弹窗中枢与无障碍焦点锁定)
     │       ├── toast.js          # ToastSystem (Apple 质感非阻塞通知与 PDF 下载)
     │       ├── nav.js            # MobileNav (移动端折叠抽屉导航)
-    │       ├── forms.js          # FormDispatcher (招募/赞助/留言邮件表格化外发至 joshuawang1225@gmail.com)
+    │       ├── forms.js          # FormDispatcher (招募/赞助/留言邮件表格化外发至 diskomiakhan@gmail.com)
     │       ├── security.js       # SecurityShield (防复刻快捷键拦截、防右键抓取与版权署名防篡改)
     │       └── bootstrap.js      # AppBootstrap (各模块独立错误边界 try/catch 隔离初始化)
     ├── docs/
-    │   └── 河北工程大学凌云车队_2026赛季FSEC商业赞助招商手册.pdf
+    │   └── 河北工程大学科信学院凌云油车队_2026赛季FSC商业赞助招商手册.pdf
     └── images/
 ```
 
@@ -88,4 +89,3 @@ node scripts/build.js
   - `LingYun.debug.getModuleLog('UnifiedScrollEngine')`：过滤查看特定模块的生命周期记录。
   - `LingYun.debug.getErrors()`：快速审查是否存在未捕获的子模块初始化异常。
   - `LingYun.debug.enable()` / `LingYun.debug.disable()`：动态切换调试开关。
-
