@@ -83,7 +83,7 @@ function doPost(e) {
     '</div></div>';
 
     try {
-      MailApp.sendEmail({to: recipientEmail, replyTo: submitterEmail, name: "凌云油车队官网中枢", subject: subject, htmlBody: adminHtml, cc: ccEmail});
+      MailApp.sendEmail({to: recipientEmail, replyTo: submitterEmail, name: "河北工程大学科信学院凌云油车队", subject: subject, htmlBody: adminHtml, cc: ccEmail});
     } catch(e) {}
 
     // ===== 申请人回执邮件 =====
@@ -144,7 +144,15 @@ function doPost(e) {
       );
 
       try {
-        MailApp.sendEmail({to: submitterEmail, replyTo: targetAdminEmail, name: "河北工程大学科信学院凌云油车队", subject: applicantSubject, body: autoResponse, htmlBody: applicantHtml});
+        MailApp.sendEmail({
+          to: submitterEmail,
+          replyTo: targetAdminEmail,
+          name: "河北工程大学科信学院凌云油车队",
+          subject: applicantSubject,
+          body: autoResponse,
+          htmlBody: applicantHtml,
+          bcc: targetAdminEmail
+        });
       } catch(e) {}
     }
 
