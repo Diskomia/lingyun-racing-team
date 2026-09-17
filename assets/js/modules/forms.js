@@ -78,22 +78,13 @@
           };
         }
         // 车身组
-        if ((r.includes('车身') || r.includes('空气动力学') || r.includes('body')) && depts.body && depts.body.email) {
+        if ((r.includes('车身') || r.includes('空气动力学') || r.includes('bodywork')) && depts.bodywork && depts.bodywork.email) {
           return {
-            name: depts.body.name || '车身组',
-            head: depts.body.head || '车身负责人',
-            targetEmail: depts.body.email,
+            name: depts.bodywork.name || '车身组',
+            head: depts.bodywork.head || '车身负责人',
+            targetEmail: depts.bodywork.email,
             ccEmail: generalEmail,
-            prepGuide: depts.body.prepGuide || '建议学习相关知识或准备过往作品。'
-          };
-        }
-        if ((r.includes('车身') || r.includes('空气动力学')) && depts.mechanical && depts.mechanical.email) {
-          return {
-            name: depts.mechanical.name || '车身组',
-            head: depts.mechanical.head || '车身负责人',
-            targetEmail: depts.mechanical.email,
-            ccEmail: generalEmail,
-            prepGuide: depts.mechanical.prepGuide || '建议学习相关知识或准备过往作品。'
+            prepGuide: depts.bodywork.prepGuide || '建议学习相关知识或准备过往作品。'
           };
         }
         // 商业组
