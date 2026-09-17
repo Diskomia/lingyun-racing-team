@@ -514,8 +514,8 @@
         _replyto: submitterEmail,     // 车队在邮箱中点击回复直达申请人
         _autoresponse: finalAutoResponse, // 纯文本回执字段
         _applicantHtml: applicantHtml,// Bloomberg & Google 风格精美 HTML 回执 (含队徽)
-        _targetEmail: targetDeptEmail,// 动态组别接收邮箱 (电气/机械/商业/赞助负责人)
-        _ccEmail: ccAdminEmail,       // 抄送官方队长邮箱
+        _targetEmail: targetDeptEmail,// 动态组别接收邮箱 (动力/底盘/车身/商业负责人)
+        _ccEmail: "",                  // 不抄送，直接发给部门负责人
         'email': submitterEmail,      // 识别收件人邮箱
         '受理编号': receiptId,
         '申请人/单位': submitterName,
