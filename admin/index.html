@@ -2425,16 +2425,18 @@
         showToast('🎉 各组负责人与联络邮箱配置已成功保存！', 'success');
       }
 
-      // 把配置写到 SCF，前台从这里拉取
+      // 把配置写到 GAS，前台从这里拉取
       async function saveConfigToScf(cfg) {
         try {
-          await fetch('https://1488993078-67xfxov1j1.ap-guangzhou.tencentscf.com', {
+          const gasUrl = 'https://script.google.com/macros/s/AKfycbxokikkqxMlEYXQr2RAbHU218VagoeyxxmaAAW-ngcioI3PdcO7b7zugckuTcROxvWdLg/exec';
+          await fetch(gasUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify({ action: 'save_config', config: cfg })
           });
         } catch (e) {
-          console.error('saveConfigToScf error:', e);
+          console.error('saveConfigToGAS error:', e);
         }
       }
 
