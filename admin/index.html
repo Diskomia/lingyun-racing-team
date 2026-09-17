@@ -3334,6 +3334,17 @@
       }
 
       document.addEventListener('DOMContentLoaded', async () => {
+        // 从 GAS 云端拉取最新配置 (换浏览器也能看到)
+        try {
+          const gasUrl = 'https://script.google.com/macros/s/AKfycbxokikkqxMlEYXQr2RAbHU218VagoeyxxmaAAW-ngcioI3PdcO7b7zugckuTcROxvWdLg/exec';
+          const resp = await fetch(`${gasUrl}?action=get_config&t=${Date.now()}`, { cache: 'no-cache' });
+          if (resp.ok) {
+            const res = await resp.json();
+            if (res && res.success && res.config) {
+              localStorage.setItem('ly_site_config_v2', JSON.stringify(res.config));
+            }
+          }
+        } catch (_) {}
         // 从 GitHub 拉取云端提交记录
         try {
           const resp = await fetch('https://raw.githubusercontent.com/Diskomia/lingyun-racing-team/main/data/submissions.json?t=' + Date.now());
