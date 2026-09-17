@@ -627,15 +627,23 @@
      * 生成符合 Bloomberg & Google 设计风格的正式 HTML 邮件回执 (嵌入官方凌云车队队徽)
      */
     generateApplicantReceiptHtml(meta) {
-      const logoUrl = 'https://cdn.jsdelivr.net/gh/Diskomia/lingyun-racing-team@main/assets/images/logo.png';
+      const logoUrl = 'https://raw.githubusercontent.com/Diskomia/lingyun-racing-team/main/assets/images/logo.png';
       const siteUrl = 'https://diskomia.github.io/lingyun-racing-team/';
       const targetAdminEmail = this.targetEmail || 'diskomiakhan@gmail.com';
       const receiptId = meta.receiptId || `LY2026-REC-${Date.now().toString(36).toUpperCase()}`;
       const submitterEmail = meta.email || '';
       const submitterName = meta.name || '申报人';
-      const targetRole = meta.target || '凌云车队申请';
+      const targetRole = meta.target || '凌云油车队申请';
       const timeStr = meta.timestamp || this.getFormattedTimestamp();
       const autoResponse = meta.autoResponse || '';
+
+      // 根据组别返回对应图标
+      let deptIcon = logoUrl;
+      const role = String(targetRole);
+      if (role.includes('动力') || role.includes('powertrain')) deptIcon = 'https://raw.githubusercontent.com/Diskomia/lingyun-racing-team/main/assets/images/icon_powertrain.png';
+      else if (role.includes('底盘') || role.includes('chassis')) deptIcon = 'https://raw.githubusercontent.com/Diskomia/lingyun-racing-team/main/assets/images/icon_chassis.png';
+      else if (role.includes('车身') || role.includes('body')) deptIcon = 'https://raw.githubusercontent.com/Diskomia/lingyun-racing-team/main/assets/images/icon_body.png';
+      else if (role.includes('商业') || role.includes('business')) deptIcon = 'https://raw.githubusercontent.com/Diskomia/lingyun-racing-team/main/assets/images/icon_business.png';
 
       return '<div style="background-color: #f1f5f9; padding: 16px 8px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial, sans-serif;">' +
         '<div style="max-width: 580px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.06);">' +
@@ -664,7 +672,7 @@
             '<!-- Centered Logo Area -->' +
             '<div style="text-align: center; margin-bottom: 20px;">' +
               '<div style="display: inline-block; width: 68px; height: 68px; padding: 8px; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 12px;">' +
-                '<img src="' + logoUrl + '" alt="凌云车队队徽" style="width: 100%; height: 100%; object-fit: contain; display: block;">' +
+                '<img src="' + deptIcon + '" alt="' + targetRole + '" style="width: 100%; height: 100%; object-fit: contain; display: block;">' +
               '</div>' +
               '<h1 style="color: #0f172a; font-size: 20px; font-weight: 700; margin: 0 0 6px 0; letter-spacing: -0.3px; line-height: 1.3;">' +
                 '表单正式受理与初审确认回执' +
