@@ -2193,16 +2193,22 @@ window.LingYun = window.LingYun || {};
         targetAdminEmail: targetDeptEmail
       });
 
-      // 组装 FormSubmit 标准 Payload
+      // 组装 FormSubmit Payload（原作者版本，确保双方都收到）
       const payload = {
         _subject: subject,
+        _template: 'table',
         _captcha: 'false',
         _replyto: submitterEmail,
-        _autoresponse: autoResponse || '',
+        _autoresponse: finalAutoResponse,
+        _applicantHtml: applicantHtml,
+        _targetEmail: targetDeptEmail,
+        _ccEmail: ccAdminEmail,
         'email': submitterEmail,
         '受理编号': receiptId,
         '申请人/单位': submitterName,
         '申报意向/合作级别': submitterTarget,
+        '对口接收组别': routing.name,
+        '组别负责人': routing.head,
         ...tableData,
         '提交时间': timestamp,
         '来源站点': '河北工程大学科信学院凌云油车队官方网站 (FSC)'
