@@ -52,6 +52,13 @@
         phone: "",
         prepGuide: "建议学习车架、悬架与机械设计相关知识或准备过往作品。"
       },
+      body: {
+        name: "车身组",
+        head: "车身负责人",
+        email: "diskomiakhan@gmail.com",
+        phone: "",
+        prepGuide: "建议学习复合材料、空气动力学与工业设计相关知识或准备过往作品。"
+      },
       business: {
         name: "商业组",
         head: "商业负责人",

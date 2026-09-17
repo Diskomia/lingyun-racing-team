@@ -222,6 +222,13 @@ window.LingYun = window.LingYun || {};
         phone: "",
         prepGuide: "建议学习车架、悬架与机械设计相关知识或准备过往作品。"
       },
+      body: {
+        name: "车身组",
+        head: "车身负责人",
+        email: "diskomiakhan@gmail.com",
+        phone: "",
+        prepGuide: "建议学习复合材料、空气动力学与工业设计相关知识或准备过往作品。"
+      },
       business: {
         name: "商业组",
         head: "商业负责人",
@@ -1795,24 +1802,46 @@ window.LingYun = window.LingYun || {};
 
       if (category === 'recruit') {
         const r = String(role || '');
-        if (r.includes('电气') && depts.electrical && depts.electrical.email) {
+        // 动力总成组
+        if ((r.includes('动力') || r.includes('powertrain')) && depts.electrical && depts.electrical.email) {
           return {
-            name: depts.electrical.name || '电气组',
+            name: depts.electrical.name || '动力总成组',
             head: depts.electrical.head || '动力总成负责人',
             targetEmail: depts.electrical.email,
             ccEmail: generalEmail,
             prepGuide: depts.electrical.prepGuide || '建议学习相关知识或准备过往作品。'
           };
         }
-        if (r.includes('机械') && depts.mechanical && depts.mechanical.email) {
+        // 底盘组
+        if ((r.includes('底盘') || r.includes('车架') || r.includes('chassis')) && depts.mechanical && depts.mechanical.email) {
           return {
-            name: depts.mechanical.name || '机械组',
-            head: depts.mechanical.head || '机械负责人',
+            name: depts.mechanical.name || '底盘组',
+            head: depts.mechanical.head || '底盘负责人',
             targetEmail: depts.mechanical.email,
             ccEmail: generalEmail,
             prepGuide: depts.mechanical.prepGuide || '建议学习相关知识或准备过往作品。'
           };
         }
+        // 车身组
+        if ((r.includes('车身') || r.includes('空气动力学') || r.includes('body')) && depts.body && depts.body.email) {
+          return {
+            name: depts.body.name || '车身组',
+            head: depts.body.head || '车身负责人',
+            targetEmail: depts.body.email,
+            ccEmail: generalEmail,
+            prepGuide: depts.body.prepGuide || '建议学习相关知识或准备过往作品。'
+          };
+        }
+        if ((r.includes('车身') || r.includes('空气动力学')) && depts.mechanical && depts.mechanical.email) {
+          return {
+            name: depts.mechanical.name || '车身组',
+            head: depts.mechanical.head || '车身负责人',
+            targetEmail: depts.mechanical.email,
+            ccEmail: generalEmail,
+            prepGuide: depts.mechanical.prepGuide || '建议学习相关知识或准备过往作品。'
+          };
+        }
+        // 商业组
         if (r.includes('商业') && depts.business && depts.business.email) {
           return {
             name: depts.business.name || '商业组',
