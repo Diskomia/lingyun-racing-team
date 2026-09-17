@@ -190,7 +190,7 @@
       window.addEventListener('ly_config_updated', () => applyDynamicContent());
       // 异步从 GAS 云端拉取最新全站配置 (优先级最高，换浏览器也能看到)
       const mgr = (global.LingYun && global.LingYun.SiteConfigManager) || global.SiteConfigManager;
-      const gasUrl = 'https://script.google.com/macros/s/AKfycbxokikkqxMlEYXQr2RAbHU218VagoeyxxmaAAW-ngcioI3PdcO7b7zugckuTcROxvWdLg/exec';
+      const gasUrl = 'https://lingyun-mail.diskomiakhan.workers.dev/';
       if (mgr && typeof mgr.fetchCloudConfig === 'function') {
         mgr.fetchCloudConfig(gasUrl);
       }

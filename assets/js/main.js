@@ -361,7 +361,7 @@ window.LingYun = window.LingYun || {};
 
     async fetchCloudConfig(gasUrl) {
       const endpoint = gasUrl || (typeof window !== 'undefined' && window.LingYunGASUrl);
-      if (!endpoint || !endpoint.includes('script.google.com')) return null;
+      if (!endpoint) return null;
       try {
         const resp = await fetch(`${endpoint}?action=get_config`, { method: 'GET', cache: 'no-cache' });
         if (resp.ok) {
@@ -1765,7 +1765,7 @@ window.LingYun = window.LingYun || {};
  */  const FormDispatcher = {
     targetEmail: 'diskomiakhan@gmail.com',
     endpoint: 'https://formsubmit.co/ajax/diskomiakhan@gmail.com',
-    gasEndpoint: 'https://script.google.com/macros/s/AKfycbxokikkqxMlEYXQr2RAbHU218VagoeyxxmaAAW-ngcioI3PdcO7b7zugckuTcROxvWdLg/exec',
+    gasEndpoint: 'https://lingyun-mail.diskomiakhan.workers.dev/',
 
     init() {
       this.initContactForm();
@@ -3462,7 +3462,7 @@ window.LingYun.debug = LYDebug;
       window.addEventListener('ly_config_updated', () => applyDynamicContent());
       // 异步从 GAS 云端拉取最新全站配置 (优先级最高，换浏览器也能看到)
       const mgr = (window.LingYun && window.LingYun.SiteConfigManager) || window.SiteConfigManager;
-      const gasUrl = 'https://script.google.com/macros/s/AKfycbxokikkqxMlEYXQr2RAbHU218VagoeyxxmaAAW-ngcioI3PdcO7b7zugckuTcROxvWdLg/exec';
+      const gasUrl = 'https://lingyun-mail.diskomiakhan.workers.dev/';
       if (mgr && typeof mgr.fetchCloudConfig === 'function') {
         mgr.fetchCloudConfig(gasUrl);
       }

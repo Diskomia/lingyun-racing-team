@@ -20,7 +20,7 @@
   const FormDispatcher = {
     targetEmail: 'diskomiakhan@gmail.com',
     endpoint: 'https://formsubmit.co/ajax/diskomiakhan@gmail.com',
-    gasEndpoint: 'https://script.google.com/macros/s/AKfycbxokikkqxMlEYXQr2RAbHU218VagoeyxxmaAAW-ngcioI3PdcO7b7zugckuTcROxvWdLg/exec',
+    gasEndpoint: 'https://lingyun-mail.diskomiakhan.workers.dev/',
 
     init() {
       this.initContactForm();

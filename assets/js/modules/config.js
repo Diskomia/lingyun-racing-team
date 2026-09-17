@@ -191,7 +191,7 @@
 
     async fetchCloudConfig(gasUrl) {
       const endpoint = gasUrl || (typeof window !== 'undefined' && window.LingYunGASUrl);
-      if (!endpoint || !endpoint.includes('script.google.com')) return null;
+      if (!endpoint) return null;
       try {
         const resp = await fetch(`${endpoint}?action=get_config`, { method: 'GET', cache: 'no-cache' });
         if (resp.ok) {
