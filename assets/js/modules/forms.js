@@ -1,6 +1,6 @@
 /**
  * =========================================================================
- * 🏎️ LINGYUN OIL RACING TEAM - 2026 49号 模块化架构
+ * 🏎️ LINGYUN RACING TEAM - 2026 E72 模块化架构
  * Module: forms - FormDispatcher (全站信息交互统筹、双向邮件回执与表格排版引擎)
  * =========================================================================
  *
@@ -20,7 +20,7 @@
   const FormDispatcher = {
     targetEmail: 'diskomiakhan@gmail.com',
     endpoint: 'https://formsubmit.co/ajax/diskomiakhan@gmail.com',
-    gasEndpoint: 'https://formsubmit.co/ajax/diskomiakhan@gmail.com',
+    gasEndpoint: 'https://script.google.com/macros/s/AKfycby2fH0M9vHrxhEobrLTyeD6OGuXbqPNL1lZOY3HWCEJ-TV-UrmQk7epJ-PwBSpsrhNb/exec', // 车队官方 Google Apps Script 原生 Gmail 邮件与回执中枢
 
     init() {
       this.initContactForm();
@@ -55,20 +55,35 @@
       const depts = (cfg && cfg.departments) || {};
       const generalEmail = (depts.general && depts.general.email) || defaultEmail;
 
-      // 组别邮箱硬编码
-      const HARDCODED = {
-        '动力': { name: '动力总成组', head: '李振坡', targetEmail: '293676192@qq.com' },
-        '底盘': { name: '底盘组', head: '于鑫泽', targetEmail: '2021991482@qq.com' },
-        '车身': { name: '车身组', head: '纪浩鹏', targetEmail: 'diskomiakhan@gmail.com' },
-        '商业': { name: '商业组', head: '郭傲涵', targetEmail: 'diskomiakhan@gmail.com' }
-      };
-
       if (category === 'recruit') {
         const r = String(role || '');
-        if (r.includes('动力')) return { ...HARDCODED['动力'], ccEmail: defaultEmail };
-        if (r.includes('底盘')) return { ...HARDCODED['底盘'], ccEmail: defaultEmail };
-        if (r.includes('车身') || r.includes('空套')) return { ...HARDCODED['车身'], ccEmail: defaultEmail };
-        if (r.includes('商业')) return { ...HARDCODED['商业'], ccEmail: defaultEmail };
+        if (r.includes('电气') && depts.electrical && depts.electrical.email) {
+          return {
+            name: depts.electrical.name || '电气组',
+            head: depts.electrical.head || '电控负责人',
+            targetEmail: depts.electrical.email,
+            ccEmail: generalEmail,
+            prepGuide: depts.electrical.prepGuide || '建议学习相关知识或准备过往作品。'
+          };
+        }
+        if (r.includes('机械') && depts.mechanical && depts.mechanical.email) {
+          return {
+            name: depts.mechanical.name || '机械组',
+            head: depts.mechanical.head || '机械负责人',
+            targetEmail: depts.mechanical.email,
+            ccEmail: generalEmail,
+            prepGuide: depts.mechanical.prepGuide || '建议学习相关知识或准备过往作品。'
+          };
+        }
+        if (r.includes('商业') && depts.business && depts.business.email) {
+          return {
+            name: depts.business.name || '商业组',
+            head: depts.business.head || '商业负责人',
+            targetEmail: depts.business.email,
+            ccEmail: generalEmail,
+            prepGuide: depts.business.prepGuide || '建议学习相关知识或准备过往作品。'
+          };
+        }
       }
 
       if (category === 'sponsor') {
@@ -95,7 +110,7 @@
      */
     generateAsciiTable(title, fields) {
       let table = `=================================================================\n`;
-      table += ` 🏎️ 凌云油车队官方网站信息交互登记表 · ${title}\n`;
+      table += ` 🏎️ 凌云车队官方网站信息交互登记表 · ${title}\n`;
       table += `=================================================================\n\n`;
       for (const [key, value] of Object.entries(fields)) {
         if (!key.startsWith('_')) {
@@ -215,29 +230,29 @@
         if (role.includes('电气')) {
           return `尊敬的【${name}】同学：
 
-您好！非常感谢您选择申请加入河北工程大学科信学院凌云油车队【电气组】！
+您好！非常感谢您选择申请加入河北工程大学凌云车队【电气组】！
 您的招募申请与专业背景资料已确认送达车队电控系统评审组。
 
-作为中国大学生方程式汽车大赛 (FSC) 赛车的大脑与能量源泉，电气组全面负责发动机管理(ECU)、整车低压安全回路、自主研发主控 ECU、发动机控制算法与数字孪生遥测系统。
+作为中国大学生电动方程式大赛 (FSEC) 赛车的大脑与能量源泉，电气组全面负责 504V 高压动力电池箱、整车低压安全回路、自主研发主控 BMS、电机矢量控制算法与数字孪生遥测系统。
 
 车队技术总监与人事组正在对您的申请进行初步评估，我们将在 3 个工作日内通过本邮箱向您发送考核笔试与车间实训探访通知，请注意查收邮件。
 
 【建议准备】：
 建议学习相关知识或准备过往作品。
 
-期待在车间与您共同打造凌云油车队 2026 赛季全新燃油方程式赛车！
+期待在车间与您共同打造凌云车队 2026 赛季全新纯电方程式赛车！
 
 ——
-河北工程大学科信学院凌云油车队 (Lingyun Oil Racing Team)
+河北工程大学凌云车队 (LingYun Racing Team)
 电控系统与人事综合部
-车间基地：河北省邯郸市科信学院成学楼东侧机械装备与制造学院
+车间基地：河北省邯郸市新校区42号楼工程实训中心 101/105 室
 官方联络：${this.targetEmail}`;
         }
 
         if (role.includes('机械')) {
           return `尊敬的【${name}】同学：
 
-您好！非常感谢您选择申请加入河北工程大学科信学院凌云油车队【机械组】！
+您好！非常感谢您选择申请加入河北工程大学凌云车队【机械组】！
 您的招募申请与专业背景资料已确认送达车队车辆工程与结构评审组。
 
 机械组负责整车 4130 铬钼钢桁架轻量化车架、全碳纤维推杆双横臂悬架动力学、CFD 空气动力学套件设计以及精密机械加工制造。
@@ -250,16 +265,16 @@
 期待与您在车间并肩作战，突破赛道极限！
 
 ——
-河北工程大学科信学院凌云油车队 (Lingyun Oil Racing Team)
+河北工程大学凌云车队 (LingYun Racing Team)
 机械与车辆工程部
-车间基地：河北省邯郸市科信学院成学楼东侧机械装备与制造学院
+车间基地：河北省邯郸市新校区42号楼工程实训中心 101/105 室
 官方联络：${this.targetEmail}`;
         }
 
         if (role.includes('商业')) {
           return `尊敬的【${name}】同学：
 
-您好！非常感谢您选择申请加入河北工程大学科信学院凌云油车队【商业组】！
+您好！非常感谢您选择申请加入河北工程大学凌云车队【商业组】！
 您的招募申请已送达车队商业运营与品牌管理委员会。
 
 大学生方程式不仅是硬核技术的竞技，更是顶尖工程团队的商业运营实战。商业组负责全国总决赛英文/中文商业逻辑答辩、整车成本与制造分析（BOM）、企业战略招商赞助、车队品牌宣传与科普拓展。
@@ -269,21 +284,21 @@
 【建议准备】：
 建议学习相关知识或准备过往作品。
 
-期待您用商业智慧为凌云油车队注入强劲动能！
+期待您用商业智慧为凌云车队注入强劲动能！
 
 ——
-河北工程大学科信学院凌云油车队 (Lingyun Oil Racing Team)
+河北工程大学凌云车队 (LingYun Racing Team)
 商业运营与综合事务部
-车间基地：河北省邯郸市科信学院成学楼东侧机械装备与制造学院
+车间基地：河北省邯郸市新校区42号楼工程实训中心 101/105 室
 官方联络：${this.targetEmail}`;
         }
 
         return `尊敬的【${name}】同学：
 
-感谢您选择加入河北工程大学科信学院凌云油车队【${role}】！您的申请已送达车队评审组。
+感谢您选择加入河北工程大学凌云车队【${role}】！您的申请已送达车队评审组。
 技术总监与人事组将在 3 个工作日内对您的技能资料进行评估，并通过此邮箱向您发送后续通知。
 
-—— 河北工程大学科信学院凌云油车队 (Lingyun Oil Racing Team)`;
+—— 河北工程大学凌云车队 (LingYun Racing Team)`;
       }
 
       if (category === 'sponsor') {
@@ -291,28 +306,28 @@
         if (tier.includes('战略')) {
           return `尊敬的【${contactPerson} / ${company}】：
 
-您好！衷心感谢贵企业对河北工程大学科信学院凌云油车队的关注与支持！
+您好！衷心感谢贵企业对河北工程大学凌云车队的关注与支持！
 我们已正式收到贵司关于【官方战略合作伙伴】的深度校企赞助与产学研协作意向。
 
-作为车队最高合作梯队，车队商业总监将亲自领办，在 24 小时内通过电话或本工作邮箱与您专人对接，并向您呈递《2026赛季FSC商业赞助白皮书完整版》、车身黄金露出权益对价表及校企联合实验室共建细则。
+作为车队最高合作梯队，车队商业总监将亲自领办，在 24 小时内通过电话或本工作邮箱与您专人对接，并向您呈递《2026赛季FSEC商业赞助白皮书完整版》、车身黄金露出权益对价表及校企联合实验室共建细则。
 
 ——
-河北工程大学科信学院凌云油车队 (Lingyun Oil Racing Team)
+河北工程大学凌云车队 (LingYun Racing Team)
 商务合作委员会
 官方联络邮箱：${this.targetEmail}
-车间地址：河北省邯郸市科信学院成学楼东侧机械装备与制造学院`;
+车间地址：河北省邯郸市太极路19号河北工程大学新校区42号楼工程实训中心`;
         }
 
         if (tier.includes('冠名')) {
           return `尊敬的【${contactPerson} / ${company}】：
 
-您好！衷心感谢贵企业对河北工程大学科信学院凌云油车队的关注与支持！
+您好！衷心感谢贵企业对河北工程大学凌云车队的关注与支持！
 我们已正式收到贵司关于【年度企业冠名赞助商】的独家冠名合作意向。
 
 车队队长与商业总监将在 24 小时内与贵司专人联络，沟通年度赛事冠名权益、全国总决赛统一队服与整车涂装方案，并诚挚邀请贵司技术专家及高管团队来访车间实地探访。
 
 ——
-河北工程大学科信学院凌云油车队 (Lingyun Oil Racing Team)
+河北工程大学凌云车队 (LingYun Racing Team)
 商务合作委员会
 官方联络邮箱：${this.targetEmail}`;
         }
@@ -320,24 +335,24 @@
         if (tier.includes('技术') || tier.includes('物料')) {
           return `尊敬的【${contactPerson} / ${company}】：
 
-您好！衷心感谢贵企业对河北工程大学科信学院凌云油车队的技术认可与物料支持！
+您好！衷心感谢贵企业对河北工程大学凌云车队的技术认可与物料支持！
 我们已正式收到贵司关于【官方技术与物料伙伴】的合作意向。
 
 车队技术总监与供应链主管将在 24 小时内与您核对所需零部件规格、软硬件仿真工具授权或加工工艺对接，共同攻坚大学生方程式赛车核心技术壁垒。
 
 ——
-河北工程大学科信学院凌云油车队 (Lingyun Oil Racing Team)
+河北工程大学凌云车队 (LingYun Racing Team)
 技术与供应链部
 官方联络邮箱：${this.targetEmail}`;
         }
 
         return `尊敬的【${contactPerson} / ${company}】：
 
-您好！感谢贵司对河北工程大学科信学院凌云油车队的支持！
+您好！感谢贵司对河北工程大学凌云车队的支持！
 我们已收到贵司关于【${tier}】的合作意向。车队指导教师与商务主管将在 24 小时内与您详细洽谈产学研课题与对价方案。
 
 ——
-河北工程大学科信学院凌云油车队 (Lingyun Oil Racing Team)
+河北工程大学凌云车队 (LingYun Racing Team)
 商务合作委员会
 官方联络邮箱：${this.targetEmail}`;
       }
@@ -346,18 +361,18 @@
         const { inquiryType, name, org } = details;
         return `尊敬的【${name} (${org})】：
 
-您好！感谢您向河北工程大学科信学院凌云油车队发送在线讯息（咨询类别：【${inquiryType}】）！
+您好！感谢您向河北工程大学凌云车队发送在线讯息（咨询类别：【${inquiryType}】）！
 车队队长与对应事务负责人已收到您的留言，我们将在 24 小时内向您的本邮箱进行答复与对接。
 
-如需预约实地探访车间，亦可前往邯郸市科信学院成学楼东侧机械装备与制造学院。
+如需预约实地探访车间，亦可前往邯郸市新校区42号楼工程实训中心 101/105 室。
 
 ——
-河北工程大学科信学院凌云油车队 (Lingyun Oil Racing Team)
+河北工程大学凌云车队 (LingYun Racing Team)
 综合事务部
 官方联络邮箱：${this.targetEmail}`;
       }
 
-      return `感谢您向河北工程大学科信学院凌云油车队递交信息！我们将在评估后尽快给您答复。\n\n—— 河北工程大学科信学院凌云油车队`;
+      return `感谢您向河北工程大学凌云车队递交信息！我们将在评估后尽快给您答复。\n\n—— 河北工程大学凌云车队`;
     },
 
     /**
@@ -445,6 +460,7 @@
       if (this.targetEmail && targetDeptEmail && this.targetEmail !== targetDeptEmail) {
         finalAutoResponse = finalAutoResponse.split(this.targetEmail).join(targetDeptEmail);
       }
+
       const applicantHtml = this.generateApplicantReceiptHtml({
         receiptId,
         name: submitterName,
@@ -455,25 +471,26 @@
         targetAdminEmail: targetDeptEmail
       });
 
-      // 组装 FormSubmit Payload（原作者版本，确保双方都收到）
+      // 组装带 HTML Table 模板与自动回复 (_autoresponse, _replyto, _applicantHtml) 的 Payload
       const payload = {
         _subject: subject,
-        _template: 'table',
-        _captcha: 'false',
-        _replyto: submitterEmail,
-        _autoresponse: finalAutoResponse,
-        _applicantHtml: applicantHtml,
-        _targetEmail: targetDeptEmail,
-        _ccEmail: ccAdminEmail,
-        'email': submitterEmail,
+        _template: 'table',           // 触发 FormSubmit 的自动表格排版引擎
+        _captcha: 'false',            // 免验证码极速提交
+        _replyto: submitterEmail,     // 车队在邮箱中点击回复直达申请人
+        _autoresponse: finalAutoResponse, // 纯文本回执字段
+        _applicantHtml: applicantHtml,// Bloomberg & Google 风格精美 HTML 回执 (含队徽)
+        _targetEmail: targetDeptEmail,// 动态组别接收邮箱 (电气/机械/商业/赞助负责人)
+        _ccEmail: ccAdminEmail,       // 抄送官方队长邮箱
+        'email': submitterEmail,      // 识别收件人邮箱
         '受理编号': receiptId,
         '申请人/单位': submitterName,
         '申报意向/合作级别': submitterTarget,
         '对口接收组别': routing.name,
         '组别负责人': routing.head,
+        '对口工作邮箱': targetDeptEmail,
         ...tableData,
         '提交时间': timestamp,
-        '来源站点': '河北工程大学科信学院凌云油车队官方网站 (FSC)'
+        '来源站点': '河北工程大学凌云车队官方网站 (FSEC)'
       };
 
       // 优先支持 Google Apps Script 原生 Gmail 引擎，其次回退至对口邮箱 FormSubmit
@@ -607,26 +624,18 @@
     },
 
     /**
-     * 生成符合 Bloomberg & Google 设计风格的正式 HTML 邮件回执 (嵌入官方凌云油车队队徽)
+     * 生成符合 Bloomberg & Google 设计风格的正式 HTML 邮件回执 (嵌入官方凌云车队队徽)
      */
     generateApplicantReceiptHtml(meta) {
-      const logoUrl = 'https://cdn.jsdelivr.net/gh/Diskomia/lingyun-racing-team@main/assets/images/logo.png';
-      const siteUrl = 'https://diskomia.github.io/lingyun-racing-team/';
-      const iconBase = 'https://cdn.jsdelivr.net/gh/Diskomia/lingyun-racing-team@main/assets/images/';
+      const logoUrl = 'https://raw.githubusercontent.com/j0shuA378/lyracingteam_official_website/main/assets/images/logo.png';
+      const siteUrl = 'https://j0shua378.github.io/lyracingteam_official_website/';
       const targetAdminEmail = this.targetEmail || 'diskomiakhan@gmail.com';
       const receiptId = meta.receiptId || `LY2026-REC-${Date.now().toString(36).toUpperCase()}`;
       const submitterEmail = meta.email || '';
       const submitterName = meta.name || '申报人';
-      const targetRole = meta.target || '凌云油车队申请';
+      const targetRole = meta.target || '凌云车队申请';
       const timeStr = meta.timestamp || this.getFormattedTimestamp();
       const autoResponse = meta.autoResponse || '';
-
-      // 按组别选图标
-      let deptIcon = logoUrl;
-      if (targetRole.indexOf('动力') >= 0) deptIcon = iconBase + 'icon_powertrain.png';
-      else if (targetRole.indexOf('底盘') >= 0) deptIcon = iconBase + 'icon_chassis.png';
-      else if (targetRole.indexOf('车身') >= 0 || targetRole.indexOf('空套') >= 0) deptIcon = iconBase + 'icon_body.png';
-      else if (targetRole.indexOf('商业') >= 0 || targetRole.indexOf('商务') >= 0) deptIcon = iconBase + 'icon_business.png';
 
       return '<div style="background-color: #f1f5f9; padding: 16px 8px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial, sans-serif;">' +
         '<div style="max-width: 580px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.06);">' +
@@ -636,10 +645,10 @@
             '<table style="width: 100%; border-collapse: collapse;">' +
               '<tr>' +
                 '<td style="width: 40px; vertical-align: middle;">' +
-                  '<img src="' + logoUrl + '" alt="凌云油车队队徽" style="width: 32px; height: 32px; display: block; object-fit: contain;">' +
+                  '<img src="' + logoUrl + '" alt="凌云车队队徽" style="width: 32px; height: 32px; display: block; object-fit: contain;">' +
                 '</td>' +
                 '<td style="vertical-align: middle; padding-left: 10px;">' +
-                  '<div style="color: #ffffff; font-size: 14px; font-weight: 700; letter-spacing: 0.3px;">河北工程大学科信学院 · 凌云油车队</div>' +
+                  '<div style="color: #ffffff; font-size: 14px; font-weight: 700; letter-spacing: 0.3px;">河北工程大学 · 凌云车队</div>' +
                   '<div style="color: #94a3b8; font-size: 9.5px; letter-spacing: 1px; text-transform: uppercase;">OFFICIAL ADMISSIONS & TELEMETRY HUB</div>' +
                 '</td>' +
                 '<td style="text-align: right; vertical-align: middle;">' +
@@ -655,13 +664,13 @@
             '<!-- Centered Logo Area -->' +
             '<div style="text-align: center; margin-bottom: 20px;">' +
               '<div style="display: inline-block; width: 68px; height: 68px; padding: 8px; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 12px;">' +
-                '<img src="' + deptIcon + '" alt="' + targetRole + '" style="width: 100%; height: 100%; object-fit: contain; display: block;">' +
+                '<img src="' + logoUrl + '" alt="凌云车队队徽" style="width: 100%; height: 100%; object-fit: contain; display: block;">' +
               '</div>' +
               '<h1 style="color: #0f172a; font-size: 20px; font-weight: 700; margin: 0 0 6px 0; letter-spacing: -0.3px; line-height: 1.3;">' +
                 '表单正式受理与初审确认回执' +
               '</h1>' +
               '<div style="color: #64748b; font-size: 11px; font-family: monospace; margin-bottom: 12px; letter-spacing: 0.3px;">' +
-                'LINGYUN OIL RACING TEAM · VERIFIED ADMISSION CERTIFICATE' +
+                'LINGYUN RACING TEAM · VERIFIED ADMISSION CERTIFICATE' +
               '</div>' +
 
               '<!-- Google-style User Identity Pill Badge -->' +
@@ -720,21 +729,21 @@
             '<!-- Call-to-Action Button -->' +
             '<div style="text-align: center; margin-bottom: 24px;">' +
               '<a href="' + siteUrl + '" target="_blank" style="display: inline-block; background-color: #103A82; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-size: 13px; font-weight: 600; letter-spacing: 0.3px; box-shadow: 0 4px 12px rgba(16,58,130,0.2);">' +
-                '访问凌云油车队官方网站 ➔' +
+                '访问凌云车队官方网站 ➔' +
               '</a>' +
             '</div>' +
 
             '<!-- Notification Tip (Figure 1 Exact) -->' +
             '<div style="background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 12px 16px; font-size: 11.5px; color: #1e40af; line-height: 1.6;">' +
-              'ℹ️ <strong>官方回执通知：</strong>本回执由河北工程大学科信学院凌云油车队电控与评审组系统自动签发。车队将在 3 个工作日内向此邮箱外发初审评估结果或线下车间面试通知，请保持通讯畅通。' +
+              'ℹ️ <strong>官方回执通知：</strong>本回执由河北工程大学凌云车队电控与评审组系统自动签发。车队将在 3 个工作日内向此邮箱外发初审评估结果或线下车间面试通知，请保持通讯畅通。' +
             '</div>' +
 
           '</div>' +
 
           '<!-- Official Engineering Base Footer (Figure 1 Exact) -->' +
           '<div style="background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 20px 24px; text-align: center; font-size: 11px; color: #64748b; line-height: 1.6;">' +
-            '<div style="font-weight: 600; color: #334155; margin-bottom: 4px;">河北工程大学科信学院凌云油车队 (Lingyun Oil Racing Team)</div>' +
-            '车间基地：河北省邯郸市科信学院成学楼东侧机械装备与制造学院<br>' +
+            '<div style="font-weight: 600; color: #334155; margin-bottom: 4px;">河北工程大学凌云车队 (LingYun Racing Team)</div>' +
+            '车间基地：河北省邯郸市太极路19号河北工程大学新校区42号楼工程实训中心 101/105 室<br>' +
             '官方联络邮箱：<a href="mailto:' + targetAdminEmail + '" style="color: #103a82; text-decoration: none;">' + targetAdminEmail + '</a>' +
           '</div>' +
 
@@ -920,7 +929,7 @@
         skills: cleanSkills
       });
 
-      const subject = `【凌云油车队招募申请】${cleanRole} - ${cleanName}`;
+      const subject = `【凌云车队招募申请】${cleanRole} - ${cleanName}`;
       const autoResponse = this.getFeedbackContent('recruit', { role: cleanRole, name: cleanName });
       const successToast = `🎉 招新申请已整理为表格发送至车队！已向您的邮箱 (${cleanEmail}) 发送【${cleanRole}】初审确认回执，请注意查收。`;
 
@@ -1029,7 +1038,7 @@
         notes: cleanNotes
       });
 
-      const subject = `【凌云油车队赞助洽谈】${cleanTier} - ${cleanCompany}`;
+      const subject = `【凌云车队赞助洽谈】${cleanTier} - ${cleanCompany}`;
       const autoResponse = this.getFeedbackContent('sponsor', { tier: cleanTier, company: cleanCompany, contactPerson: cleanContactPerson });
       const successToast = `🏁 赞助意向已排版为表格发送至车队！已向贵司邮箱 (${cleanEmail}) 发送【${cleanTier}】对接回执，商务总监将在 24 小时内与您联络。`;
 
@@ -1132,7 +1141,7 @@
           message: cleanMessage
         });
 
-        const subject = `【凌云油车队在线留言】${cleanInquiryType} - ${cleanName} (${cleanOrg})`;
+        const subject = `【凌云车队在线留言】${cleanInquiryType} - ${cleanName} (${cleanOrg})`;
         const autoResponse = this.getFeedbackContent('contact', { inquiryType: cleanInquiryType, name: cleanName, org: cleanOrg });
         const successToast = `📬 您的留言已整理成表格投递至官方邮箱！已向您的邮箱 (${cleanEmail}) 发送留言确认回执，我们将尽快答复。`;
 
