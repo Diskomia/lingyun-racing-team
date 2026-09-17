@@ -2273,22 +2273,30 @@ window.LingYun = window.LingYun || {};
         '来源站点': '河北工程大学科信学院凌云油车队官方网站 (FSEC)'
       };
 
-      // 优先支持 Google Apps Script 原生 Gmail 引擎，其次回退至对口邮箱 FormSubmit
+      // 优先支持 Cloudflare Workers 代理，其次回退至对口邮箱 FormSubmit
       const dynamicFallback = 'https://formsubmit.co/ajax/' + encodeURIComponent(targetDeptEmail);
       const activeEndpoint = this.gasEndpoint || (typeof window !== 'undefined' && window.LingYunGASUrl) || dynamicFallback;
 
-      const isGAS = activeEndpoint.includes('script.google.com');
+      const isProxy = activeEndpoint.includes('workers.dev') || activeEndpoint.includes('script.google.com');
+
+      // 带超时的 fetch 封装（10秒超时）
+      const fetchWithTimeout = (url, options, timeoutMs = 10000) => {
+        return Promise.race([
+          fetch(url, options),
+          new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('请求超时，请检查网络后重试')), timeoutMs)
+          )
+        ]);
+      };
 
       try {
         debug.log('FormDispatcher', 'Sending form payload to ' + activeEndpoint, payload);
 
-        if (isGAS) {
-          // Google Apps Script 浏览器跨域分发方案：
-          // 1. Content-Type: text/plain;charset=utf-8 属于 CORS-safelisted 标头，完全阻止浏览器发起 OPTIONS 预检请求（Preflight）
-          // 2. mode: 'no-cors' 忽略 302 跨域重定向，确保请求 100% 直达 Google Apps Script 执行 MailApp.sendEmail()
-          await fetch(activeEndpoint, {
+        if (isProxy) {
+          // Cloudflare Workers / GAS 跨域分发方案
+          await fetchWithTimeout(activeEndpoint, {
             method: 'POST',
-            mode: 'no-cors',
+            mode: 'cors',
             cache: 'no-cache',
             headers: {
               'Content-Type': 'text/plain;charset=utf-8'
@@ -2296,7 +2304,7 @@ window.LingYun = window.LingYun || {};
             body: JSON.stringify(payload)
           });
         } else {
-          const response = await fetch(activeEndpoint, {
+          const response = await fetchWithTimeout(activeEndpoint, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -2338,30 +2346,17 @@ window.LingYun = window.LingYun || {};
           timestamp
         });
       } catch (err) {
-        debug.error('FormDispatcher', 'Fetch failed, falling back to hidden frame & mailto client', err);
-        if (isGAS) {
-          try {
-            this.submitViaHiddenFrame(activeEndpoint, payload);
-          } catch (_) {}
-        }
-
+        debug.error('FormDispatcher', 'Fetch failed', err);
         this.setButtonLoading(submitBtn, false);
 
-        toast(successToast || `🎉 表单已成功提交！官方受理回执凭证已生成。`, 'success');
+        // 失败时显示错误提示，而不是成功提示
+        const errorMsg = err.message || '网络连接失败';
+        toast(`❌ 提交失败：${errorMsg}。请检查网络后重试，或直接发邮件至 ${targetDeptEmail}`, 'error', 5000);
 
-        if (form) form.reset();
-        if (typeof onSuccess === 'function') {
-          setTimeout(onSuccess, 500);
+        // 不显示成功回执，提示用户稍后重试
+        if (typeof onError === 'function') {
+          setTimeout(() => onError(err), 500);
         }
-
-        this.showReceiptModal({
-          receiptId,
-          name: submitterName,
-          target: submitterTarget,
-          email: submitterEmail,
-          autoResponse,
-          timestamp
-        });
       }
     },
 
