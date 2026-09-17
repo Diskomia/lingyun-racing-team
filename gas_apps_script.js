@@ -34,7 +34,13 @@ function doPost(e) {
     var IMG_BASE = "https://raw.githubusercontent.com/Diskomia/lingyun-racing-team/main/assets/images/";
 
     function embedImage(url) {
-      // 直接用外部 URL，Gmail 会自动代理显示
+      try {
+        var resp = UrlFetchApp.fetch(url, {muteHttpExceptions: true});
+        if (resp.getResponseCode() === 200) {
+          var blob = resp.getBlob();
+          return "data:" + blob.getContentType() + ";base64," + Utilities.base64Encode(blob.getBytes());
+        }
+      } catch (_) {}
       return url;
     }
 
@@ -90,7 +96,7 @@ function doPost(e) {
     if (submitterEmail && autoResponse) {
       var applicantSubject = "【河北工程大学科信学院凌云油车队】您的申报已受理 (受理号: " + receiptId + ")";
 
-      var applicantHtml = data._applicantHtml || (
+      var applicantHtml = (
         '<div style="background:#f1f5f9;padding:16px 8px;font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,Helvetica,Arial,sans-serif;">' +
         '<div style="max-width:580px;margin:0 auto;background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.06);">' +
           '<div style="background:#0c1017;padding:16px 20px;border-bottom:2px solid #D9232D;">' +
